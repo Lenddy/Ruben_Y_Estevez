@@ -5,7 +5,7 @@ const app = express()
 const port = 8000
 
 require("dotenv").config() // so we can read the information from the secret key that is on the .env file
-console.log(`secret ${process.env.secret_key}`) //take this out later
+// console.log(`secret ${process.env.secret_key}`) //take this out later
 
 const cookieParser = require("cookie-parser") //so that the server is able to so that the server is able to understand  the cookie info coming from the client browser
 
