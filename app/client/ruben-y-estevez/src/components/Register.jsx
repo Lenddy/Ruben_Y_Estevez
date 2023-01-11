@@ -14,11 +14,11 @@ const Register = () => {
         .then(
             res =>{
                 console.log("this is the result",res)
-            if(res.data?.error){
-                setFromErrors(res.data.error.errors)
+            if(res.data?.err){
+                setFromErrors(res.data.err.errors)
             }else{
                 setFromErrors({})
-                // navigate("/")
+                navigate("/")
             }
         }
         ).catch(err => console.log( "there was an error",err))
@@ -40,22 +40,46 @@ const Register = () => {
             <div>
                 <label htmlFor="" >Nombre </label>
                 <input type="text" name='nombre' className='form-control'  onChange={changeHandler} />
+                {   formInfo.nombre?.length > 0 && formInfo.nombre?.length < 2?
+                    <p style={{color:"red"}}  >nombre debe de ser por lo menos 2 letras</p>:
+                    fromErrors.nombre? <p style={{color:"red"}} > {fromErrors.nombre.message} </p>:
+                    null
+                }
             </div> 
             <div>
                 <label htmlFor=""> Apellido </label>
                 <input type="text" name="apellido"  className='form-control' onChange={changeHandler} />
+                {   formInfo.apellido?.length >0 && formInfo.apellido?.length < 2?
+                    <p style={{color:"red"}}  >apellido debe de ser por lo menos 2 letras</p>:
+                    fromErrors.apellido? <p style={{color:"red"}} > {fromErrors.apellido.message} </p>:
+                    null
+                }
             </div>
             <div>
                 <label htmlFor="">Nombre de Usuario</label>
-                 <input type="text" name="nombreDeUsuario"  className='form-control' onChange={changeHandler} /> {/*make it that when this is check that the type changes from password to text */}
+                <input type="text" name="nombreDeUsuario"  className='form-control' onChange={changeHandler} /> 
+                {   formInfo.nombreDeUsuario?.length >0 && formInfo.nombreDeUsuario?.length < 2?
+                    <p style={{color:"red"}}  >nombre De Usuario debe de ser por lo menos 2 letras</p>:
+                    fromErrors.nombreDeUsuario? <p style={{color:"red"}} > {fromErrors.nombreDeUsuario.message} </p>:
+                    null
+                }
             </div>
             <div>
                 <label htmlFor="">Contraseña</label>
-                 <input type="password" name="contraseña"  className='form-control' onChange={changeHandler}/> {/*make it that when this is check that the type changes from password to text */}
+                <input type="password" name="contraseña"  className='form-control' onChange={changeHandler}/> 
+                {   formInfo.contraseña?.length >0 && formInfo.contraseña?.length < 3?
+                    <p style={{color:"red"}}  >contraseña debe de ser por lo menos 3 letras o números</p>:
+                    fromErrors.contraseña? <p style={{color:"red"}} > {fromErrors.contraseña.message} </p>:
+                    null
+                }
             </div>
             <div>
                 <label htmlFor="">confirmar contraseña</label>
-                 <input type="password" name="confirmar"   className='form-control' onChange={changeHandler}/> {/*make it that when this is check that the type changes from password to text */}
+                <input type="password" name="confirmar"   className='form-control' onChange={changeHandler}/> 
+                { 
+                    fromErrors.confirmar? <p style={{color:"red"}} > {fromErrors.confirmar.message} </p>:
+                    null
+                }
             </div>
             <button className='btn btn-success mt-3'>Registrarse</button>
             </form>
