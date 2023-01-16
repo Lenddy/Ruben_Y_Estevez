@@ -1,3 +1,6 @@
+//! db file
+
+
 const mongoose = require("mongoose")
 
 //to connect to mongoDb(data base)
@@ -9,3 +12,5 @@ mongoose.connect(`mongodb+srv://${process.env.user}:${process.env.password}@mear
     })
     .then(() => console.log('Established a connection to the database'))
     .catch(err => console.log('Something went wrong when connecting to the database ', err))
+
+//! db file end

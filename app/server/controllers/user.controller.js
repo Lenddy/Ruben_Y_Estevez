@@ -1,3 +1,6 @@
+//!user controller file
+
+
 const Users = require("../models/user.model")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
@@ -14,9 +17,6 @@ class User {
         })
         .catch(err => res.json({message:"error getting all users",error:err}))
     }
-
-
-
 
 
     register = (req,res)=>{
@@ -43,8 +43,6 @@ class User {
         })//end of parent .then()
         .catch(err=>console.log("error",err))
     }
-
-
 
 
     //async and await is another way of doing .then() and .catch 
@@ -79,8 +77,6 @@ class User {
     }
 
 
-
-
     loggedUser = (req,res)=>{
         //using the info of the user that is store in the cookie  to get the id of the logged in user and quwey the db to find a user with that id and return with info about the logged user 
         const decodedJwt = jwt.decode(req.cookies.userToken, {complete:true})
@@ -98,7 +94,6 @@ class User {
     }
 
 
-
     delete =(req,res)=>{
         Users.findOneAndDelete({_id:req.params.id})
         .then(user =>{
@@ -109,8 +104,27 @@ class User {
     }
 }
 
-
 module.exports = new User()
+
+//!user controller file end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //try  doing it with async and await

@@ -1,3 +1,5 @@
+//!server file
+
 // import
 const express = require("express")
 const cors = require("cors")
@@ -26,3 +28,5 @@ require("./server/routes/user.routes")(app)
 
 
 app.listen(port,()=>console.log(`listening on port ${port}`))
+
+//!server file end

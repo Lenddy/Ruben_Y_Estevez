@@ -1,3 +1,5 @@
+//!user model file
+
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt") //to encrypt the password
 
@@ -59,3 +61,6 @@ user.pre("save",//calling .pre() method but giving it a string (save) instead of
 const Users = mongoose.model("user_table",user)
 
 module.exports = Users
+
+
+//! user model file end
