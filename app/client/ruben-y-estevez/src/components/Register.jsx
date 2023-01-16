@@ -18,7 +18,7 @@ const Register = () => {
                 setFromErrors(res.data.err.errors)
             }else{
                 setFromErrors({})
-                navigate("/")
+                navigate("/DashBoard")
             }
         }
         ).catch(err => console.log( "there was an error",err))
