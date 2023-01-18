@@ -1,11 +1,11 @@
 import {useState,} from 'react';
 import {navigate,Link, useNavigate} from "react-router-dom"
 import axios from"axios";
-import { set } from 'mongoose';
 
 const Register = () => {
     const [formInfo,setFormInfo] = useState ({})
     const [fromErrors,setFromErrors] = useState({})
+    const [show, setShow] = useState("password")
     const navigate = useNavigate()
 
     const submitHandler = (e)=>{
@@ -31,7 +31,15 @@ const Register = () => {
         })
     }
     
-    
+    const showHandler = (e)=>{
+        if(e.target.checked){
+            setShow("text")
+        }
+        else{
+            setShow("password")
+        }
+    }
+
     return (
         <div>
             <h1> Registrarse </h1>
@@ -66,20 +74,27 @@ const Register = () => {
             </div>
             <div>
                 <label htmlFor="">Contraseña</label>
-                <input type="password" name="contraseña"  className='form-control' onChange={changeHandler}/> 
+                <input type={show} name="contraseña"  className='form-control' onChange={changeHandler}/> 
                 {   formInfo.contraseña?.length >0 && formInfo.contraseña?.length < 3?
                     <p style={{color:"red"}}  >contraseña debe de ser por lo menos 3 letras o números</p>:
                     fromErrors.contraseña? <p style={{color:"red"}} > {fromErrors.contraseña.message} </p>:
                     null
                 }
             </div>
+
+
             <div>
                 <label htmlFor="">confirmar contraseña</label>
-                <input type="password" name="confirmar"   className='form-control' onChange={changeHandler}/> 
+                <input type={show} name="confirmar"   className='form-control' onChange={changeHandler}/> 
                 { 
                     fromErrors.confirmar? <p style={{color:"red"}} > {fromErrors.confirmar.message} </p>:
                     null
                 }
+            </div>
+
+            <div>
+                <label htmlFor="">mostrar contraseña</label>
+                <input type="checkbox" name="checkbox"   onChange={e =>showHandler(e)} />
             </div>
             <button className='btn btn-success mt-3'>Registrarse</button>
             </form>

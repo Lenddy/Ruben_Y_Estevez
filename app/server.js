@@ -24,6 +24,7 @@ require("./server/config/prestamos.config")
 
 //import routes
 require("./server/routes/user.routes")(app)
+require("./server/routes/person.routes")(app)
 
 
 
