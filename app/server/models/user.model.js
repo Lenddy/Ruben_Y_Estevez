@@ -18,7 +18,7 @@ const user = mongoose.Schema({
     nombreDeUsuario:{
         type:String,
         required: [true,"debes de poner tu nombre de usuario"],
-        minLength:[2,"tu nombre usuario debe de tener por lo menos 3 letras "]
+        minLength:[2,"tu nombre usuario debe de tener por lo menos 2 letras "]
     },
     contraseña:{
         type: String,
