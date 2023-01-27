@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -7,22 +7,37 @@ const ClientForm = () => {
     const [info,setInfo] = useState({})
     const [formInfoErr,setFormInfoErr] = useState({})
 
-    const changeHandler = (e)=>{
-        setInfo({
-            ...info,
-            [e.target.name]: e.target.value
-        })
+    useEffect(()=>{
+        axios.get("http://localhost:8000/api/User/loggedUser",{withCredentials:true})
+        .then(res=>{
+        }).catch(
+            err=>{console.log("error",err) 
+        navigate("/")
+            }
+        )
+    },[])
+
+    const logout =()=>{
+        axios.get("http://localhost:8000/api/User/logout",{withCredentials:true})
+        .then(res=>{
+            navigate("/")
+        }).catch(
+            err=>{console.log("error",err) 
+            }
+        )
     }
+
+
 
     const submitHandler = (e)=>{
         e.preventDefault()
-        axios.post("http://localhost:8000/api/People/new", {withCredentials:true} , info)
+        axios.post("http://localhost:8000/api/People/new" , info )
         .then(res =>{
-            console.log("hsdfklslkdfjskljflksjdlf",res)
+            console.log(res)
             if(res.data.err?.errors){
                 setFormInfoErr(res.data.err.errors)
             }else{
-                // setFormInfoErr()
+                setFormInfoErr()
                 navigate("/DashBoard") //change this to 
             }
         }).catch(
@@ -30,12 +45,21 @@ const ClientForm = () => {
         )
     }
 
+    const changeHandler = (e)=>{
+        setInfo({
+            ...info,
+            [e.target.name]: e.target.value
+        })
+    }
+
+
+
 
     return (
         <div>
             <Link to="/Dashboard"><button className=' btn btn-secondary text-white'>todos los clientes</button> </Link>
             
-             <form className='from-group' onSubmit={submitHandler} >    
+             <form className='from-group' onSubmit={submitHandler} >
                 <div>
                     <label >Nombre</label>
                     <input type="text" name="name"  className='form-control' onChange={changeHandler}/>
@@ -76,8 +100,8 @@ const ClientForm = () => {
                 <div>
                     <label >tipo de identificación</label>
                     <select name="idType" className='form-control'  onChange={changeHandler} >
-                        <option  selected="true" disabled="disabled">selecciona una opción</option>
-                        <option value="cédula">cédula</option>
+                        <option  selected={true} disabled="disabled">selecciona una opción</option>
+                        <option value="Cédula">cédula</option>
                         <option value="RNC">RNC</option>
                         <option value="Pasaporte">Pasaporte</option>
                     </select>
@@ -146,6 +170,14 @@ const ClientForm = () => {
                     <input type="text" name="otherIncome"  className='form-control' onChange={changeHandler} />
                     {
                     formInfoErr.otherIncome? <p style={{color:"red"}} > {formInfoErr.otherIncome.message} </p>:
+                    null
+                }
+                </div>
+                <div>
+                    <label >Numero telefónico De Trabajo</label>
+                    <input type="text" name="workPNumber"  className='form-control' onChange={changeHandler} />{info.workPNumber?.length > 0 && info.workPNumber?.length < 10?
+                    <p style={{color:"red"}}  > tiempo laborando debe de tener por lo menos 10 números</p>:
+                    formInfoErr.workPNumber? <p style={{color:"red"}} > {formInfoErr.workPNumber.message} </p>:
                     null
                 }
                 </div>

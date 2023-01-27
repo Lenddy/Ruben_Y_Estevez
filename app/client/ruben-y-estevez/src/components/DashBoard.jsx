@@ -3,10 +3,12 @@ import { Link,useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
 
+
 const DashBoard = () => {
     const [user,setUser] = useState({})
     const [person,setPerson] = useState([])
     const navigate = useNavigate()
+    const [deleted,setDeleted] = useState(false)
 
     useEffect(()=>{
         axios.get("http://localhost:8000/api/User/loggedUser",{withCredentials:true})
@@ -40,7 +42,15 @@ const DashBoard = () => {
         }).catch(err =>{
             console.log(err)
         })
-    },[])
+    },[person])
+
+        const deleteHandler = (id)=>{
+            axios.delete(`http://localhost:8000/api/People/delete/${id}`)
+            .then(res =>{
+                console.log(res)
+                setDeleted(!deleted)
+            }).catch(err=>console.log(err))
+        }
 
 
     return (
@@ -55,8 +65,8 @@ const DashBoard = () => {
                 <h1>todas los clientes</h1>
                 {
                     person.length === 0?
-                    <div> <p className='text-danger' > no hay clientes  todavía agrega una</p>
-                    <button> this should redirect to add a new person </button>
+                    <div> <p className='text-danger' > no hay clientes todavía agrega uno nuevo</p>
+                    <Link to="/nuevo/cliente"><button className=' btn btn-secondary text-white'>agregar nuevo cliente</button> </Link>
                     </div>:
                     person.map((p,idx)=>{
                         return (
@@ -65,7 +75,12 @@ const DashBoard = () => {
                                         <p>tipo/identificación : {p.idType}</p>
                                         <p>No./identificación : {p.idNum}</p> 
                                         <p>Teléfono: {p.pNumber}</p> 
-                                        <p>Acciones : some action</p>  
+                                        <p>Acciones :  some action </p> 
+                                        <div>
+                                        <Link to={`/${p._id}`} ><button>ver</button></Link> 
+                                        | <Link to={`/editar/cliente/${p._id}`} ><button>Editar Cliente</button></Link>
+                                        | <button onClick={()=>{deleteHandler(p._id)}} >Borrar Client</button> 
+                                        </div>
                                         <hr/>
                                         
                             </div>

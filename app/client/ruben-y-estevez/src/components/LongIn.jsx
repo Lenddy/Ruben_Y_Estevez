@@ -97,7 +97,7 @@ const LongIn = () => {
                 <ol>
                     <li>add a way to store data locally</li>
                     <li>genera info about the company(mission, vision , values)</li>
-                    <li>add sorting to the website</li>
+                    <li>add sorting to the website (using  useLocalStorage  method)</li>
                     <li>add socket.io (also add a messaging system)  one to many tables perhaps</li>
                     <li> how to add things to excel using react(data credit) also one that allow you to print(not needed)</li>
                     <li>add a calculator(maybe us an api)</li>
@@ -111,7 +111,7 @@ const LongIn = () => {
                     <li>history of payments</li>
                     <li>add a chart on that show how much mony is coming and out  and how much interest is coming in  </li>
                     <li> to be able to make bonus to you payments  </li>
-
+                    <li> make customs components alerts (go watch the video about custom alerts in your YouTube )</li>
                 </ol>
             </div>
 
