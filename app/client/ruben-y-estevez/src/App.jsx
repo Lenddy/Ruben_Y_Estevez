@@ -6,6 +6,7 @@ import DashBoard from "./components/DashBoard"
 import ClientForm from './components/ClientForm';
 import OneClient from './components/OneClient';
 import ClientUpdate from './components/ClientUpdate';
+import ConfirmDelete from './components/ConfirmDelete'
 
 function App() {
   return (

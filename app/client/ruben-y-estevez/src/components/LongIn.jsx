@@ -59,7 +59,7 @@ const LongIn = () => {
             <div>
                 <label htmlFor="">Usuario </label>
                 <select name="nombreDeUsuario"  className='form-control' onChange={changeHandler}  >
-                    <option value="" selected="true" disabled="disabled"  >seleccionar usuario</option>
+                    <option value="" selected={true} disabled="disabled"  >seleccionar usuario</option>
                     {
                         usuarios.map((u)=>{
                             return(

@@ -1,14 +1,16 @@
 import {useEffect,useState , } from 'react';
 import { Link,useNavigate} from 'react-router-dom';
+import ConfirmDelete from './ConfirmDelete';
 import axios from 'axios';
 
 
 
-const DashBoard = () => {
+const DashBoard = (props) => {
     const [user,setUser] = useState({})
     const [person,setPerson] = useState([])
     const navigate = useNavigate()
-    const [deleted,setDeleted] = useState(false)
+    const {component} = props
+
 
     useEffect(()=>{
         axios.get("http://localhost:8000/api/User/loggedUser",{withCredentials:true})
@@ -42,15 +44,9 @@ const DashBoard = () => {
         }).catch(err =>{
             console.log(err)
         })
-    },[person])
+    },[])
 
-        const deleteHandler = (id)=>{
-            axios.delete(`http://localhost:8000/api/People/delete/${id}`)
-            .then(res =>{
-                console.log(res)
-                setDeleted(!deleted)
-            }).catch(err=>console.log(err))
-        }
+
 
 
     return (
@@ -77,9 +73,9 @@ const DashBoard = () => {
                                         <p>Teléfono: {p.pNumber}</p> 
                                         <p>Acciones :  some action </p> 
                                         <div>
-                                        <Link to={`/${p._id}`} ><button>ver</button></Link> 
-                                        | <Link to={`/editar/cliente/${p._id}`} ><button>Editar Cliente</button></Link>
-                                        | <button onClick={()=>{deleteHandler(p._id)}} >Borrar Client</button> 
+                                        <Link to={`/${p._id}`} ><button className='btn btn-success' >ver</button></Link> 
+                                        | <Link to={`/editar/cliente/${p._id}`} ><button className='btn btn-primary' >Editar Cliente</button></Link>
+                                        |{ <ConfirmDelete id={p._id}/>}
                                         </div>
                                         <hr/>
                                         
