@@ -5,11 +5,20 @@ import axios from 'axios';
 
 
 
-const DashBoard = () => {
+const DashBoard = (props) => {
     const [user,setUser] = useState({})
     const [person,setPerson] = useState([])
     const navigate = useNavigate()
 
+    const onload =()=>{
+        axios.get("http://localhost:8000/api/People",{withCredentials:true}) //
+        .then(res =>{
+            console.log("this is the result",res)
+            setPerson(res.data.results)
+        }).catch(err =>{
+            console.log(err)
+        })
+    }
     
     useEffect(()=>{
         axios.get("http://localhost:8000/api/User/loggedUser",{withCredentials:true})
@@ -43,7 +52,8 @@ const DashBoard = () => {
         }).catch(err =>{
             console.log(err)
         })
-    },[])//when i put the state person it keep re rendering 
+    },[props.refresh])//when i put the state person it keep re rendering 
+
 
     return (
         <div>
@@ -69,7 +79,7 @@ const DashBoard = () => {
                                         <div>
                                         <Link to={`/${p._id}`} ><button className='btn btn-success' >ver</button></Link> 
                                         |<Link to={`/editar/cliente/${p._id}`} ><button className='btn btn-primary' >Editar Cliente</button></Link>
-                                        |<ConfirmDelete id={p._id} />
+                                        |<ConfirmDelete id={p._id} reload={onload} /> 
                                         </div>
                                         <hr/>
                                         

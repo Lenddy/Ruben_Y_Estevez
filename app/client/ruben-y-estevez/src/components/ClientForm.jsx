@@ -52,9 +52,6 @@ const ClientForm = () => {
         })
     }
 
-
-
-
     return (
         <div>
             <Link to="/Dashboard"><button className=' btn btn-secondary text-white'>todos los clientes</button> </Link>

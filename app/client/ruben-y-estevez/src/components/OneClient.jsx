@@ -2,6 +2,8 @@ import {useState, useEffect} from 'react';
 import { useParams,useNavigate, Link } from 'react-router-dom';
 import moment from "moment"
 import axios from 'axios';
+import ConfirmDelete from './ConfirmDelete';
+
 
 const OneClient = () => {
     const {id} = useParams()
@@ -61,7 +63,7 @@ const OneClient = () => {
         <div>
             <p>make a dropdown menu or find a way to better display the redirects</p>
             <div>
-            <Link to={`/`} ><button>todos los clientes</button></Link> 
+            <Link to={`/DashBoard`} ><button>todos los clientes</button></Link> 
             <Link to={``} ><button>todos los prestamos vacio</button></Link> 
             <Link to={``} ><button>todo los alquileres vacio</button></Link> 
             <Link to={``} ><button>crear un nuevo cliente vacio</button></Link> 
@@ -75,7 +77,7 @@ const OneClient = () => {
             <Link to={`/editar/cliente/${id}`} ><button>editar</button></Link>
             {notFound? <h1 className='text-danger'>hubo un error encontrando a este cliente o el cliente no existe regrese hacia la pagina donde están todos los clientes y inténtelo denuedo</h1>:
             <div>
-                <button onClick={()=>{deleteHandler(client._id)}} >delete</button>
+                <ConfirmDelete id={client._id}  /> 
             <h1>Información de {client.name} {client.Lname}</h1>
             <h3>nombre {client.name} </h3>
             <h3>apellido {client.Lname} </h3>

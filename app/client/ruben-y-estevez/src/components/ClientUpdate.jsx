@@ -2,6 +2,7 @@ import {useState ,useEffect} from 'react';
 import { Link, useNavigate ,useParams} from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
+import ConfirmDelete from './ConfirmDelete';
 
 const ClientUpdate = () => {
     const navigate = useNavigate()
@@ -9,15 +10,8 @@ const ClientUpdate = () => {
     const [info,setInfo] = useState({})
     const [formInfoErr,setFormInfoErr] = useState({})
     const [notFound, setNotFound] = useState(false)
-    const [deleted,setDeleted] = useState(false)
 
-
-
-
-
-
-
-
+    
     useEffect(()=>{
         axios.get("http://localhost:8000/api/User/loggedUser",{withCredentials:true})
         .then(res=>{
@@ -70,22 +64,11 @@ const ClientUpdate = () => {
         )
     }
 
-    
-    const deleteHandler = (id)=>{
-        axios.delete(`http://localhost:8000/api/People/delete/${id}`)
-        .then(res =>{
-            console.log(res)
-            setDeleted(!deleted)
-            navigate("/DashBoard")
-        }).catch(err=>console.log(err))
-    }
-
-
 
     return (
         <div>
             <Link to="/Dashboard"><button className=' btn btn-secondary text-white'>todos los clientes</button> </Link>
-            <button onClick={()=>{deleteHandler(info._id)}} >Borrar client</button>
+            <ConfirmDelete id={info._id}/> 
     {notFound? <h1 className='text-danger'>hubo un error encontrando a este cliente o el cliente no existe regrese hacia la pagina donde están todos los clientes y inténtelo de nuevo</h1>:
 <form className='from-group' onSubmit={submitHandler} > 
     <div>
