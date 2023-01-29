@@ -1,19 +1,14 @@
 import {useState} from 'react';
 import {Modal,Button} from "react-bootstrap"
-
 import axios from 'axios';
-
 
 const ConfirmDelete = (props) => {
     const {id} = props
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [deleted,setDeleted] = useState(false)
 
-
-    
         const deleteHandler = (id)=>{
             axios.delete(`http://localhost:8000/api/People/delete/${id}`)
             .then(res =>{
@@ -22,7 +17,6 @@ const ConfirmDelete = (props) => {
             }).catch(err=>console.log(err))
             handleClose()
         }
-
 
     return (
         <>
@@ -44,11 +38,6 @@ const ConfirmDelete = (props) => {
         </Button>
         </Modal.Footer>
     </Modal>
-
-
-
-
-
         </>
     );
 };
