@@ -5,7 +5,7 @@ import DashBoard from './DashBoard';
 import { useNavigate } from 'react-router-dom';
 
 const ConfirmDelete = (props) => {
-    const {id,reload,} = props
+    const {id,reload, name} = props
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -34,9 +34,9 @@ const ConfirmDelete = (props) => {
 
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
+        <Modal.Title>Vas a Borrar a {name}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+        <Modal.Body> si este cliente es borrado no podrás recuperar su información </Modal.Body>
         <Modal.Footer>
         <Button variant="success" onClick={handleClose}>
             cancelar

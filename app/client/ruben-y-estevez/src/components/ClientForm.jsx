@@ -99,7 +99,6 @@ const ClientForm = () => {
                     <select name="idType" className='form-control'  onChange={changeHandler} >
                         <option  selected={true} disabled="disabled">selecciona una opción</option>
                         <option value="Cédula">cédula</option>
-                        <option value="RNC">RNC</option>
                         <option value="Pasaporte">Pasaporte</option>
                     </select>
                     {/* info.idType?.length > 0 && info.idType?.length < 2?
@@ -109,6 +108,7 @@ const ClientForm = () => {
                     null
                 }
                 </div>
+
                 <div>
                     <label >No.Identificación</label>
                     <input type="text" name="idNum"  className='form-control' onChange={changeHandler} />
@@ -118,6 +118,12 @@ const ClientForm = () => {
                     null
                 }
                 </div>
+
+                <div>
+                    <label htmlFor="">RNC(opcional)</label>
+                    <input type="text" name="rnc" onChange={changeHandler}/>
+                </div>
+
                 <div>
                     <label >Numero telefónico personal</label>
                     <input type="text" name="pNumber"  className='form-control' onChange={changeHandler} />

@@ -68,7 +68,7 @@ const ClientUpdate = () => {
     return (
         <div>
             <Link to="/Dashboard"><button className=' btn btn-secondary text-white'>todos los clientes</button> </Link>
-            <ConfirmDelete id={info._id}/> 
+            <ConfirmDelete id={info._id} name={info.name}/> 
     {notFound? <h1 className='text-danger'>hubo un error encontrando a este cliente o el cliente no existe regrese hacia la pagina donde están todos los clientes y inténtelo de nuevo</h1>:
 <form className='from-group' onSubmit={submitHandler} > 
     <div>
@@ -113,7 +113,6 @@ const ClientUpdate = () => {
         <select name="idType" className='form-control'  onChange={changeHandler} value={info.idType}>
             <option  selected={true} disabled="disabled">selecciona una opción</option>
             <option value="cédula">cédula</option>
-            <option value="RNC">RNC</option>
             <option value="Pasaporte">Pasaporte</option>
         </select>
         {/* info.idType?.length > 0 && info.idType?.length < 2?
@@ -123,6 +122,7 @@ const ClientUpdate = () => {
         null
     }
     </div>
+
     <div>
         <label >No.Identificación</label>
         <input type="text" name="idNum"  className='form-control' onChange={changeHandler} value={info.idNum}/>
@@ -131,6 +131,10 @@ const ClientUpdate = () => {
         formInfoErr.idNum? <p style={{color:"red"}} > {formInfoErr.idNum.message} </p>:
         null
     }
+    </div>
+    <div>
+        <label htmlFor="">RNC(opcional)</label>
+        <input type="text" name="rnc"  onChange={changeHandler} value={info.rnc}/>
     </div>
     <div>
         <label >Numero telefónico personal</label>

@@ -58,7 +58,9 @@ const DashBoard = (props) => {
     return (
         <div>
             <h1>make all this information into tabs when you learn material ui</h1>
+            <p className='text-primary' > add a field or sub field with then loan request form </p>
             <Link to="/nuevo/cliente"><button className=' btn btn-secondary text-white'>agregar cliente</button> </Link>
+            <Link to="/Prestamos"><button className=' btn btn-secondary text-white'>Prestamos</button> </Link>
             <h1>hola {user.nombre} ya iniciaste sesión</h1>
             <button className='btn btn-warning' onClick={logout}> salir </button>
             <div>
@@ -70,20 +72,24 @@ const DashBoard = (props) => {
                     </div>:
                     person.map((p,idx)=>{
                         return (
-                            <div key={p._id}>
-                                        <p>Nombre/Apellido: {p.name} {p.Lname}  </p>
-                                        <p>tipo/identificación : {p.idType}</p>
-                                        <p>No./identificación : {p.idNum}</p> 
-                                        <p>Teléfono: {p.pNumber}</p> 
-                                        <p>Acciones :  some action </p> 
-                                        <div>
-                                        <Link to={`/${p._id}`} ><button className='btn btn-success' >ver</button></Link> 
-                                        |<Link to={`/editar/cliente/${p._id}`} ><button className='btn btn-primary' >Editar Cliente</button></Link>
-                                        |<ConfirmDelete id={p._id} reload={onload} /> 
-                                        </div>
-                                        <hr/>
-                                        
+                            <div className="d-inline-flex p-2 bd-highlight " key={p._id}>
+                            <div className="card  " style={{width: "18rem"}}>
+                                <img className="card-img-top " src="https://media.istockphoto.com/id/1209654046/vector/user-avatar-profile-icon-black-vector-illustration.jpg?s=612x612&w=0&k=20&c=EOYXACjtZmZQ5IsZ0UUp1iNmZ9q2xl1BD1VvN6tZ2UI=" alt="client picture"/>
+                                <div className="card-body">
+                                <h5 className="card-title">{p.name} {p.Lname}  </h5>
+                                <p>{p.idType}: {p.idNum}</p>
+                                <p>Teléfono: {p.pNumber}</p>  
+                            <div>
+                            <hr/>
+                            <Link to={`/${p._id}`} className='btn btn-success card-text'>ver</Link> 
+                            |<Link to={`/editar/cliente/${p._id}`} className='btn btn-primary'>Editar Cliente</Link>
+                            |<ConfirmDelete id={p._id} reload={onload} name={p.name} /> 
                             </div>
+
+                                </div>
+                            </div>
+                        </div>
+
                         )
                     })
                 }
@@ -96,32 +102,3 @@ const DashBoard = (props) => {
 
 export default DashBoard;
 
-    // const deleteHandler = (id)=>{
-    //     axios.delete(`http://localhost:8000/api/People/delete/${id}`)
-    //     .then(res =>{
-    //         console.log(res)
-    //         setDeleted(!deleted)
-    //     }).catch(err=>console.log(err))
-    //     handleClose()
-    // }
-
-
-
-// {handleShow && <ConfirmDelete/>}
-
-
-{/* <Button variant="danger" onClick={handleShow}>Borrar Cliente</Button>
-<Modal show={show} onHide={handleClose}>
-<Modal.Header closeButton>
-<Modal.Title>Modal heading</Modal.Title>
-</Modal.Header>
-<Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-<Modal.Footer>
-<Button variant="success" onClick={handleClose}>
-    cancelar
-</Button>
-<Button variant="danger" onClick={()=>deleteHandler(p._id)}>
-    confirmar
-</Button>
-</Modal.Footer>
-</Modal> */}

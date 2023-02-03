@@ -11,11 +11,31 @@ const person = mongoose.Schema({
         required: [true,"debes de poner un nombre"],
         minLength:[2,"nombre debe de ser por lo menos 2 letras"]
     },
+    midName:{
+        type: String,
+        required: [true,"debes de poner un segundo nombre"],
+        minLength:[2,"segundo nombre debe de ser por lo menos 2 letras"]
+    },
     Lname:{
         type: String,
         required: [true,"debes de poner un apellido"],
         minLength:[2,"apellido debe de ser por lo menos 2 letras"]
     },
+    secondLname:{
+        type: String,
+        minLength:[2,"segundo apellido debe de ser por lo menos 2 letras"]
+    },
+    fullName:{
+        type:String,
+        default:
+        function(){
+            if(this.name && this.midName && this.Lname || this.secondLname ){
+                return `${this.name} ${this.midName} ${this.Lname} ${this.secondLname }`
+            }return null
+            }
+        }
+        
+    ,
     nickname:{
         type: String,
         minLength:[2," apodo debe de ser por lo menos 2 letras"]
@@ -27,8 +47,15 @@ const person = mongoose.Schema({
     idType:{
         type:String,
         required:[true,"debes de seleccionar una forma de identificación "],
-        enum:["Cédula","RNC","Pasaporte"],
+        enum:{
+            values:["Cédula","Pasaporte"],
+            message:"puedes elegir entre Cédula y Pasaporte"
+        }
     },
+    rnc:{
+        type: String
+    }
+    ,
     idNum:{
         type:String,
         required:[true,"debes tener un numero de identificación"],

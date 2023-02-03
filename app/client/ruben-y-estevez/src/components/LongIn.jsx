@@ -53,6 +53,7 @@ const LongIn = () => {
 
     return (
         <div>
+            <h1 className='text-danger'> you might want to change the input type to the time of repayment on the back end for the loans set it to numbers </h1>
             <h1>Iniciar sesión</h1>
             <Link to="/registrarse"><button className=' btn btn-secondary text-white'>nueva cuenta</button> </Link>
             <form className='form-group ' onSubmit={submitHandler} >
@@ -90,11 +91,21 @@ const LongIn = () => {
 
             </form>
 
+                    <p className='text-danger'>interval's  broooooooo</p>
+                    <p className='text-danger'> create a function that takes  2 parameters one the day  and one the amount of time (weekly = +7, 15days = + 15 , monthly = 31(change this one to fit the amount of time on how long the month is edge case ))   then   ether create another function that has the Logic to count the amount of money that they need to  pay add a parameter that says if they haven't pay by the day(date that was set )  time(weekly = +7, 15days = + 15 , monthly = 31) then the amount raises multiply by the interest () also create another function  that allow you to input a different amount that is less or == to the amount that particular payment(cuota) is  then  dubstracted (the current payment -(minus) the amount inputed)    <span className='text-primary' > fine a way to store some of the info in arrays  OR/ make a add new loan  api and this loan needs to be attach to only on particular user (one to many)  and fine out  a way to prevent  one a cliente of having more than 1 loan at the time iF you can (I KNOW YOU CAN BIG DADDY)    </span>  </p>
 
+                    <div>
+                    <p className='text-danger'>idea came into my head to have a flag(boolean) tha sets the a loan to true(or false when tey are done because the loan wont be true or false because i was never created) when is active but set to false when the las 
+                    payment(cuota) is payed  and while this boolean is true trow a erro message  that does not alow one(OR SAYS THE WHILE THEY HAVE AT LEAST ONE CUOTA UN PAYED IN THEIR LAST(CURRENT LOAN) THEY ARE NOT ALOW TO HAVE MORE LOANS )    ALSO FIGRE OUT THE BLACK LISTING  WITH A BOOLEAN()/ ALSO TALK WITH THE PEOPLE ABOUT A FEATURE THAT IF THEY ARE IN A GREEN LIST( ORE TRUSTED LIST ) THEY ARE ALOW TO HAVE ONE FEATURE (LIKE PAY LEST MONEY  OR SOMETHING LIKE THAT )   </p>
+                    </div>
 
             <div>
                 <h1>todo list</h1>
                 <ol>
+                    <li>use regex for the phone numbers</li>
+                    <li>learn how to transfer messages and audio files from WhatsApp to this system/webpage</li>
+                    <li>make a calculator on the payment page</li>
+                    <li>learn how to make a drop down menu  select multiple inputs (example) if a person selects a field that is not the first one then input that was selected is selected and aso the previous inputs before that  ar also selected (idea) if more thatn oen input is selected make all the other inputs in to an array([]) and loop on that array  to calculate the total amount( also use for the calculator later on)  </li>
                     <li>add a way to store data locally</li>
                     <li>genera info about the company(mission, vision , values)</li>
                     <li>add sorting to the website (using  useLocalStorage  method)</li>
@@ -121,3 +132,44 @@ const LongIn = () => {
 
 
 export default LongIn;
+
+
+/* for the loans you need 
+
+before you create a loan fine a way that the workers can preview
+so they can tell the clientes the total amount that they need to pay
+the interés they will need to pay back
+the days that they need to pay  and they amount that they need to pay that day 
+
+
+adn add places where they need to sign both the client and then worker
+
+
+1 id for the loan
+    fine a way to make the id     maybe set a state that will go up and attach the current number  to one specific loan 
+
+2 the name of the client
+
+3 date of the loan 
+    1 from this you need to make function that will alow the workers to update loans 
+    2 see the  total amount that the person needs to pay 
+    3 see  the amount that they need to pay the day that they are suppose to 
+    4 if they dont pay they will hav to pay a lateness  fee and that late ness comes 5 days after the current cuota is not payed
+    5 a way that the clients can add bonuses to the current cuota instead of the full cuota 
+    6 a history of payment and that has the day they pay ,the amount and the cuota/s number
+        1 this must have the amount of total full cuotas that are payed
+        2 total amount that has been payed at the time
+        3 total capital that has been payed 
+        4 and the total capital that has been payed
+
+4 amount of the loan
+
+5 inters rate
+
+6 then amount of cuotas
+
+7 repayment period 
+    1 monthly
+    2 every 15 days
+    3 weekly
+*/

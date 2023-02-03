@@ -7,4 +7,5 @@ module.exports = (app)=>{
     app.post("/api/People/new",person.addOne)
     app.put("/api/People/update/:id",person.updateOne)
     app.delete("/api/People/delete/:id",person.deleteOne)
+    app.get("/api/People/:name/:Lname",person.getByFullName)
 }
