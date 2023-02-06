@@ -10,6 +10,10 @@ const DashBoard = (props) => {
     const [person,setPerson] = useState([])
     const navigate = useNavigate()
 
+    let interest = (15000 * (14 * 0.01))/13;
+    let total = ((15000 /13) + interest);
+    console.log(interest, total)
+
     const onload =()=>{
         axios.get("http://localhost:8000/api/People",{withCredentials:true}) //
         .then(res =>{
@@ -71,12 +75,13 @@ const DashBoard = (props) => {
                     <Link to="/nuevo/cliente"><button className=' btn btn-secondary text-white'>agregar nuevo cliente</button> </Link>
                     </div>:
                     person.map((p,idx)=>{
+ 
                         return (
                             <div className="d-inline-flex p-2 bd-highlight " key={p._id}>
                             <div className="card  " style={{width: "18rem"}}>
                                 <img className="card-img-top " src="https://media.istockphoto.com/id/1209654046/vector/user-avatar-profile-icon-black-vector-illustration.jpg?s=612x612&w=0&k=20&c=EOYXACjtZmZQ5IsZ0UUp1iNmZ9q2xl1BD1VvN6tZ2UI=" alt="client picture"/>
                                 <div className="card-body">
-                                <h5 className="card-title">{p.name} {p.Lname}  </h5>
+                                <h5 className="card-title">{p.name} {p.Lname}</h5>
                                 <p>{p.idType}: {p.idNum}</p>
                                 <p>Teléfono: {p.pNumber}</p>  
                             <div>

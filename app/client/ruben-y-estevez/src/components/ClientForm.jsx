@@ -58,7 +58,7 @@ const ClientForm = () => {
             
              <form className='from-group' onSubmit={submitHandler} >
                 <div>
-                    <label >Nombre</label>
+                    <label >primer Nombre</label>
                     <input type="text" name="name"  className='form-control' onChange={changeHandler}/>
                     {info.name?.length > 0 && info.name?.length < 2?
                     <p style={{color:"red"}}  >nombre debe de ser por lo menos 2 letras</p>:
@@ -66,6 +66,16 @@ const ClientForm = () => {
                     null
                 }
                 </div>
+                <div>
+                    <label >Segundo Nombre</label>
+                    <input type="text" name="midName"  className='form-control' onChange={changeHandler}/>
+                    {info.midName?.length > 0 && info.midName?.length < 2?
+                    <p style={{color:"red"}}  >nombre debe de ser por lo menos 2 letras</p>:
+                    formInfoErr.midName? <p style={{color:"red"}} > {formInfoErr.midName.message} </p>:
+                    null
+                }
+                </div>
+
                 <div>
                     <label >Apellido</label>
                     <input type="text" name="Lname"  className='form-control' onChange={changeHandler}/>
@@ -75,8 +85,18 @@ const ClientForm = () => {
                     null
                 }
                 </div>
+
                 <div>
-                    <label >Apodo</label>
+                    <label >segundo Apellido (opcional)</label>
+                    <input type="text" name="secondLname"  className='form-control' onChange={changeHandler}/>
+                    {info.secondLname?.length > 0 && info.secondLname?.length < 2?
+                    <p style={{color:"red"}}  >apellido debe de tener por lo menos 2 letras</p>:
+                    formInfoErr.secondLname? <p style={{color:"red"}} > {formInfoErr.secondLname.message} </p>:
+                    null
+                }
+                </div>
+                <div>
+                    <label >Apodo (opcional)</label>
                     <input type="text" name="nickname"  className='form-control' onChange={changeHandler}/>
                     {info.nickname?.length > 0 && info.nickname?.length < 2?
                     <p style={{color:"red"}}  >Apodo debe de tener por lo menos 2 letras</p>:
@@ -121,7 +141,12 @@ const ClientForm = () => {
 
                 <div>
                     <label htmlFor="">RNC(opcional)</label>
-                    <input type="text" name="rnc" onChange={changeHandler}/>
+                    <input type="text" name="rnc" className='form-control' onChange={changeHandler}/>
+                    {info.rnc?.length > 0 && info.rnc?.length < 9?
+                    <p style={{color:"red"}}  >RNC debe de tener por lo menos 9 letras o numeros</p>:
+                    formInfoErr.rnc? <p style={{color:"red"}} > {formInfoErr.rnc.message} </p>:
+                    null
+                }
                 </div>
 
                 <div>
@@ -162,7 +187,7 @@ const ClientForm = () => {
                 </div>
                 <div>
                     <label >Ingresos</label>
-                    <input type="text" name="income"  className='form-control' onChange={changeHandler} />
+                    <input type="number" name="income" step={0.01} className='form-control' onChange={changeHandler} />
                     {
                     formInfoErr.income? <p style={{color:"red"}} > {formInfoErr.income.message} </p>:
                     null
@@ -170,7 +195,7 @@ const ClientForm = () => {
                 </div>
                 <div>
                     <label >Otros Ingresos</label>
-                    <input type="text" name="otherIncome"  className='form-control' onChange={changeHandler} />
+                    <input type="number" name="otherIncome" step={0.01} className='form-control' onChange={changeHandler} />
                     {
                     formInfoErr.otherIncome? <p style={{color:"red"}} > {formInfoErr.otherIncome.message} </p>:
                     null

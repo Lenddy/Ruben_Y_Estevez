@@ -60,12 +60,12 @@ class person{
 
 
     getByFullName=(req,res)=>{ 
-        Persons.findOne({name:req.params.name,Lname:req.params.Lname})
+        Persons.findOne({fullName:req.params.PersonFullName})
         .then(onePerson=>{
             res.json({
                 results:onePerson
             })
-        }).catch(err =>{res.json({err,msg:"error getting one person"})})
+        }).catch(err =>{res.json({err,msg:"error getting one person by full name"})})
     }
 }
 

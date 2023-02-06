@@ -25,16 +25,18 @@ const person = mongoose.Schema({
         type: String,
         minLength:[2,"segundo apellido debe de ser por lo menos 2 letras"]
     },
-    fullName:{
+    fullName:{ //getting the full name of the person 
         type:String,
         default:
         function(){
             if(this.name && this.midName && this.Lname || this.secondLname ){
-                return `${this.name} ${this.midName} ${this.Lname} ${this.secondLname }`
+                if(this.secondLname == undefined || this.secondLname){
+                    return `${this.name} ${this.midName} ${this.Lname}`
+                }
+                return `${this.name} ${this.midName} ${this.Lname} ${this.secondLname}`
             }return null
             }
         }
-        
     ,
     nickname:{
         type: String,
