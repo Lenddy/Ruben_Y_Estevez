@@ -92,6 +92,7 @@ const LongIn = () => {
             </form>
 
                     <p className='text-danger'>interval's  broooooooo</p>
+                    
                     <p className='text-danger'> create a function that takes  2 parameters one the day  and one the amount of time (weekly = +7, 15days = + 15 , monthly = 31(change this one to fit the amount of time on how long the month is edge case ))   then   ether create another function that has the Logic to count the amount of money that they need to  pay add a parameter that says if they haven't pay by the day(date that was set )  time(weekly = +7, 15days = + 15 , monthly = 31) then the amount raises multiply by the interest () also create another function  that allow you to input a different amount that is less or == to the amount that particular payment(cuota) is  then  dubstracted (the current payment -(minus) the amount inputed)    <span className='text-primary' > fine a way to store some of the info in arrays  OR/ make a add new loan  api and this loan needs to be attach to only on particular user (one to many)  and fine out  a way to prevent  one a cliente of having more than 1 loan at the time iF you can (I KNOW YOU CAN BIG DADDY)    </span>  </p>
 
                     <div>
