@@ -8,10 +8,13 @@ import OneClient from './components/OneClient';
 import ClientUpdate from './components/ClientUpdate';
 import AllLoans from './components/loans/AllLoans';
 import AddLoan from './components/loans/AddLoan';
+import OneLoan from './components/loans/OneLoan';
+import ConfirmLoan from './components/loans/ConfirmLoan';
 
-function App() {
+const App = ()=> {
   return (
     <div className="App">
+      
       <Routes>
       <Route exact path='/' element={<LongIn/>} ></Route>
       <Route exact path='/Registrarse' element = {<Register/>} />
@@ -21,6 +24,8 @@ function App() {
       <Route exact path='/editar/cliente/:id' element={<ClientUpdate/>} />
       <Route exact path='/Prestamos' element={<AllLoans/>} />
       <Route exact path='/Nuevo/Prestamos' element={<AddLoan/>} />
+      <Route exact path='Prestamos/:id' element={<OneLoan/>} />
+      <Route exact path='/confirm/loan' element={<ConfirmLoan/>} />
 
       </Routes>
     </div>

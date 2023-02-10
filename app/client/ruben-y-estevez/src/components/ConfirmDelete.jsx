@@ -37,7 +37,7 @@ const ConfirmDelete = (props) => {
         <Modal.Title>Vas a Borrar a {name}</Modal.Title>
         </Modal.Header>
         <Modal.Body> si este cliente es borrado no podrás recuperar su información </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer >
         <Button variant="success" onClick={handleClose}>
             cancelar
         </Button>

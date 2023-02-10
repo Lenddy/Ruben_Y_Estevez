@@ -24,6 +24,8 @@ const AllLoans = () => {
     return (
         <div>
             <Link to={`/Nuevo/Prestamos`} className='btn btn-success card-text'>Agregar préstamo</Link> 
+            <Link to="/Dashboard" className="btn btn-primary" >todos los clientes</Link>
+
             <h1>make a feed(carousel) that show the clients than need to pay this day and have other feature  </h1>
             <h1>you might also want to learn the bootstrap alert and colapsa  and drop downs and the nav bar</h1>
                 {
@@ -37,7 +39,7 @@ const AllLoans = () => {
                                     <p className="card-text">total prestado: {l.loanAmount}</p>
                                     <p className="card-text">total cuotas:{l.cuotasNumber}</p>
                                     <p className="card-text">dia Agradado: {moment(l.dateAdded).format("d/m/yyyy")}</p>
-                                    <Link to={""} className="btn btn-primary">Go somewhere</Link>
+                                    <Link to={`/Prestamos/${l._id}`} className="btn btn-danger">cobrar</Link>
                                     </div>
                                 </div>
                             </div>

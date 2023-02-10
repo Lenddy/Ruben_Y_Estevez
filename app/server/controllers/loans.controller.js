@@ -42,6 +42,7 @@ class Loan{
 
     getOne = (req,res)=>{
         loan.findOne({_id:req.params.id})
+        .populate("client_id")
         .then(oneLoan=>{
             res.json({
                 results:oneLoan

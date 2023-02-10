@@ -1,29 +1,23 @@
 import {useState, useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import ConfirmLoan from "./ConfirmLoan"
 
-const AddLoan = () => {
+const AddLoan = (props) => {
+    // const {formInfoErr} = props
     const navigate = useNavigate()
-    const [info,setInfo] = useState({client_id:null})
+    const [info,setInfo] = useState({})//client_id:null
     const [formInfoErr,setFormInfoErr] = useState({})
     const [user,setUser] = useState({})
     const [person,setPerson] = useState([])
-    const [clientFullName,setFullName] =useState({})
+    // const [clientFullName,setFullName] =useState({})
     // const [clientId,setClientId] = useState(clientFullName._id)
-    const theId =clientFullName._id
+    // const theId =clientFullName._id
 
 
     useEffect(()=>{
         axios.get("http://localhost:8000/api/User/loggedUser",{withCredentials:true})
             .then(res=>{
-                axios.get("http://localhost:8000/api/People")
-                    //child .then
-                    .then(res =>{
-                        console.log("this is the result",res)
-                        setPerson(res.data.results)
-                    }).catch(err =>{
-                    console.log(err)
-                })
             if(res.data.result){
                 setUser(res.data.result)
                 //end of parent .then
@@ -33,6 +27,15 @@ const AddLoan = () => {
             navigate("/")
                 })
         },[])
+
+    useEffect(()=>{
+        axios.get("http://localhost:8000/api/People")
+                .then(res =>{
+                // console.log("this is the result",res)
+                    setPerson(res.data.results)
+                }).catch(err =>{
+                    console.log(err)})
+                },[])
 
 
     const logout =()=>{
@@ -63,14 +66,13 @@ const AddLoan = () => {
     }
 
 
-
     const changeHandler = (e)=>{
-        if(theId !== undefined){
-            info.client_id = theId
-        }
-        if(theId !== undefined){
-            info.client_id = theId
-        }
+        // if(theId !== undefined){
+        //     info.client_id = theId
+        // }
+        // if(theId !== undefined){
+        //     info.client_id = theId
+        // }
         setInfo({
             ...info,
             [e.target.name]: e.target.value,
@@ -81,43 +83,33 @@ const AddLoan = () => {
 
 
 
-    const fullName = (name)=>{
-        axios.get(`http://localhost:8000/api/People/Full/Name/${name}`)
-        .then(res=>{
-            console.log("for full name api",res)
-            console.log("for full name api",res.data.results)
-            // setClientId(res.data.results._id)
-            setFullName(res.data.results)
-        }).catch(err=>console.log("erro for full name",err))
-    }
-
-    
-        // axios.get(`http://localhost:8000/api/People/Full/Name/${name}`)
-        // .then(res=>{
-        //     console.log("for full name api",res)
-        //     console.log("for full name api",res.data.results)
-        //     // setClientId(res.data.results._id)
-        //     setFullName(res.data.results)
-        // }).catch(err=>console.log("erro for full name",err)
+    // const fullName = (name)=>{
+    //     axios.get(`http://localhost:8000/api/People/Full/Name/${name}`)
+    //     .then(res=>{
+    //         console.log("for full name api",res)
+    //         console.log("for full name api",res.data.results)
+    //         // setClientId(res.data.results._id)
+    //         setFullName(res.data.results)
+    //     }).catch(err=>console.log("erro for full name",err))
+    // }
 
     return (
         <div>
             <Link to="/Dashboard"><button className=' btn btn-secondary text-white'>todos los clientes</button> </Link>
-                <h1>{clientFullName._id}</h1>
             pass the id insted of the full name than get the name gorm the id 
+                <h1> id here {info._id}</h1>
             <form className='from-group' onSubmit={submitHandler} >
             <div>
-                <h1>is here</h1>
-                <input type="text" defaultValue={clientFullName?._id} name="" />
+
             </div>
                 <div>
                     <label >Cliente</label>
-                    <select className='form-control' name="clientName"  onChange={e=>{changeHandler(e) ;fullName(e.target.value)}}>
+                    <select className='form-control' name="client_id"  onChange={changeHandler }>
                         <option disabled selected >seleccionar cliente</option>
                         {
                             person.map((p,idx)=>{
                                 // <input  type="text" name="client_id" value={p._id} onChange={changeHandler}/>
-                                    return <option key={p._id} value={p.fullName}>{p.fullName}</option>
+                                    return <option key={p._id} value={p._id}>{p.fullName}</option>
                             })
                         }
                     </select>
@@ -182,7 +174,9 @@ const AddLoan = () => {
                     null
                 }
                 </div>
-                <button className='btn btn-success' > agregar cliente </button>
+                {info?.client_id == null ||info?.client_id == null? "":<ConfirmLoan formInfo={info}/>
+                }
+                {/* <button className='btn btn-success' > agregar cliente </button> */}
                 </form>
         </div>
     );

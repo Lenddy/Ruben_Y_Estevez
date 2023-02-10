@@ -6,11 +6,11 @@ const mongoose = require("mongoose")
 
 
 const loan = mongoose.Schema({
-    clientName:{
-        type: String,
-        // required: [true,"debes de poner a un cliente "],
-        // minLength:[2,"nombre del cliente debe de tener por lo menos 2 letras"]
-    },
+    // clientName:{
+    //     type: String,
+    //     // required: [true,"debes de poner a un cliente "],
+    //     // minLength:[2,"nombre del cliente debe de tener por lo menos 2 letras"]
+    // },
     dateAdded:{
         type: Date,
         required: [true,"debes de poner una fecha"],
@@ -35,7 +35,7 @@ const loan = mongoose.Schema({
     },
     client_id:{
         type: mongoose.Schema.Types.ObjectId,
-        required:[true,"el id del cliente es necesario"],
+        required:[true,"necesitas seleccionar a un cliente"],
         ref:"person"
     }
     
