@@ -124,6 +124,21 @@ const LongIn = () => {
                     <li>add a chart on that show how much mony is coming and out  and how much interest is coming in  </li>
                     <li> to be able to make bonus to you payments  </li>
                     <li> make customs components alerts (go watch the video about custom alerts in your YouTube )</li>
+                    <li>come see this div to dynamically render the React component language{/* import React, { useState, useEffect } from 'react';
+
+                    const App = () => {
+                    const [language, setLanguage] = useState('en');
+
+                 useEffect(() => {
+            const deviceLanguage =
+                    (navigator.language || navigator.userLanguage).slice(0, 2);
+                    setLanguage(deviceLanguage);
+                    }, []);
+
+                     return <div>{language}</div>;
+                    };
+
+export default App;*/}</li> 
                 </ol>
             </div>
 

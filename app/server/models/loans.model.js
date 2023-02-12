@@ -33,6 +33,21 @@ const loan = mongoose.Schema({
          required:[true,"debes de seleccionar un tipo de pago"],
         enum:["Semanal","Quincenal","Mensual","Anual"]
     },
+    payments:{
+        type:Object,Array,
+    },
+    totalInterest:{
+        type:Number,
+    },
+    totalPrincipal:{
+        type:Number,
+    },
+    total:{
+        type:Number
+    },
+    dates:{
+        type:Array,
+    },
     client_id:{
         type: mongoose.Schema.Types.ObjectId,
         required:[true,"necesitas seleccionar a un cliente"],

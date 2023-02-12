@@ -4,7 +4,7 @@ import axios from 'axios';
 import ConfirmLoan from "./ConfirmLoan"
 
 const AddLoan = (props) => {
-    // const {formInfoErr} = props
+    // const {action} = props
     const navigate = useNavigate()
     const [info,setInfo] = useState({})//client_id:null
     const [formInfoErr,setFormInfoErr] = useState({})
@@ -14,7 +14,7 @@ const AddLoan = (props) => {
     // const [clientId,setClientId] = useState(clientFullName._id)
     // const theId =clientFullName._id
 
-
+console.log(info.dateAdded)
     useEffect(()=>{
         axios.get("http://localhost:8000/api/User/loggedUser",{withCredentials:true})
             .then(res=>{
@@ -67,37 +67,17 @@ const AddLoan = (props) => {
 
 
     const changeHandler = (e)=>{
-        // if(theId !== undefined){
-        //     info.client_id = theId
-        // }
-        // if(theId !== undefined){
-        //     info.client_id = theId
-        // }
         setInfo({
             ...info,
             [e.target.name]: e.target.value,
         })
-        // obj["client_id"] = clientFullName._id
-        // setInfo(obj)
     }
-
-
-
-    // const fullName = (name)=>{
-    //     axios.get(`http://localhost:8000/api/People/Full/Name/${name}`)
-    //     .then(res=>{
-    //         console.log("for full name api",res)
-    //         console.log("for full name api",res.data.results)
-    //         // setClientId(res.data.results._id)
-    //         setFullName(res.data.results)
-    //     }).catch(err=>console.log("erro for full name",err))
-    // }
-
     return (
         <div>
             <Link to="/Dashboard"><button className=' btn btn-secondary text-white'>todos los clientes</button> </Link>
             pass the id insted of the full name than get the name gorm the id 
                 <h1> id here {info._id}</h1>
+                <h1>fine a way that when is Monthly to only update the month</h1>
             <form className='from-group' onSubmit={submitHandler} >
             <div>
 
@@ -166,7 +146,7 @@ const AddLoan = (props) => {
                         <option  value="Semanal">Semanal</option>
                         <option  value="Quincenal">Quincenal</option>
                         <option  value="Mensual">Mensual</option>
-                        <option  value="Anual">Anual</option>
+
                     </select>
                     {info.idNum?.length > 0 && info.idNum?.length < 6?
                     <p style={{color:"red"}}  >numero de identificación debe de tener 6 o mas letras o números</p>:
@@ -174,7 +154,7 @@ const AddLoan = (props) => {
                     null
                 }
                 </div>
-                {info?.client_id == null ||info?.client_id == null? "":<ConfirmLoan formInfo={info}/>
+                {info?.client_id == null ||info?.client_id == null? "":<ConfirmLoan formInfo={info} id={info.client_id} date={info.dateAdded} Amount={info.loanAmount} int={info.interest} cuotas={info.cuotasNumber} type={info.timeType} />
                 }
                 {/* <button className='btn btn-success' > agregar cliente </button> */}
                 </form>
