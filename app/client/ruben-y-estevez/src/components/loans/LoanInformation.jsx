@@ -1,6 +1,7 @@
 import React from 'react';
 
-const LoanInformation = ({ payments, totalInterest, totalPrincipal, dates ,total}) => {
+
+const LoanInformation = ({ payments, totalInterest, totalPrincipal, dates ,total,totalCapital}) => {
 
 
     function numberWithCommas(x) {
@@ -17,28 +18,29 @@ const LoanInformation = ({ payments, totalInterest, totalPrincipal, dates ,total
             <th >#cuota</th>
             <th >Pago a interés</th>
             <th >Pago a capital</th>
-            <th  >cuota</th>
+            <th>cuota</th>
             <th  >Balance</th>
         </tr>
         </thead>
         <tbody className='text-center'>
         {payments.map((payment, index) => (
             <tr key={index}>
-            <td>{dates[index]}</td>
-            <td>{payment.paymentNumber}</td>
+            <td>{payment.paymentDate}</td>
+            <td>{payment._id}</td>
             <td>{numberWithCommas(payment.interestPayment.toFixed(2))}</td>
-            <td>{numberWithCommas(payment.capitalPayment.toFixed(2))}</td>
+            <td>{numberWithCommas(payment.capitalPayment.toFixed(2))}</td> 
             <td>{numberWithCommas(payment.principalPayment.toFixed(2))}</td>
-            <td>{numberWithCommas(payment.balance.toFixed(2))}</td>
+            <td>{numberWithCommas(payment.balance.toFixed(2))}</td> 
             </tr>
         ))}
         </tbody>
         <tfoot className='text-center' >
         <tr>
             <td>Total</td>
+
             <td>{numberWithCommas(total.toFixed(2))}</td>
             <td>{numberWithCommas(totalInterest.toFixed(2))}</td>
-            <td></td>
+             <td>{numberWithCommas(totalCapital.toFixed(2))}</td>
             <td>{numberWithCommas(totalPrincipal.toFixed(2))}</td>
             <td></td>
         </tr>

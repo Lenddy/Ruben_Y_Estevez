@@ -51,14 +51,14 @@ class User {
         //if the user Name is not found on the db
         if(user === null){
             // return res.sendStatus(400)
-            return res.json({err:{nombreDeUsuario:{msg:"usuario o contraseña no coinciden 1"}},user })
+            return res.json({err:{nombreDeUsuario:{msg:"usuario o contraseña no coinciden "}},user })
         }
         //if the user was found compare the password
         const correctPassword = await  bcrypt.compare(req.body.contraseña, user.contraseña) //compare take the password inputted and compare it to the hash password in the data base to se if it matches
         //if the password does not match
         if(!correctPassword){
             // return res.sendStatus(400)
-            return res.json({err:{contraseña:{msg:"usuario o contraseña no coinciden 2"}}})
+            return res.json({err:{contraseña:{msg:"usuario o contraseña no coinciden "}}})
         }
         if(req.body.contraseña === null){
             res.json({err:{contraseña:{msg:"debe de entrar una contraseña"}}})

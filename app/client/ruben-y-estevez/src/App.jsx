@@ -14,7 +14,6 @@ import ConfirmLoan from './components/loans/ConfirmLoan';
 const App = ()=> {
   return (
     <div className="App">
-      
       <Routes>
       <Route exact path='/' element={<LongIn/>} ></Route>
       <Route exact path='/Registrarse' element = {<Register/>} />
@@ -26,7 +25,6 @@ const App = ()=> {
       <Route exact path='/Nuevo/Prestamos' element={<AddLoan/>} />
       <Route exact path='Prestamos/:id' element={<OneLoan/>} />
       <Route exact path='/confirm/loan' element={<ConfirmLoan/>} />
-
       </Routes>
     </div>
   );
