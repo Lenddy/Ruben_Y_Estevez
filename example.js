@@ -92,14 +92,126 @@
 
 
 
-let  ZeroPaddedInput=(number)=> {
-  let newNumber = ""
-  if (number < 10) {
-      newNumber = `00${number}`;
-  } else {
-      newNumber = `0${number}`;
-  }
-  return newNumber
-  };
+// let  ZeroPaddedInput=(number)=> {
+//   let newNumber = ""
+//   if (number < 10) {
+//       newNumber = `00${number}`;
+//   } else {
+//       newNumber = `0${number}`;
+//   }
+//   return newNumber
+//   };
 
-  console.log(ZeroPaddedInput(10))
+//   console.log(ZeroPaddedInput(10))
+
+// const payments = [
+//     {
+//       _id: 1,
+//       isPaid: true,
+//       amount: 1,
+//       number: 3
+//     },
+//     {
+//       _id: 2,
+//       isPaid: false,
+//       amount: 1,
+//       number: 4
+//     },
+//     {
+//       _id: 3,
+//       isPaid: false,
+//       amount: 1,
+//       number: 1
+//     },
+//   ];
+  
+//   const idThreshold = 2;
+  
+//   const filteredPayments = payments.filter(p => p._id <= idThreshold && p.isPaid == false);
+  
+//   // console.log(filteredPayments);
+
+//   let total = 0
+//   let totalNumber = 0
+//   // for(let i = 0 ; i > payments.length - 1; i++){
+//   //   total += payments[i].amount
+//   // }
+//   // console.log(total)
+
+//   filteredPayments.forEach(item =>{
+//     total += item.amount
+//     totalNumber += item.number
+//   })
+
+//   // const sum = payments.reduce((total,obj)=>{
+//   //   return total + obj.amount
+//   // },0)
+
+// // console.log(total)
+// // console.log(totalNumber)
+// // console.log(sum)
+// // console.log(parseFloat(1.15))
+
+
+
+// const numberWithCommas=(x)=>{
+//   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+// }
+
+
+// console.log(numberWithCommas(10000000))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const countryChanges = {};
+
+const addCountryChange = (country, ...coins) => {
+    const total = coins.reduce((acc, coin) => acc + coin.value, 0);
+    const changeFunc = amount => {
+        if (!amount) {
+        return {};
+        }
+        const coinCounts = {};
+        if (amount >= total) {
+        coins.forEach(coin => {
+            if (amount >= coin.value) {
+            const coinName = coin.name + (coin.value > 1 ? 's' : '');
+            coinCounts[coinName] = Math.floor(amount / coin.value);
+            amount %= coin.value;
+            }
+        });
+        }
+        return coinCounts;
+    };
+    countryChanges[country] = changeFunc;
+};
+
+
+addCountryChange("United States", {name: "quarter", value: 25}, {name: "dime", value: 10}, {name: "nickel", value: 5}, {name: "penny", value: 1});
+
+addCountryChange("Dominican republic", {name: "quarter", value: 25}, {name: "dime", value: 10}, {name: "nickel", value: 5}, {name: "penny", value: 1});
+
+console.log(countryChanges["United States"](68)); // { quarter: 2, dime: 1, nickel: 1, penny: 3 }
+console.log(countryChanges["Dominican republic"](35)); // { quarter: 4 }
+
+
+addCountryChange("Republica Dominicana",{name:"2000 pesos",value:2000},{name:"1000 pesos",value:1000},{name:"500 pesos",value:500},{name:"200 pesos",value:200},{name:"100 pesos",value:100},{name:"50 pesos",value:50},{name:"25 pesos",value:25},{name:"10 pesos",value:10},{name:"5 pesos",value:5},{name:"1 pesos",value:1})
+
+
+// addCountryChange("Republica Dominicana", {name:"2000 pesos",value:2000}, {name:"1000 pesos",value:1000}, {name:"500 pesos",value:500}, {name:"200 pesos",value:200}, {name:"100 pesos",value:100}, {name:"50 pesos",value:50}, {name:"25 pesos",value:25}, {name:"10 pesos",value:10}, {name:"5 pesos",value:5}, {name:"1 pesos",value:1});
+
+
+// console.log(countryChanges["Republica Dominicana"](1100))
+// console.log(countryChanges)

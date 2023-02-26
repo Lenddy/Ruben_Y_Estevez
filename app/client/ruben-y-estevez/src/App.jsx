@@ -10,6 +10,8 @@ import AllLoans from './components/loans/AllLoans';
 import AddLoan from './components/loans/AddLoan';
 import OneLoan from './components/loans/OneLoan';
 import ConfirmLoan from './components/loans/ConfirmLoan';
+import Test from "./components/Test"
+
 
 const App = ()=> {
   return (
@@ -25,6 +27,7 @@ const App = ()=> {
       <Route exact path='/Nuevo/Prestamos' element={<AddLoan/>} />
       <Route exact path='Prestamos/:id' element={<OneLoan/>} />
       <Route exact path='/confirm/loan' element={<ConfirmLoan/>} />
+      <Route exact path='/test' element={<Test/>} />
       </Routes>
     </div>
   );

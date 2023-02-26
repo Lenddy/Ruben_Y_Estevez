@@ -2,19 +2,38 @@ import {useEffect, useState} from "react";
 import { useParams,useNavigate, Link } from "react-router-dom"; 
 import axios from "axios";
 import UndoPayment from "./UndoPayment";
+import Select from "react-select"
 
 const OneLoan =(props)=>{
-    const {cancelPayment} = props
+    // const {cancelPayment} = props
     const {id} = useParams()
+    console.log(id)
     const navigate = useNavigate()
     const [loan,setLoan] = useState({})
     const [payments,setPayments] =useState([])
     const [selected, setSelected] = useState(null);
     const [number,setNumber] = useState([])
     const [error,setError] = useState({})
-    const [loanValues,setLoanValues] = useState([])
+    const [loanValues,setLoanValues] = useState({})
+    const [Default, setDefault] = useState("seleccionar cuota/s")
+    console.log(selected)
+{/* <Select options={payments?.filter(p=> p.isPaid == false).map((p,idx)=>{
+                                return(
+                                    <option value={p._id} key={idx}>{`${p?._id}| ${p?.paymentDate} |${numberWithCommas(p?.principalPayment.toFixed(2))}`}</option>
+                                )
+                            })}/> */}
 
-console.log('this are the payments',payments[selected >= selected -1])
+                    {/* <select className="form-control" onChange={e=>{changeHandler(e); calculation(e.target.value)}} name="_id"  >
+                        <option value={Default.cuota} selected>seleccionar cuota/s</option>
+                        {
+                            payments?.filter(p=> p.isPaid == false).map((p,idx)=>{
+                                return(
+                                    <option value={p._id} key={idx}>{`${p?._id}| ${p?.paymentDate} |${numberWithCommas(p?.principalPayment.toFixed(2))}`}</option>
+                                )
+                            })
+                        }
+                    </select> */}
+
     useEffect(()=>{
         axios.get(`http://localhost:8000/api/Loan/`)
         .then(res =>{
@@ -23,8 +42,6 @@ console.log('this are the payments',payments[selected >= selected -1])
             console.log("error",err)
         })
     },[])
-
-console.log("this are the loan values",loanValues)
 
 
     useEffect(()=>{
@@ -48,25 +65,30 @@ console.log("this are the loan values",loanValues)
         //     ...selected,
         //     [e.target.name]: e.target.value
         // }
+        // setDefault()
+        console.log(e.target.value)
     }
     const submitHandler=(e,payment_id)=>{
         e.preventDefault()
-        axios.put(`http://localhost:8000/api/Loan/update/status/${id}/${payment_id}`)
+        // http://localhost:8000/api/Loan/update/status/${id}/${payment_id}
+        axios.put(`http://localhost:8000/api/Loan/status/many/${id}/${payment_id}`)//
         .then(res =>{
-            console.log(res.data.results)
+            // console.log(res.data.results)
             if(payment_id == null || payment_id == undefined){
                 setError({err:"debes de seleccionar una cuota "})
-            }else{
+            }
+            else{
+                setSelected(null)
                 setError()
                 axios.get(`http://localhost:8000/api/Loan/${id}`)
-        .then(res =>{
-            setLoan(res.data.results)
-            console.log(res.data.results)
-            console.log(res.data.results.payments)
-            setPayments(res.data.results.payments)
-        }).catch(err=>{ 
-            console.log("error",err)
-        })
+                .then(res =>{
+                    setLoan(res.data.results)
+                    // console.log(res.data.results)
+                    // console.log(res.data.results.payments)
+                    setPayments(res.data.results.payments)
+                }).catch(err=>{ 
+                    console.log("error",err)
+                })
                 navigate(`/Prestamos/${id}`)
             }
         }).catch(err=>{ 
@@ -75,19 +97,65 @@ console.log("this are the loan values",loanValues)
     }
 
     //! here
-    const calculation =(number)=>{
-    {
+    const calculation =(num)=>{ 
+        let totalPayment = 0// principal payment
+        let totalCapital = 0// capital payment
+        let totalInterest = 0// interest payment
+        const filteredPayments = payments?.filter(p => p._id <= num && p.isPaid == false);
 
-        // you get an array of all the te payments with this make use of it like to add up all the amount that the person is going to pay  if they select more than one payments 
-        payments?.filter(p=> p._id <= number).map((p,idx)=>{
-            return(
-                setLoanValues([...loanValues,p.principalPayment])
-            )
+        filteredPayments?.forEach(item =>{
+            totalPayment += parseFloat(item.principalPayment)
+            totalCapital += parseFloat(item.capitalPayment)
+            totalInterest += parseFloat(item.interestPayment)
+        })
+        setLoanValues({
+            totalPayment:parseFloat(totalPayment),
+            totalCapital:parseFloat(totalCapital),
+            totalInterest:parseFloat(totalInterest)
+        })
+    }
+
+
+
+    const nameV = (value) => {   //! this was created to se if i can make the select go back to the default but i could   try fix it 
+        if(value === null || value === undefined){
+            setDefault("seleccionar cuota/s");
+        }
+        payments?.filter(p => p.isPaid == false && p._id == value).map((p, idx) => {
+        setDefault(`${p?._id}| ${p?.paymentDate} |${numberWithCommas( p?.principalPayment.toFixed(2))}`);
+        });
+    }
+
+
+    const handleSelect =()=>{
+        return <div>
+                <select className="form-control" value={Default.cuota} onChange={(e) => { changeHandler(e);calculation(e.target.value); nameV(selected)}} name="_id" >
+                    <option value={Default.cuota}>seleccionar cuota/s</option>
+                        {payments?.filter((p) => p.isPaid == false).map((p, idx) => {
+                            return (<option value={p._id} key={idx} >{`${p?._id}| ${p?.paymentDate} |${numberWithCommas( p?.principalPayment.toFixed(2))}`}
+                    </option>);})}
+                </select>
+
+                {
+                        selected === undefined || selected === null?
+                        null:
+                        <button className="btn btn-success mt-3">pagar</button>
+                }
+
+             {/* 2<select className="form-control" onChange={e=>{changeHandler(e); calculation(e.target.value)}} name="_id"  >
+        <option value={Default.cuota} selected>seleccionar cuota/s</option>
+        {
+            payments?.filter(p=> p.isPaid == false).map((p,idx)=>{
+                return(
+                    <option value={p._id} key={idx}>{`${p?._id}| ${p?.paymentDate} |${numberWithCommas(p?.principalPayment.toFixed(2))}`}</option>
+                )
             })
         }
+    </select> */}
 
+    </div>
     }
-    
+
 
     //! pass payments an other info as a prop and change some stuff in the other side undone payment by the way
     return(
@@ -96,7 +164,7 @@ console.log("this are the loan values",loanValues)
                 <Link to="/Dashboard" className="btn btn-primary" >todos los prestamos</Link>
                 <Link to="/Prestamos" className="btn btn-primary" >todos los prestamos</Link>
                 <UndoPayment id={id} payments={payments} />
- 
+
             </div>
                 <h1>{loan?.client_id?.fullName}</h1>
                 <div>
@@ -113,38 +181,60 @@ console.log("this are the loan values",loanValues)
                         return <input type="text" disabled value={newNumber}/>
                     })
                 }
-                <div className="d-flex  justify-content-between align-middle " style={{width:"400px",border:"solid 1px black"}}>
+                {/* <div className="d-flex  justify-content-between align-middle " style={{width:"400px",border:"solid 1px black"}}>
                 <h5>total a pagar: {loan?.total? numberWithCommas(loan.total.toFixed(2)):null}</h5>
                 <h5>total capital: {loan?.totalCapital? numberWithCommas(loan.totalCapital.toFixed(2)):null}</h5>
-                </div>
+                </div> */}
                     <form onSubmit={e=>submitHandler(e,selected)}>
-                    <select className="form-control" onChange={e=>{changeHandler(e); calculation(e.target.value)}} name="_id"  >
-                        <option value={undefined} selected>seleccionar cuota/s</option>
-                        {
-                            payments?.filter(p=> p.isPaid == false).map((p,idx)=>{
-                                return(
-                                    <option value={p._id} key={idx}>{`${p?._id}| ${p?.paymentDate} |${numberWithCommas(p?.principalPayment.toFixed(2))}`}</option>
-                                )
-                            })
-                        }
-                    </select>
+                        
+                    {/* the select goes here   */}
+                    {handleSelect()}
                     {
                         error == undefined || error == null?<p className="text-danger">{error?.err}</p>:
-                        selected !== null || selected !== undefined? null:
+                        selected !== null || selected !== undefined? null || selected=="seleccionar cuota/s":
                         <p className="text-danger">{error?.err}</p>
                     }
-                        <h1>hola</h1>
+
                     {
-                        selected === undefined || selected === null?
+                        selected == undefined || selected == null || selected=="seleccionar cuota/s"? null:
+                        loanValues === undefined || loanValues === null || loanValues.totalPayment === 0 || loanValues.totalCapital === 0 || loanValues.totalInterest === 0 || loanValues == "{}"?
                         null:
-                        <button className="btn btn-success mt-3">pagar</button>
+                        <table>
+                            <tr>
+                                <th>Total:{loanValues?.totalPayment === 0 ||loanValues?.totalPayment === null ||loanValues?.totalPayment === undefined?null: numberWithCommas(loanValues.totalPayment.toFixed(2))}</th>
+                                <th>capital:{loanValues?.totalCapital === 0 ||loanValues?.totalCapital === null ||loanValues?.totalCapital === undefined?null: numberWithCommas(loanValues.totalCapital.toFixed(2))}</th>
+                                <th>interés:{ loanValues?.totalInterest === 0 ||loanValues?.totalInterest === null ||loanValues?.totalInterest === undefined? null: numberWithCommas(loanValues.totalInterest.toFixed(2))}</th>
+                                <th></th>
+                            </tr>
+                        </table>
+
                     }
+
+
                     </form>
+                    <div>
+                <h1>todo</h1>
+                <ul>
+                    <li> add a late fee</li>
+                    <li>make a function that adds a lateness fee 10 after five days of not paying  the standart is a 10% of the cuota but try to fine a way that that number can be change  </li>
+                    <li>use moddals to aplay bonuse by getting the curent payment and rest the number inpute and the number can t be mor thant the couta</li>
+                    <li>add a calculator that automatically add the sume of the total that need to be pay( if more than one cuota is selected )  and allows the user to to input a number and  and return the amount of money that the user need to give back </li>
+                    <li>fix the loan number or  loan id </li>
+                    <li>make a history with al the payments that have been made </li>
+
+                </ul>
+                </div>
                 </div>
         </div>
     )
                     }
 export default OneLoan;
+
+
+
+
+
+
 
 
 

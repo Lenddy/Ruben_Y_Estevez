@@ -118,19 +118,59 @@ class Loan{
 
 
 
+
+    updateManyLoanStatus = async (req, res) => {
+        console.log("req.params._id:", req.params._id);
+        const id = req.params._id
+        // const payment_id = parseInt(req.params.payment_id)
+        const payment_id = req.params.payment_id;
+        console.log(`id: ${id}, payment_id: ${payment_id}`) // Debugging line
+        loan.updateMany(
+          { _id: id, "payments._id": payment_id, "payments.isPaid": false },
+          { $set: { "payments.$[elem].isPaid": true } },
+          { arrayFilters: [{ "elem._id": { $lte: payment_id } }] }
+        )
+        .then(statusUpdate => {
+          res.json({ results: statusUpdate })
+        })
+        .catch(err => {
+          res.json({ err, msg: "error getting the status of many loans" })
+        })
+      }
+      
+
+
+    //   updateManyLoanStatus = async (req, res) => {
+    //     console.log("req.params._id:", req.params._id);
+    //     const id = `${req.params._id}`
+    //     // const payment_id = parseInt(req.params.payment_id)
+    //     const payment_id = req.params.payment_id;
+    //     console.log(`id: ${id}, payment_id: ${payment_id}`) // Debugging line
+    //     await loan.findById({_id:id})
+    //     .updateMany(
+    //       {"payments._id": payment_id, "payments.isPaid": false },
+    //       { $set: { "payments.$[elem].isPaid": true } },
+    //       { arrayFilters: [{ "elem._id": { $lte: payment_id } }] }
+    //     )
+    //     .then(statusUpdate => {
+    //       res.json({ results: statusUpdate })
+    //     })
+    //     .catch(err => {
+    //       res.json({ err, msg: "error getting the status of many loans" })
+    //     })
+    //   }
+      
+
     // updateManyLoanStatus = async (req, res) => {
-    //     const id = req.params.id
-    //     const payment_id = parseInt(req.params.payment_id)
-    //     await loan.find({_id:id})
-    //     .find({payments:{$elemMatch:{_id:{$lte:payment_id},isPaid:Boolean(false)}}})
-    //     // .updateOne(
-    //     //     {"payments._id": payment_id},
-    //     //     {
-    //     //         $set:{
-    //     //             "payments.$.isPaid":Boolean(true)
-    //     //         }
-    //     //     }
-    //     // )
+    //     const id = `${req.params._id}`
+    //     const payment_id =  parseInt(req.params.payment_id)
+    //     loan.updateMany(
+    //         { _id: id, "payments._id": payment_id, "payments.isPaid": Boolean(false) },
+    //         { $set: { "payments.$[elem].isPaid": Boolean(true)} },//, "payments.$[elem].field2": value2 
+    //         { arrayFilters: [{ "elem._id": payment_id, "elem._id": { $lte: payment_id } }] }
+    //       )
+          
+
     //     .then(statusUpdate=>{
     //         res.json({
     //             results:statusUpdate
@@ -138,10 +178,44 @@ class Loan{
     //     }).catch(err =>{res.json({err,msg:"error getting the status of many loans"})})
     // }
     
+
+
+            //   )console.log(id, payment_id)
+
+
+        // loan.updateMany({
+        //     "_id": id
+        //     },
+        //     {
+        //     "$set": {
+        //         "payments.$[p].payment_status": true
+        //     }
+        //     },
+        //     {
+        //     arrayFilters: [
+        //         {
+        //         "p._id": { $lte:payment_id }
+        //         }
+        //     ]
+        //     })
+
+
+    // const id = req.params.id
+    // const payment_id = parseInt(req.params.payment_id)
+    // await loan.find({_id:id})
+    // .find({payments:{$elemMatch:{_id:{$lte:payment_id},isPaid:Boolean(false)}}})
+    // // .updateOne(
+    // //     {"payments._id": payment_id},
+    // //     {
+    // //         $set:{
+    // //             "payments.$.isPaid":Boolean(true)
+    // //         }
+    // //     }
+    // )
     // ,
     // {
-        //     $set:{
-            //         "payments.$.isPaid":Boolean(false)
+    //         $set:{
+    //                 "payments.$.isPaid":Boolean(false)
     //     }
     // }
 

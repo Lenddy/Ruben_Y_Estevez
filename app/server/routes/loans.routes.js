@@ -13,7 +13,7 @@ module.exports = (app)=>{
     app.put("/api/Loan/update/status/:id/:payment_id",loan.updateStatus)
     app.put("/api/Loan/update/undo/:id/:payment_id",loan.undoLoanStatus)
 
-    app.get("/api/Loan/:id/:payment_id",loan.getOneLoanPayment)
-    // app.get("/api/Loan/status/:id/:payment_id",loan.updateManyLoanStatus)
+    // app.get("/api/Loan/:id/:payment_id",loan.getOneLoanPayment)
+    app.put("/api/Loan/status/many/:id/:payment_id",loan.updateManyLoanStatus)
     // app.get("/api/Loan//:id/:payment_id",loan.getOneLoanPayment)
 }

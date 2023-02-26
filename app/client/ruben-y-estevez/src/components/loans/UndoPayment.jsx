@@ -20,11 +20,10 @@ const UndoPayment = (props) => {
     const numberWithCommas=(x)=>{
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
-    
+
     const changeHandler=(e)=>{
         setSelected( e.target.value)
     }
-    
 
     const submitHandler=(e,payment_id)=>{
         e.preventDefault()
