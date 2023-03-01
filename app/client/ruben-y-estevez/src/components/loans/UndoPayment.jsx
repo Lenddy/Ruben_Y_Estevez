@@ -27,7 +27,7 @@ const UndoPayment = (props) => {
 
     const submitHandler=(e,payment_id)=>{
         e.preventDefault()
-        axios.put(`http://localhost:8000/api/Loan/update/undo/${id}/${payment_id}`)
+        axios.put(`http://localhost:8000/api/Loan/update/status/undo/${id}/${payment_id}`)
         .then(res =>{
             console.log(res.data.results)
             if(payment_id == null || payment_id == undefined){
@@ -91,8 +91,9 @@ const UndoPayment = (props) => {
                         {
                             payments.filter(p=> p.isPaid == true).map((p,idx)=>{
                                 
-                                return(<div>
-                                <ul>
+                                return(
+                                <div key={p._id}>
+                                <ul key={p._id}>
                                 <li value={p._id} key={p._id}>{`${p?._id}|${p?.paymentDate}|${numberWithCommas(p?.principalPayment.toFixed(2))}`}</li>
                                 <button className="btn btn-success" value={p._id} onClick={e=>{changeHandler(e); alertUser()}} >anular cuota: {p?._id} </button>
                                 </ul>

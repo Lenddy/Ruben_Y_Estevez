@@ -9,11 +9,13 @@ module.exports = (app)=>{
     // to get all the loans than one client had have
     //to get all the loans than belong to one client
     app.get("/api/Loan/People/:clientId",loan.getAllLoansOfOneClient)
+    
     //to update the is paid status
-    app.put("/api/Loan/update/status/:id/:payment_id",loan.updateStatus)
-    app.put("/api/Loan/update/undo/:id/:payment_id",loan.undoLoanStatus)
+    // app.put("/api/Loan/update/status/:id/:payment_id",loan.updateStatus)
+    app.put("/api/Loan/update/status/:id/:payment_id",loan.updateManyLoanStatus)
+    // app.put("/api/Loan/update/status/undo/:id/:payment_id",loan.undoLoanStatus)
+    app.put("/api/Loan/update/status/undo/:id/:payment_id",loan.undoManyLoanStatus)
 
     // app.get("/api/Loan/:id/:payment_id",loan.getOneLoanPayment)
-    app.put("/api/Loan/status/many/:id/:payment_id",loan.updateManyLoanStatus)
     // app.get("/api/Loan//:id/:payment_id",loan.getOneLoanPayment)
 }

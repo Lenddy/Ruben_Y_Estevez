@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import { useParams,useNavigate, Link } from "react-router-dom"; 
 import axios from "axios";
 import UndoPayment from "./UndoPayment";
+import Print from "../Print";
 import Select from "react-select"
 
 const OneLoan =(props)=>{
@@ -16,7 +17,7 @@ const OneLoan =(props)=>{
     const [error,setError] = useState({})
     const [loanValues,setLoanValues] = useState({})
     const [Default, setDefault] = useState("seleccionar cuota/s")
-    console.log(selected)
+    console.log(loanValues)
 {/* <Select options={payments?.filter(p=> p.isPaid == false).map((p,idx)=>{
                                 return(
                                     <option value={p._id} key={idx}>{`${p?._id}| ${p?.paymentDate} |${numberWithCommas(p?.principalPayment.toFixed(2))}`}</option>
@@ -71,7 +72,7 @@ const OneLoan =(props)=>{
     const submitHandler=(e,payment_id)=>{
         e.preventDefault()
         // http://localhost:8000/api/Loan/update/status/${id}/${payment_id}
-        axios.put(`http://localhost:8000/api/Loan/status/many/${id}/${payment_id}`)//
+        axios.put(`http://localhost:8000/api/Loan/update/status/${id}/${payment_id}`)//
         .then(res =>{
             // console.log(res.data.results)
             if(payment_id == null || payment_id == undefined){
@@ -135,11 +136,25 @@ const OneLoan =(props)=>{
                             return (<option value={p._id} key={idx} >{`${p?._id}| ${p?.paymentDate} |${numberWithCommas( p?.principalPayment.toFixed(2))}`}
                     </option>);})}
                 </select>
+                {
+                selected == undefined || selected == null || selected=="seleccionar cuota/s"? null:
+                        loanValues === undefined || loanValues === null || loanValues == "{}"?
+                        null:
+                        <table>
+                            <tr>
+                                <th>Total:{loanValues?.totalPayment === null ||loanValues?.totalPayment === undefined?null: numberWithCommas(loanValues?.totalPayment.toFixed(2))}</th>
+                                <th>capital:{loanValues?.totalCapital === null ||loanValues?.totalCapital === undefined?null: numberWithCommas(loanValues?.totalCapital.toFixed(2))}</th>
+                                <th>interés:{loanValues?.totalInterest === null ||loanValues?.totalInterest === undefined? null: numberWithCommas(loanValues?.totalInterest.toFixed(2))}</th>
+                                <th>mora : 0.00 by default change it later</th>
+                            </tr>
+                        </table>
+                }
 
                 {
-                        selected === undefined || selected === null?
-                        null:
-                        <button className="btn btn-success mt-3">pagar</button>
+                       selected == undefined || selected == null || selected=="seleccionar cuota/s"? null:
+                       loanValues === undefined || loanValues === null || loanValues == "{}"?
+                       null:
+                        <button className="btn btn-success mt-3" >pagar</button>
                 }
 
              {/* 2<select className="form-control" onChange={e=>{changeHandler(e); calculation(e.target.value)}} name="_id"  >
@@ -159,6 +174,7 @@ const OneLoan =(props)=>{
 
     //! pass payments an other info as a prop and change some stuff in the other side undone payment by the way
     return(
+        
         <div>
             <div>
                 <Link to="/Dashboard" className="btn btn-primary" >todos los prestamos</Link>
@@ -166,6 +182,15 @@ const OneLoan =(props)=>{
                 <UndoPayment id={id} payments={payments} />
 
             </div>
+            <h1>comprobante fiscal
+                     and input   represents the number  
+
+                        and bellow a select with consumidor final 
+                        and factura valida para crédito fiscal 
+                        the value is the number 
+
+
+            </h1>
                 <h1>{loan?.client_id?.fullName}</h1>
                 <div>
                     <label> # préstamo</label>
@@ -191,26 +216,9 @@ const OneLoan =(props)=>{
                     {handleSelect()}
                     {
                         error == undefined || error == null?<p className="text-danger">{error?.err}</p>:
-                        selected !== null || selected !== undefined? null || selected=="seleccionar cuota/s":
+                        selected !== null || selected !== undefined? null :
                         <p className="text-danger">{error?.err}</p>
                     }
-
-                    {
-                        selected == undefined || selected == null || selected=="seleccionar cuota/s"? null:
-                        loanValues === undefined || loanValues === null || loanValues.totalPayment === 0 || loanValues.totalCapital === 0 || loanValues.totalInterest === 0 || loanValues == "{}"?
-                        null:
-                        <table>
-                            <tr>
-                                <th>Total:{loanValues?.totalPayment === 0 ||loanValues?.totalPayment === null ||loanValues?.totalPayment === undefined?null: numberWithCommas(loanValues.totalPayment.toFixed(2))}</th>
-                                <th>capital:{loanValues?.totalCapital === 0 ||loanValues?.totalCapital === null ||loanValues?.totalCapital === undefined?null: numberWithCommas(loanValues.totalCapital.toFixed(2))}</th>
-                                <th>interés:{ loanValues?.totalInterest === 0 ||loanValues?.totalInterest === null ||loanValues?.totalInterest === undefined? null: numberWithCommas(loanValues.totalInterest.toFixed(2))}</th>
-                                <th></th>
-                            </tr>
-                        </table>
-
-                    }
-
-
                     </form>
                     <div>
                 <h1>todo</h1>
@@ -221,6 +229,7 @@ const OneLoan =(props)=>{
                     <li>add a calculator that automatically add the sume of the total that need to be pay( if more than one cuota is selected )  and allows the user to to input a number and  and return the amount of money that the user need to give back </li>
                     <li>fix the loan number or  loan id </li>
                     <li>make a history with al the payments that have been made </li>
+                    <li>add a fully pay field  or a active field to the loans if it is tru then the loan does not show up </li>
 
                 </ul>
                 </div>
