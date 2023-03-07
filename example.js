@@ -92,17 +92,17 @@
 
 
 
-// let  ZeroPaddedInput=(number)=> {
-//   let newNumber = ""
-//   if (number < 10) {
-//       newNumber = `00${number}`;
-//   } else {
-//       newNumber = `0${number}`;
-//   }
-//   return newNumber
-//   };
+const  ZeroPaddedInput=(number)=> {
+  let newNumber = ""
+  if (number < 10) {
+      newNumber = `00${number}`;
+  } else {
+      newNumber = `0${number}`;
+  }
+  return newNumber
+  };
 
-//   console.log(ZeroPaddedInput(10))
+  console.log(ZeroPaddedInput(10))
 
 // const payments = [
 //     {
@@ -215,3 +215,28 @@ addCountryChange("Republica Dominicana",{name:"2000 pesos",value:2000},{name:"10
 
 // console.log(countryChanges["Republica Dominicana"](1100))
 // console.log(countryChanges)
+
+
+let amount = 2833.25
+let toPay =0
+let sum = 0
+for(let i = 0 ;i <amount;i++ ){
+    if(amount >= 0 ){
+        sum++
+        amount-= 150
+        toPay += 150
+        // amount += 88.5
+        
+
+    }else break
+}
+console.log(sum)
+console.log(amount)
+console.log(toPay)
+
+
+
+let sti:number ="string"
+console.log(sti)
+sti =19
+console.log(sti)

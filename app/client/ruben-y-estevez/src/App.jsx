@@ -11,6 +11,7 @@ import AddLoan from './components/loans/AddLoan';
 import OneLoan from './components/loans/OneLoan';
 import ConfirmLoan from './components/loans/ConfirmLoan';
 import Test from "./components/Test"
+import Print from './components/Print';
 
 
 const App = ()=> {
@@ -27,7 +28,8 @@ const App = ()=> {
       <Route exact path='/Nuevo/Prestamos' element={<AddLoan/>} />
       <Route exact path='Prestamos/:id' element={<OneLoan/>} />
       <Route exact path='/confirm/loan' element={<ConfirmLoan/>} />
-      <Route exact path='/test' element={<Test/>} />
+      <Route exact path='/print' element={<Print/>} />
+      {/* <Route exact path='/test' element={<Print/>} /> */}
       </Routes>
     </div>
   );

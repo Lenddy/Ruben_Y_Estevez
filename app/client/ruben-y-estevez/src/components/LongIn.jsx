@@ -91,19 +91,37 @@ const LongIn = () => {
 
             </form>
 
-                
+                    <div> make a clock that show the curent day of the week the day the month  the year and the time dinamicaly 
+                        
+                        use this function as reference
+                        var datetime = null,
+                        date = null;
+
+                        {/* var update = function () {
+                            date = moment(new Date())
+                            datetime.html(date.format('dddd, MMMM Do YYYY, h:mm:ss a'));
+                        };
+
+                        $(document).ready(function(){
+                            datetime = $('#datetime')
+                            update();
+                            setInterval(update, 1000);
+                        }); */}
+                        </div>
                     <div>
                     <p className='text-danger'>idea came into my head to have a flag(boolean) tha sets the a loan to true(or false when tey are done because the loan wont be true or false because i was never created) when is active but set to false when the las 
                     payment(cuota) is payed  and while this boolean is true trow a erro message  that does not alow one(OR SAYS THE WHILE THEY HAVE AT LEAST ONE CUOTA UN PAYED IN THEIR LAST(CURRENT LOAN) THEY ARE NOT ALOW TO HAVE MORE LOANS )    ALSO FIGRE OUT THE BLACK LISTING  WITH A BOOLEAN()/ ALSO TALK WITH THE PEOPLE ABOUT A FEATURE THAT IF THEY ARE IN A GREEN LIST( ORE TRUSTED LIST ) THEY ARE ALOW TO HAVE ONE FEATURE (LIKE PAY LEST MONEY  OR SOMETHING LIKE THAT )   </p>
                     </div>
-
-            <div>
+            todo is hidden remember
+            <div >
                 <h1>todo list</h1>
+                contenteditable="true" allow you do edit text that is not on a input tag
                 <ol>
-                    <li>use regex for the phone numbers</li>
+                    <li contenteditable="true">use regex for the phone numbers</li>
+                    <li>make the app to be able to support companies  == new db = companies will have their name , email , phone number , and address and socials if they want and a description ,: and use that info on the print component</li>
                     <li>learn how to transfer messages and audio files from WhatsApp to this system/webpage</li>
                     <li>make a calculator on the payment page</li>
-                    <li>learn how to make a drop down menu  select multiple inputs (example) if a person selects a field that is not the first one then input that was selected is selected and aso the previous inputs before that  ar also selected (idea) if more thatn oen input is selected make all the other inputs in to an array([]) and loop on that array  to calculate the total amount( also use for the calculator later on)  </li>
+                    <li>learn how to make a drop down menu  select multiple inputs (example) if a person selects a field that is not the first one then input that was selected is selected and aso the previous inputs before that  ar also selected (idea) if more that oen input is selected make all the other inputs in to an array([]) and loop on that array  to calculate the total amount( also use for the calculator later on)  </li>
                     <li>add a way to store data locally</li>
                     <li>genera info about the company(mission, vision , values)</li>
                     <li>add sorting to the website (using  useLocalStorage  method)</li>

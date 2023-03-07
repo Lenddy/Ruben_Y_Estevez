@@ -72,6 +72,7 @@ console.log(info.dateAdded)
             [e.target.name]: e.target.value,
         })
     }
+    console.log("this is the whole info ",info)
     return (
         <div>
             <Link to="/Dashboard"><button className=' btn btn-secondary text-white'>todos los clientes</button> </Link>

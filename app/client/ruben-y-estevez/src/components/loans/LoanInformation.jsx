@@ -37,7 +37,6 @@ const LoanInformation = ({ payments, totalInterest, totalPrincipal, dates ,total
         <tfoot className='text-center' >
         <tr>
             <td>Total</td>
-
             <td>{numberWithCommas(total.toFixed(2))}</td>
             <td>{numberWithCommas(totalInterest.toFixed(2))}</td>
              <td>{numberWithCommas(totalCapital.toFixed(2))}</td>

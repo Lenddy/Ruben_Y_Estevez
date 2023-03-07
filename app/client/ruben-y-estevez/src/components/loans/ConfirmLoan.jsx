@@ -15,7 +15,7 @@ const ConfirmLoan = (props) => {
     const [formInfoErr,setFormInfoErr] = useState({})
     const [info,setInfo] = useState({})
 
-        console.log("this are all the cuotas ",allCuotas)
+        console.log("this are all the cuotas ", (11 / 100) * 10000)
     // console.log("is here",info)
     // formInfo.loanAmount,formInfo.interest,formInfo.cuotasNumber,formInfo.cuotasNumber,formInfo.dateAdded,formInfo.timeType)
     useEffect(() => {
@@ -50,8 +50,25 @@ const ConfirmLoan = (props) => {
             err =>{console.log("there was an error", err)}
         )
     }
-
-
+//! to calculate the 10 persent of somethign 
+//! to calculate the 10 persent of somethign 
+//! to calculate the 10 persent of somethign 
+//! to calculate the 10 persent of somethign 
+//! to calculate the 10 persent of somethign 
+//! to calculate the 10 persent of somethign 
+//! to calculate the 10 persent of somethign 
+//! to calculate the 10 persent of somethign 
+//! to calculate the 10 persent of somethign 
+//! to calculate the 10 persent of somethign 
+//! to calculate the 10 persent of somethign 
+//! to calculate the 10 persent of somethign 
+//! to calculate the 10 persent of somethign 
+//! to calculate the 10 persent of somethign 
+//! to calculate the 10 persent of somethign 
+//! to calculate the 10 persent of somethign 
+//! to calculate the 10 persent of somethign 
+// subjest that you put the  (interest rate /100)* loanAmount
+     console.log("this are all the cuotas ", (11 / 100) * 10000)
 const calculateLoanAndDates = (principal, interestRate, term, repetition, startDate, unit) => {
     let payments = [];
     let totalInterest = 0;
@@ -115,10 +132,12 @@ const calculateLoanAndDates = (principal, interestRate, term, repetition, startD
     console.log("this is the total capital payment",totalCapital)
     let fullTotal =totalInterest + totalPrincipal
     setAllCuotas({
+    interest:interestRate,
     payments: payments,
     totalInterest: totalInterest,
     totalPrincipal: totalPrincipal,
     total:fullTotal,
+    totalPaid:0,
     totalCapital:totalCapital ,
     dates: dates
     });

@@ -5,99 +5,48 @@ import UndoPayment from "./UndoPayment";
 import Print from "../Print";
 import Select from "react-select"
 
-const OneLoan =(props)=>{
-    // const {cancelPayment} = props
+const OneLoan =()=>{
     const {id} = useParams()
-    console.log(id)
-    const navigate = useNavigate()
     const [loan,setLoan] = useState({})
     const [payments,setPayments] =useState([])
-    const [selected, setSelected] = useState(null);
-    const [number,setNumber] = useState([])
-    const [error,setError] = useState({})
+    const [selected, setSelected] = useState();
     const [loanValues,setLoanValues] = useState({})
-    const [Default, setDefault] = useState("seleccionar cuota/s")
-    console.log(loanValues)
-{/* <Select options={payments?.filter(p=> p.isPaid == false).map((p,idx)=>{
-                                return(
-                                    <option value={p._id} key={idx}>{`${p?._id}| ${p?.paymentDate} |${numberWithCommas(p?.principalPayment.toFixed(2))}`}</option>
-                                )
-                            })}/> */}
+    const [toPrint,setToPrint] = useState({})
+    const [loadToPrint,setLoadToPrint] = useState(false)
+    console.log(loan)
 
-                    {/* <select className="form-control" onChange={e=>{changeHandler(e); calculation(e.target.value)}} name="_id"  >
-                        <option value={Default.cuota} selected>seleccionar cuota/s</option>
-                        {
-                            payments?.filter(p=> p.isPaid == false).map((p,idx)=>{
-                                return(
-                                    <option value={p._id} key={idx}>{`${p?._id}| ${p?.paymentDate} |${numberWithCommas(p?.principalPayment.toFixed(2))}`}</option>
-                                )
-                            })
-                        }
-                    </select> */}
-
-    useEffect(()=>{
-        axios.get(`http://localhost:8000/api/Loan/`)
-        .then(res =>{
-            setNumber(res.data.results)
-        }).catch(err=>{ 
-            console.log("error",err)
-        })
-    },[])
 
 
     useEffect(()=>{
         axios.get(`http://localhost:8000/api/Loan/${id}`)
         .then(res =>{
             setLoan(res.data.results)
-            console.log(res.data.results)
             setPayments(res.data.results.payments)
         }).catch(err=>{ 
             console.log("error",err)
         })
     },[])
 
-    const numberWithCommas=(x)=>{
+    const  numberWithCommas  = (x)=>{
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
     
     const changeHandler=(e)=>{
         setSelected(e.target.value)
-        // {
-        //     ...selected,
-        //     [e.target.name]: e.target.value
-        // }
-        // setDefault()
-        console.log(e.target.value)
     }
+
+
     const submitHandler=(e,payment_id)=>{
         e.preventDefault()
-        // http://localhost:8000/api/Loan/update/status/${id}/${payment_id}
         axios.put(`http://localhost:8000/api/Loan/update/status/${id}/${payment_id}`)//
         .then(res =>{
-            // console.log(res.data.results)
-            if(payment_id == null || payment_id == undefined){
-                setError({err:"debes de seleccionar una cuota "})
-            }
-            else{
-                setSelected(null)
-                setError()
-                axios.get(`http://localhost:8000/api/Loan/${id}`)
-                .then(res =>{
-                    setLoan(res.data.results)
-                    // console.log(res.data.results)
-                    // console.log(res.data.results.payments)
-                    setPayments(res.data.results.payments)
-                }).catch(err=>{ 
-                    console.log("error",err)
-                })
-                navigate(`/Prestamos/${id}`)
-            }
+            console.log(res)
         }).catch(err=>{ 
             console.log("error",err)
         })
     }
 
-    //! here
+
     const calculation =(num)=>{ 
         let totalPayment = 0// principal payment
         let totalCapital = 0// capital payment
@@ -114,24 +63,22 @@ const OneLoan =(props)=>{
             totalCapital:parseFloat(totalCapital),
             totalInterest:parseFloat(totalInterest)
         })
+        setToPrint({
+                loanValues: {
+                    totalPayment:numberWithCommas(parseFloat(totalPayment).toFixed(2)),
+                    totalCapital:numberWithCommas(parseFloat(totalCapital).toFixed(2)),
+                    totalInterest:numberWithCommas(parseFloat(totalInterest).toFixed(2))
+                },
+                loan: loan,
+            })
     }
-
-
-
-    const nameV = (value) => {   //! this was created to se if i can make the select go back to the default but i could   try fix it 
-        if(value === null || value === undefined){
-            setDefault("seleccionar cuota/s");
-        }
-        payments?.filter(p => p.isPaid == false && p._id == value).map((p, idx) => {
-        setDefault(`${p?._id}| ${p?.paymentDate} |${numberWithCommas( p?.principalPayment.toFixed(2))}`);
-        });
-    }
+console.log(toPrint)
 
 
     const handleSelect =()=>{
         return <div>
-                <select className="form-control" value={Default.cuota} onChange={(e) => { changeHandler(e);calculation(e.target.value); nameV(selected)}} name="_id" >
-                    <option value={Default.cuota}>seleccionar cuota/s</option>
+                <select className="form-control"  onChange={(e) => { changeHandler(e);calculation(e.target.value); }} name="_id" >
+                    <option >seleccionar cuota/s</option>
                         {payments?.filter((p) => p.isPaid == false).map((p, idx) => {
                             return (<option value={p._id} key={idx} >{`${p?._id}| ${p?.paymentDate} |${numberWithCommas( p?.principalPayment.toFixed(2))}`}
                     </option>);})}
@@ -151,76 +98,59 @@ const OneLoan =(props)=>{
                 }
 
                 {
-                       selected == undefined || selected == null || selected=="seleccionar cuota/s"? null:
-                       loanValues === undefined || loanValues === null || loanValues == "{}"?
-                       null:
-                        <button className="btn btn-success mt-3" >pagar</button>
+                    selected == undefined || selected == null || selected=="seleccionar cuota/s"? null:
+                    loanValues === undefined || loanValues === null || loanValues == "{}"?
+                    null:
+                    <button className="btn btn-success mt-3" onClick={() => setLoadToPrint(true)}>pagar</button>
+
                 }
 
-             {/* 2<select className="form-control" onChange={e=>{changeHandler(e); calculation(e.target.value)}} name="_id"  >
-        <option value={Default.cuota} selected>seleccionar cuota/s</option>
-        {
-            payments?.filter(p=> p.isPaid == false).map((p,idx)=>{
-                return(
-                    <option value={p._id} key={idx}>{`${p?._id}| ${p?.paymentDate} |${numberWithCommas(p?.principalPayment.toFixed(2))}`}</option>
-                )
-            })
-        }
-    </select> */}
 
     </div>
     }
 
 
-    //! pass payments an other info as a prop and change some stuff in the other side undone payment by the way
+    const renderToPrint=(render)=>{
+        if(render == true){
+            return <Print info={toPrint} payment_id={selected} />
+        }else return null
+    }
+    
+    {/* <div className="d-flex  justify-content-between align-middle " style={{width:"400px",border:"solid 1px black"}}>
+    <h5>total a pagar: {loan?.total? numberWithCommas(loan.total.toFixed(2)):null}</h5>
+    <h5>total capital: {loan?.totalCapital? numberWithCommas(loan.totalCapital.toFixed(2)):null}</h5>
+    </div> */}
+
     return(
         
         <div>
+        {renderToPrint(loadToPrint)}
             <div>
-                <Link to="/Dashboard" className="btn btn-primary" >todos los prestamos</Link>
+                <Link to="/Dashboard" className="btn btn-success" >todos los clientes</Link>
                 <Link to="/Prestamos" className="btn btn-primary" >todos los prestamos</Link>
                 <UndoPayment id={id} payments={payments} />
 
             </div>
             <h1>comprobante fiscal
-                     and input   represents the number  
-
-                        and bellow a select with consumidor final 
-                        and factura valida para crédito fiscal 
-                        the value is the number 
-
-
+                and input   represents the number  
+                and bellow a select with consumidor final 
+                and factura valida para crédito fiscal 
+                the value is the number 
             </h1>
-                <h1>{loan?.client_id?.fullName}</h1>
-                <div>
-                    <label> # préstamo</label>
-                    {number.filter(p=>p._id== id).map((n,
-                    idx)=>{
-                        let number = idx+1
-                        let newNumber = ""
-                        if (number < 10) {
-                            newNumber = `00${number}`;
-                        } else {
-                            newNumber = `0${number}`;
-                        }
-                        return <input type="text" disabled value={newNumber}/>
-                    })
-                }
-                {/* <div className="d-flex  justify-content-between align-middle " style={{width:"400px",border:"solid 1px black"}}>
-                <h5>total a pagar: {loan?.total? numberWithCommas(loan.total.toFixed(2)):null}</h5>
-                <h5>total capital: {loan?.totalCapital? numberWithCommas(loan.totalCapital.toFixed(2)):null}</h5>
-                </div> */}
-                    <form onSubmit={e=>submitHandler(e,selected)}>
-                        
-                    {/* the select goes here   */}
-                    {handleSelect()}
-                    {
-                        error == undefined || error == null?<p className="text-danger">{error?.err}</p>:
-                        selected !== null || selected !== undefined? null :
-                        <p className="text-danger">{error?.err}</p>
-                    }
-                    </form>
-                    <div>
+
+            <h1>{loan?.client_id?.fullName}</h1>
+
+            <div>
+                <label> # préstamo: put the number of the loan here</label>
+
+
+            <form onSubmit={e=>submitHandler(e,selected)}>
+                {handleSelect()}
+            </form>
+
+            <div>
+                        <p className=" text-danger">todo now </p>
+                        <p>1 sent client and payment  info and print</p>
                 <h1>todo</h1>
                 <ul>
                     <li> add a late fee</li>

@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 
 //you may want to use regex on the phone number if you want you can change it later
 //you may want to use regex on the phone number if you want you can change it later
-
+//! make a new field call loan id that and make the field outo popula usindin the populate fiesd 
 
 const loan = mongoose.Schema({
     // clientName:{
@@ -35,18 +35,23 @@ const loan = mongoose.Schema({
     },
     payments:{
         type:Object,Array,
+        required: [true,"necesitas agregar los pagos"]
     },
     totalInterest:{
         type:Number,
+        required: [true,"tienes que sumar el interés total"]
     },
     totalPrincipal:{
         type:Number,
+        required: [true,"you need to add the total principal"]
     },
     total:{
-        type:Number
+        type:Number,
+        required: [true,"you need to add the totality of the loan"]
     },
     dates:{
         type:Array,
+        required: [true,"you need to add the  dates that the loans are paid"]
     },
     client_id:{
         type: mongoose.Schema.Types.ObjectId,
