@@ -49,6 +49,9 @@ const loan = mongoose.Schema({
         type:Number,
         required: [true,"you need to add the totality of the loan"]
     },
+    totalPaid:{
+        type:Number,
+    },
     dates:{
         type:Array,
         required: [true,"you need to add the  dates that the loans are paid"]

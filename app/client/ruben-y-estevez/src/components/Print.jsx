@@ -88,6 +88,16 @@ const Print = (props) => {
                         <p>monto pagado: {info?.loanValues?.totalPayment} </p>
                         <hr className="dashed-2"/>
                         <p>balance pendiente{}</p>
+                        <div> </div>
+                        <div>
+                            <div>
+                                <div>
+                                    <hr />
+                                    <p>firma</p>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
 
                 </div>
