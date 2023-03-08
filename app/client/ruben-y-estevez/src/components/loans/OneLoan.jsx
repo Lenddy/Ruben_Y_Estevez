@@ -13,6 +13,7 @@ const OneLoan =()=>{
     const [loanValues,setLoanValues] = useState({})
     const [toPrint,setToPrint] = useState({})
     const [loadToPrint,setLoadToPrint] = useState(false)
+    const [ totalPaid,setTotalPaid]= useState(0)
     console.log(loan)
 
 
@@ -20,6 +21,7 @@ const OneLoan =()=>{
     useEffect(()=>{
         axios.get(`http://localhost:8000/api/Loan/${id}`)
         .then(res =>{
+            console.log("loan result", res)
             setLoan(res.data.results)
             setPayments(res.data.results.payments)
         }).catch(err=>{ 
@@ -40,6 +42,12 @@ const OneLoan =()=>{
         e.preventDefault()
         axios.put(`http://localhost:8000/api/Loan/update/status/${id}/${payment_id}`)//
         .then(res =>{
+            axios.put(`http://localhost:8000/api/Loan/update/totalPaid/${id}/${loanValues?.totalPayment}`)
+            .then(res =>{
+                console.log("this is the result",res)
+            }).catch(err=>{
+                console.log("there was an error",err)
+            })
             console.log(res)
         }).catch(err=>{ 
             console.log("error",err)
@@ -109,6 +117,23 @@ console.log(toPrint)
     </div>
     }
 
+    useEffect(()=>{
+        let totalPayment = parseFloat(loanValues?.totalPayment)
+        let totalPaid = parseFloat(loan?.totalPaid) 
+        let sum = totalPaid + totalPayment
+
+        console.log("totalPayment here ",totalPayment)
+        console.log("totalPaid here ",totalPaid)
+        console.log("total paid here ",sum)
+            setTotalPaid(
+                sum
+            )
+
+    },[loanValues?.totalPayment,loan?.totalPaid])
+    // console.log("total paid here ",loanValues?.totalPayment)
+    // console.log("total paid here ", parseFloat(loan?.totalPaid) + parseFloat(loanValues?.totalPayment))
+    console.log("total paid here ",totalPaid)
+
 
     const renderToPrint=(render)=>{
         if(render == true){
@@ -120,6 +145,8 @@ console.log(toPrint)
     <h5>total a pagar: {loan?.total? numberWithCommas(loan.total.toFixed(2)):null}</h5>
     <h5>total capital: {loan?.totalCapital? numberWithCommas(loan.totalCapital.toFixed(2)):null}</h5>
     </div> */}
+
+
 
     return(
         

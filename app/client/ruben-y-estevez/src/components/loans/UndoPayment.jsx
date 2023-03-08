@@ -71,7 +71,7 @@ const UndoPayment = (props) => {
     const arePaid=()=>{
             let paid = payments.filter(p=> p.isPaid == true)
             return paid.length
-    }
+    } 
     return (
         <div>
 

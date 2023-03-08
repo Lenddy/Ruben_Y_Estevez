@@ -172,6 +172,24 @@ class Loan{
         }
     }
 
+    updateTotalPid = async(req,res)=>{
+        const id = req.params.id
+        const sum = req.params.sum
+        try{
+            const totalPaid = await loan.findOneAndUpdate(
+                {_id:id},
+                {
+                    totalPaid: parseFloat(sum)
+                },
+                {new:true,runValidators:true}
+            );
+
+            res.json({results:totalPaid});
+        }catch(err){
+            res.json({err,msg: "error updating the  total paid"})
+        }
+    }
+
 
 //deletes a loan not in use at the moment 
     deleteOne = (req,res)=>{
