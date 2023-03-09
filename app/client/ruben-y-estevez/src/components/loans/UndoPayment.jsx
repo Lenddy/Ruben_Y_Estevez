@@ -25,6 +25,8 @@ const UndoPayment = (props) => {
         setSelected( e.target.value)
     }
 
+
+    // !sent a variable  boolean that switches from false to  true when you click the undo(anular) btn an  and attach this variable to the use effect that renders the cuotas  and also set the show to be false when click
     const submitHandler=(e,payment_id)=>{
         e.preventDefault()
         axios.put(`http://localhost:8000/api/Loan/update/status/undo/${id}/${payment_id}`)

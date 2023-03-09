@@ -14,7 +14,7 @@ const ConfirmLoan = (props) => {
     const [allCuotas,setAllCuotas] = useState({})
     const [formInfoErr,setFormInfoErr] = useState({})
     const [info,setInfo] = useState({})
-
+    console.log("this is the form info",formInfo)
         console.log("this are all the cuotas ", (11 / 100) * 10000)
     // console.log("is here",info)
     // formInfo.loanAmount,formInfo.interest,formInfo.cuotasNumber,formInfo.cuotasNumber,formInfo.dateAdded,formInfo.timeType)
@@ -139,7 +139,7 @@ const calculateLoanAndDates = (principal, interestRate, term, repetition, startD
     total:fullTotal,
     totalPaid:0,
     totalCapital:totalCapital ,
-    dates: dates
+    dates: dates,
     });
     console.log({
         payments: payments,

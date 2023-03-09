@@ -7,7 +7,7 @@ import ReactToPrint from "react-to-print"
 import moment from 'moment';
 
 const Print = (props) => {
-    const {info,payment_id} = props
+    const {info,payment_id, totalPaid} = props
     const navigate = useNavigate()
     const [show, setShow] = useState(true);
     const [payment_info, setPayment_info] = useState({});
@@ -15,6 +15,7 @@ const Print = (props) => {
     console.log("gett this info brooooo",info)
     const length = info?.loan?.payments?.length
     console.log("gett this info bruuuuuu",info?.loan.total)
+    console.log("this is the total paid", totalPaid)
 
     const numberWithCommas=(x)=>{
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -65,12 +66,12 @@ const Print = (props) => {
                 <p>calle Sanchez #110 plaza Cuple Dajabon , Rep. Dom.</p>
                 <p style={{"textTransform":"uppercase"}} ><u>recibo de ingreso</u></p>
                 <div>
-                    <p>No. préstamo :put the id of the loan here</p>
+                    <p>No. préstamo : {ZeroPaddedInput(info?.loanIdNumber)}</p>
                     <p>fecha a pagar: {payment_info?.allInfo?.paymentDate}</p>
                     <p>fecha pagado :{moment().format("Y/MM/DD, h:mm:ss a")}</p>
                 </div>
                 <div>
-                    make them into  <tr>tds</tr>
+                    make them next info into  <tr>tds</tr>
                     <div>
                         <p>Cliente: {info?.loan?.client_id?.fullName}</p> 
                         <p>{info?.loan?.client_id?.idType}: {info?.loan?.client_id?.idNum}</p> 
@@ -87,7 +88,7 @@ const Print = (props) => {
                         <p>pago a capital: {info?.loanValues?.totalCapital} </p>
                         <p>monto pagado: {info?.loanValues?.totalPayment} </p>
                         <hr className="dashed-2"/>
-                        <p>balance pendiente{}</p>
+                        <p>balance pendiente: {totalPaid?.balance}</p>
                         <div> </div>
                         <div>
                             <div>

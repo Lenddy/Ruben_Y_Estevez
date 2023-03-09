@@ -6,11 +6,9 @@ const mongoose = require("mongoose")
 //! make a new field call loan id that and make the field outo popula usindin the populate fiesd 
 
 const loan = mongoose.Schema({
-    // clientName:{
-    //     type: String,
-    //     // required: [true,"debes de poner a un cliente "],
-    //     // minLength:[2,"nombre del cliente debe de tener por lo menos 2 letras"]
-    // },
+    loanIdNumber:{
+        type:Number
+    },
     dateAdded:{
         type: Date,
         required: [true,"debes de poner una fecha"],

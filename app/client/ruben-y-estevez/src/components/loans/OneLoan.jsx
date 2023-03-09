@@ -7,16 +7,29 @@ import Select from "react-select"
 
 const OneLoan =()=>{
     const {id} = useParams()
+    const navigate = useNavigate()
+    const [user,setUser] = useState({})
     const [loan,setLoan] = useState({})
     const [payments,setPayments] =useState([])
     const [selected, setSelected] = useState();
     const [loanValues,setLoanValues] = useState({})
     const [toPrint,setToPrint] = useState({})
     const [loadToPrint,setLoadToPrint] = useState(false)
-    const [ totalPaid,setTotalPaid]= useState(0)
-    console.log(loan)
+    const [ totalPaid,setTotalPaid]= useState({})
+    console.log("this is total;",loan?.total - 4066.8510823902325)
 
-
+    useEffect(()=>{
+        axios.get("http://localhost:8000/api/User/loggedUser",{withCredentials:true})
+        .then(res=>{
+            if(res.data.result){
+                setUser(res.data.result)
+            }
+        }).catch(
+            err=>{console.log("error",err) 
+        navigate("/")
+            }
+        )
+    },[])
 
     useEffect(()=>{
         axios.get(`http://localhost:8000/api/Loan/${id}`)
@@ -27,7 +40,7 @@ const OneLoan =()=>{
         }).catch(err=>{ 
             console.log("error",err)
         })
-    },[])
+    },[totalPaid])
 
     const  numberWithCommas  = (x)=>{
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -54,33 +67,64 @@ const OneLoan =()=>{
         })
     }
 
+    useEffect(()=>{
+        let totalPayment = parseFloat(loanValues?.totalPayment)
+        let totalPaid = parseFloat(loan?.totalPaid) 
+        let sum = totalPaid + totalPayment
+        let bonus // for later
+        let balance =  loan?.total - sum 
+        // if(balance <= 0 || balance <= 0.00){
+        //     balance = 0
+        // }
+
+        console.log("totalPayment here ",totalPayment)
+        console.log("totalPaid here ",totalPaid)
+        console.log("total paid here ",sum)
+            setTotalPaid(
+                {
+                    balance: numberWithCommas(balance.toFixed(2)),
+                    sum
+                }
+            )
+    },[loanValues?.totalPayment,loan?.totalPaid])
+    // console.log("total paid here ",loanValues?.totalPayment)
+    // console.log("total paid here ", parseFloat(loan?.totalPaid) + parseFloat(loanValues?.totalPayment))
+    console.log("total paid here ",totalPaid)
 
     const calculation =(num)=>{ 
         let totalPayment = 0// principal payment
         let totalCapital = 0// capital payment
         let totalInterest = 0// interest payment
+        
+
         const filteredPayments = payments?.filter(p => p._id <= num && p.isPaid == false);
 
         filteredPayments?.forEach(item =>{
             totalPayment += parseFloat(item.principalPayment)
             totalCapital += parseFloat(item.capitalPayment)
             totalInterest += parseFloat(item.interestPayment)
+
         })
         setLoanValues({
             totalPayment:parseFloat(totalPayment),
             totalCapital:parseFloat(totalCapital),
-            totalInterest:parseFloat(totalInterest)
+            totalInterest:parseFloat(totalInterest),
+            // balance:parseFloat(balance.toFixed(2)),
         })
         setToPrint({
                 loanValues: {
                     totalPayment:numberWithCommas(parseFloat(totalPayment).toFixed(2)),
                     totalCapital:numberWithCommas(parseFloat(totalCapital).toFixed(2)),
-                    totalInterest:numberWithCommas(parseFloat(totalInterest).toFixed(2))
+                    totalInterest:numberWithCommas(parseFloat(totalInterest).toFixed(2)),
+                    // balance:parseFloat(balance.toFixed(2)),
+
                 },
                 loan: loan,
             })
+            
     }
-console.log(toPrint)
+
+    console.log("this is to Print",toPrint)
 
 
     const handleSelect =()=>{
@@ -117,27 +161,12 @@ console.log(toPrint)
     </div>
     }
 
-    useEffect(()=>{
-        let totalPayment = parseFloat(loanValues?.totalPayment)
-        let totalPaid = parseFloat(loan?.totalPaid) 
-        let sum = totalPaid + totalPayment
-
-        console.log("totalPayment here ",totalPayment)
-        console.log("totalPaid here ",totalPaid)
-        console.log("total paid here ",sum)
-            setTotalPaid(
-                sum
-            )
-
-    },[loanValues?.totalPayment,loan?.totalPaid])
-    // console.log("total paid here ",loanValues?.totalPayment)
-    // console.log("total paid here ", parseFloat(loan?.totalPaid) + parseFloat(loanValues?.totalPayment))
-    console.log("total paid here ",totalPaid)
+    
 
 
     const renderToPrint=(render)=>{
         if(render == true){
-            return <Print info={toPrint} payment_id={selected} />
+            return <Print info={toPrint} payment_id={selected} totalPaid={totalPaid} />
         }else return null
     }
     
@@ -146,6 +175,15 @@ console.log(toPrint)
     <h5>total capital: {loan?.totalCapital? numberWithCommas(loan.totalCapital.toFixed(2)):null}</h5>
     </div> */}
 
+    const  ZeroPaddedInput=(number)=> {
+        let newNumber = ""
+        if (number < 10) {
+            newNumber = `00${number}`;
+        } else {
+            newNumber = `0${number}`;
+        }
+        return newNumber
+        };
 
 
     return(
@@ -168,7 +206,7 @@ console.log(toPrint)
             <h1>{loan?.client_id?.fullName}</h1>
 
             <div>
-                <label> # préstamo: put the number of the loan here</label>
+                <label> # préstamo: {ZeroPaddedInput(loan?.loanIdNumber)}</label>
 
 
             <form onSubmit={e=>submitHandler(e,selected)}>

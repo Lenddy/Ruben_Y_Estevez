@@ -10,6 +10,9 @@ const AddLoan = (props) => {
     const [formInfoErr,setFormInfoErr] = useState({})
     const [user,setUser] = useState({})
     const [person,setPerson] = useState([])
+    const [loan,setLoan] = useState([])
+    console.log("this is info",info)
+
     // const [clientFullName,setFullName] =useState({})
     // const [clientId,setClientId] = useState(clientFullName._id)
     // const theId =clientFullName._id
@@ -20,7 +23,6 @@ console.log(info.dateAdded)
             .then(res=>{
             if(res.data.result){
                 setUser(res.data.result)
-                //end of parent .then
             }
             }).catch(
                 err=>{console.log("error",err) 
@@ -48,6 +50,16 @@ console.log(info.dateAdded)
         )
     }
 
+    useEffect(()=>{
+        axios.get(`http://localhost:8000/api/Loan`)
+        .then(res =>{
+            console.log("loan result", res)
+            setLoan(res.data)
+        }).catch(err=>{ 
+            console.log("error",err)
+        })
+    },[])
+
 
     const submitHandler = (e)=>{
         e.preventDefault()
@@ -70,15 +82,26 @@ console.log(info.dateAdded)
         setInfo({
             ...info,
             [e.target.name]: e.target.value,
+            loanIdNumber:loan.count +1
         })
     }
     console.log("this is the whole info ",info)
+
+    const  ZeroPaddedInput=(number)=> {
+        let newNumber = ""
+        if (number < 10) {
+            newNumber = `00${number}`;
+        } else {
+            newNumber = `0${number}`;
+        }
+        return newNumber
+        };
+
     return (
         <div>
             <Link to="/Dashboard"><button className=' btn btn-secondary text-white'>todos los clientes</button> </Link>
             pass the id insted of the full name than get the name gorm the id 
-                <h1> id here {info._id}</h1>
-                <h1>fine a way that when is Monthly to only update the month</h1>
+                    <h1>Numero de préstamo : {ZeroPaddedInput(loan.count +1)} </h1>
             <form className='from-group' onSubmit={submitHandler} >
             <div>
 
