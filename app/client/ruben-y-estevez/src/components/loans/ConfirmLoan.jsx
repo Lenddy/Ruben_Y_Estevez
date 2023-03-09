@@ -99,8 +99,12 @@ const calculateLoanAndDates = (principal, interestRate, term, repetition, startD
             interestPayment = balance * (interestRate / 100 / 5.5);
             newDate.setDate(newDate.getDate() + 15);
         } else if (unit === "month" || unit === "mensual" || unit === "Mensual" || unit === "MENSUAL" || unit === 30 || unit === 31) {
-            interestPayment = balance * (interestRate / 100 / 1.375 );//1.375
-            newDate.setMonth(newDate.getMonth() + 1);
+            interestPayment = balance * (interestRate / 100 / 12 );//1.375
+            // let monthlyInterestRate = interestRate / 12;
+            // let numberOfWeeks = term * 12;
+
+            // interestPayment = (balance * monthlyInterestRate/100)/ (1 - Math.pow(1 + monthlyInterestRate, - numberOfWeeks));
+            // newDate.setMonth(newDate.getMonth() + 1);
         }
 
       // interestPayment = balance * (interestRate / 100 )*(repetition/12);
@@ -130,7 +134,7 @@ const calculateLoanAndDates = (principal, interestRate, term, repetition, startD
         });
     }
     console.log("this is the total capital payment",totalCapital)
-    let fullTotal =totalInterest + totalPrincipal
+    let fullTotal = totalPrincipal //*this wa the interes + the total principle 
     setAllCuotas({
     interest:interestRate,
     payments: payments,
@@ -140,6 +144,8 @@ const calculateLoanAndDates = (principal, interestRate, term, repetition, startD
     totalPaid:0,
     totalCapital:totalCapital ,
     dates: dates,
+    totalLatenessPayment: 0,
+    numberLateness: 0,
     });
     console.log({
         payments: payments,

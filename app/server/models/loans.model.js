@@ -22,6 +22,18 @@ const loan = mongoose.Schema({
         type: Number,
         required:[true,"debes de poner la tasa de interés"]
     },
+    latenessInterest:{
+        type:Number,
+        required:[true,"debes de poner el numero de mora/interés"],
+    },
+    totalLatenessPayment:{
+        type:Number,
+        // required:[true,"debes de poner el numero de pagos/cuotas"],
+    },
+    numberLateness:{
+        type:Number,
+        // required:[true,"debes de poner el numero de pagos/cuotas"],
+    },
     cuotasNumber:{
         type:Number,
         required:[true,"debes de poner el numero de pagos/cuotas"],
@@ -53,6 +65,14 @@ const loan = mongoose.Schema({
     dates:{
         type:Array,
         required: [true,"you need to add the  dates that the loans are paid"]
+    },
+    loanFullyPaid:{
+        type:Boolean,
+        default: false
+    },
+    active:{
+        type:Boolean,
+        default:true
     },
     client_id:{
         type: mongoose.Schema.Types.ObjectId,

@@ -46,9 +46,9 @@ const Print = (props) => {
 
 
     useEffect(()=>{
-            // setTimeout(()=>{ console.log("print");window.print()},100)
+            setTimeout(()=>{ console.log("print");window.print()},10)
             
-            // setTimeout(()=>{ navigate("/Prestamos")},1000)
+            setTimeout(()=>{ navigate("/Prestamos")},10)
         },[])
 
 

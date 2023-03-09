@@ -79,11 +79,23 @@ console.log(info.dateAdded)
 
 
     const changeHandler = (e)=>{
-        setInfo({
-            ...info,
-            [e.target.name]: e.target.value,
-            loanIdNumber:loan.count +1
-        })
+        if(info?.interest == null || info?.latenessInterest == null){
+            setInfo({
+                ...info,
+                [e.target.name]: e.target.value,
+                loanIdNumber:loan.count +1,
+                interest: 10,
+                latenessInterest: 10,
+
+            })
+        }else{
+            setInfo({
+                ...info,
+                [e.target.name]: e.target.value,
+                loanIdNumber:loan.count +1,
+
+            })
+        }
     }
     console.log("this is the whole info ",info)
 
@@ -146,9 +158,19 @@ console.log(info.dateAdded)
 
                 <div>
                     <label>Tasa/Interés</label>
-                    <input type="number" name="interest"  className='form-control'step="any" onChange={changeHandler} />
+                    <input type="number" name="interest" defaultValue={parseInt(10)} placeholder={parseInt(10)}  className='form-control'step="any" onChange={changeHandler} />
                     { info.interest?.length > 0 && info?.interest < 0?
                     <p style={{color:"red"}}  >debes de poner la tasa de interés</p>:
+                    formInfoErr.interest? <p style={{color:"red"}} > {formInfoErr.interest.message} </p>:
+                    null
+                }
+                </div>
+
+                <div>
+                    <label>mora/interés</label>
+                    <input type="number" name="latenessInterest" defaultValue={parseInt(10)} placeholder={parseInt(10)}   className='form-control'step="any" onChange={changeHandler} />
+                    { info.latenessInterest?.length > 0 && info?.latenessInterest < 0?
+                    <p style={{color:"red"}}  >debes de poner la tasa de interés por mora</p>:
                     formInfoErr.interest? <p style={{color:"red"}} > {formInfoErr.interest.message} </p>:
                     null
                 }
