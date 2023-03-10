@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ConfirmLoan from "./ConfirmLoan"
+import moment from 'moment';
 
 const AddLoan = (props) => {
     // const {action} = props
@@ -79,21 +80,20 @@ console.log(info.dateAdded)
 
 
     const changeHandler = (e)=>{
-        if(info?.interest == null || info?.latenessInterest == null){
+        if(info?.interest == null || info?.latenessInterest == null|| info.dateAdded == null){
             setInfo({
                 ...info,
                 [e.target.name]: e.target.value,
                 loanIdNumber:loan.count +1,
                 interest: 10,
                 latenessInterest: 10,
+                dateAdded:moment(Date()).format("YYYY-MM-DD")
 
             })
         }else{
             setInfo({
                 ...info,
                 [e.target.name]: e.target.value,
-                loanIdNumber:loan.count +1,
-
             })
         }
     }
@@ -138,7 +138,7 @@ console.log(info.dateAdded)
 
                 <div>
                     <label >fecha</label>
-                    <input type="date" name="dateAdded"  className='form-control' onChange={changeHandler}/>
+                    <input type="date" name="dateAdded"  className='form-control'defaultValue={moment(Date()).format("YYYY-MM-DD")} placeholder={moment(Date()).format("YYYY-MM-DD")} onChange={changeHandler}/>
                     {info.dateAdded?.length > 0 && info.dateAdded?.length < 2?
                     <p style={{color:"red"}} >debes de agregar el dia que el préstamo fue echo</p>:
                     formInfoErr.dateAdded? <p style={{color:"red"}} > {formInfoErr.dateAdded.message} </p>:

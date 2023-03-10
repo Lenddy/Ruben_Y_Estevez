@@ -92,17 +92,20 @@
 
 
 
-const  ZeroPaddedInput=(number)=> {
-  let newNumber = ""
-  if (number < 10) {
-      newNumber = `00${number}`;
-  } else {
-      newNumber = `0${number}`;
-  }
-  return newNumber
-  };
+// const  ZeroPaddedInput=(number)=> {
+//   let newNumber = ""
+//   if (number < 10) {
+//       newNumber = `00${number}`;
+//   } else {
+//       newNumber = `0${number}`;
+//   }
+//   return newNumber
+//   };
 
-  console.log(ZeroPaddedInput(10))
+//   console.log(ZeroPaddedInput(10))
+
+
+
 
 // const payments = [
 //     {
@@ -175,68 +178,308 @@ const  ZeroPaddedInput=(number)=> {
 
 
 
-const countryChanges = {};
+// const countryChanges = {};
 
-const addCountryChange = (country, ...coins) => {
-    const total = coins.reduce((acc, coin) => acc + coin.value, 0);
-    const changeFunc = amount => {
-        if (!amount) {
-        return {};
-        }
-        const coinCounts = {};
-        if (amount >= total) {
-        coins.forEach(coin => {
-            if (amount >= coin.value) {
-            const coinName = coin.name + (coin.value > 1 ? 's' : '');
-            coinCounts[coinName] = Math.floor(amount / coin.value);
-            amount %= coin.value;
-            }
-        });
-        }
-        return coinCounts;
-    };
-    countryChanges[country] = changeFunc;
-};
-
-
-addCountryChange("United States", {name: "quarter", value: 25}, {name: "dime", value: 10}, {name: "nickel", value: 5}, {name: "penny", value: 1});
-
-addCountryChange("Dominican republic", {name: "quarter", value: 25}, {name: "dime", value: 10}, {name: "nickel", value: 5}, {name: "penny", value: 1});
-
-console.log(countryChanges["United States"](68)); // { quarter: 2, dime: 1, nickel: 1, penny: 3 }
-console.log(countryChanges["Dominican republic"](35)); // { quarter: 4 }
+// const addCountryChange = (country, ...coins) => {
+//     const total = coins.reduce((acc, coin) => acc + coin.value, 0);
+//     const changeFunc = amount => {
+//         if (!amount) {
+//         return {};
+//         }
+//         const coinCounts = {};
+//         if (amount >= total) {
+//         coins.forEach(coin => {
+//             if (amount >= coin.value) {
+//             const coinName = coin.name + (coin.value > 1 ? 's' : '');
+//             coinCounts[coinName] = Math.floor(amount / coin.value);
+//             amount %= coin.value;
+//             }
+//         });
+//         }
+//         return coinCounts;
+//     };
+//     countryChanges[country] = changeFunc;
+// };
 
 
-addCountryChange("Republica Dominicana",{name:"2000 pesos",value:2000},{name:"1000 pesos",value:1000},{name:"500 pesos",value:500},{name:"200 pesos",value:200},{name:"100 pesos",value:100},{name:"50 pesos",value:50},{name:"25 pesos",value:25},{name:"10 pesos",value:10},{name:"5 pesos",value:5},{name:"1 pesos",value:1})
+// addCountryChange("United States", {name: "quarter", value: 25}, {name: "dime", value: 10}, {name: "nickel", value: 5}, {name: "penny", value: 1});
+
+// addCountryChange("Dominican republic", {name: "quarter", value: 25}, {name: "dime", value: 10}, {name: "nickel", value: 5}, {name: "penny", value: 1});
+
+// console.log(countryChanges["United States"](68)); // { quarter: 2, dime: 1, nickel: 1, penny: 3 }
+// console.log(countryChanges["Dominican republic"](35)); // { quarter: 4 }
 
 
-// addCountryChange("Republica Dominicana", {name:"2000 pesos",value:2000}, {name:"1000 pesos",value:1000}, {name:"500 pesos",value:500}, {name:"200 pesos",value:200}, {name:"100 pesos",value:100}, {name:"50 pesos",value:50}, {name:"25 pesos",value:25}, {name:"10 pesos",value:10}, {name:"5 pesos",value:5}, {name:"1 pesos",value:1});
+// addCountryChange("Republica Dominicana",{name:"2000 pesos",value:2000},{name:"1000 pesos",value:1000},{name:"500 pesos",value:500},{name:"200 pesos",value:200},{name:"100 pesos",value:100},{name:"50 pesos",value:50},{name:"25 pesos",value:25},{name:"10 pesos",value:10},{name:"5 pesos",value:5},{name:"1 pesos",value:1})
 
 
-// console.log(countryChanges["Republica Dominicana"](1100))
-// console.log(countryChanges)
+// // addCountryChange("Republica Dominicana", {name:"2000 pesos",value:2000}, {name:"1000 pesos",value:1000}, {name:"500 pesos",value:500}, {name:"200 pesos",value:200}, {name:"100 pesos",value:100}, {name:"50 pesos",value:50}, {name:"25 pesos",value:25}, {name:"10 pesos",value:10}, {name:"5 pesos",value:5}, {name:"1 pesos",value:1});
 
 
-let amount = 2833.25
-let toPay =0
-let sum = 0
-for(let i = 0 ;i <amount;i++ ){
-    if(amount >= 0 ){
-        sum++
-        amount-= 150
-        toPay += 150
-        // amount += 88.5
+// // console.log(countryChanges["Republica Dominicana"](1100))
+// // console.log(countryChanges)
+
+
+// let amount = 2833.25
+// let toPay =0
+// let sum = 0
+// for(let i = 0 ;i <amount;i++ ){
+//     if(amount >= 0 ){
+//         sum++
+//         amount-= 150
+//         toPay += 150
+//         // amount += 88.5
         
 
-    }else break
-}
-console.log(sum)
-console.log(amount)
-console.log(toPay)
+//     }else break
+// }
+// console.log(sum)
+// console.log(amount)
+// console.log(toPay)
 
 
 
-let sti:number ="string"
-console.log(sti)
-sti =19
-console.log(sti)
+// let sti:number ="string"
+// console.log(sti)
+// sti =19
+// console.log(sti)
+
+
+
+
+
+// _id
+// 640b7062620abde3fff3c424
+
+// ObjectId
+// loanIdNumber
+// 1
+
+// Int32
+// dateAdded
+// 2023-03-10T00:00:00.000+00:00
+
+// Date
+// loanAmount
+// 8000
+
+// Int32
+// interest
+// 10
+
+// Int32
+// latenessInterest
+// 10
+
+// Int32
+
+// totalLatenessPayment
+// 0
+
+// Int32
+// numberLateness
+// 0
+
+// Int32
+// cuotasNumber
+// 4
+
+// Int32
+// timeType
+// Mensual
+
+// String
+
+// payments
+// Array
+
+// Array
+
+// 0
+// Object
+
+// Object
+// _id
+// 1
+
+// Int32
+// interestPayment
+// 0
+
+// Int32
+// capitalPayment
+// 2041.839555018402
+
+// Double
+// principalPayment
+// 2041.839555018402
+
+// Double
+// paymentDate
+// 2023/03/09
+
+// String
+// balance
+// 5958.160444981598
+
+// Double
+// isPaid
+// false
+
+// Boolean
+
+// 1
+// Object
+
+// Object
+// _id
+// 2
+
+// Int32
+// interestPayment
+// 0
+
+// Int32
+// capitalPayment
+// 2041.839555018402
+
+// Double
+// principalPayment
+// 2041.839555018402
+
+// Double
+// paymentDate
+// 2023/03/09
+
+// String
+// balance
+// 3916.3208899631954
+
+// Double
+// isPaid
+// false
+
+// Boolean
+
+// 2
+// Object
+
+// Object
+// _id
+// 3
+
+// Int32
+// interestPayment
+// 0
+
+// Int32
+// capitalPayment
+// 2041.839555018402
+
+// Double
+// principalPayment
+// 2041.839555018402
+
+// Double
+// paymentDate
+// 2023/03/09
+
+// String
+// balance
+// 1874.4813349447934
+
+// Double
+// isPaid
+// false
+
+// Boolean
+
+// 3
+// Object
+
+// Object
+// _id
+// 4
+
+// Int32
+// interestPayment
+// 0
+
+// Int32
+// capitalPayment
+// 2041.839555018402
+
+// Double
+// principalPayment
+// 2041.839555018402
+
+// Double
+// paymentDate
+// 2023/03/09
+
+// String
+// balance
+// -167.35822007360866
+
+// Double
+// isPaid
+// false
+
+// Boolean
+// totalInterest
+// 0
+
+// Int32
+// totalPrincipal
+// 8167.358220073608
+
+// Double
+// total
+// 8167.358220073608
+
+// Double
+// totalPaid
+// 0
+
+// Int32
+
+// dates
+// Array
+
+// Array
+// 0
+// 2023/03/09
+
+// String
+// 1
+// 2023/03/09
+
+// String
+// 2
+// 2023/03/09
+
+// String
+// 3
+// 2023/03/09
+
+// String
+// loanFullyPaid
+// false
+
+// Boolean
+// active
+// true
+
+// Boolean
+// client_id
+// 63e8aa670d214ee12995b257
+
+// ObjectId
+// createdAt
+// 2023-03-10T17:43:22.084+00:00
+
+// Date
+// updatedAt
+// 2023-03-10T17:43:22.084+00:00
+
+// Date
