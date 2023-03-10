@@ -108,7 +108,7 @@ const OneLoan =()=>{
         setLoanValues({
             totalPayment:parseFloat(totalPayment),
             totalCapital:parseFloat(totalCapital),
-            totalInterest:parseFloat(totalInterest),
+            totalInterest:parseFloat(totalInterest),  
             // balance:parseFloat(balance.toFixed(2)),
         })
         setToPrint({
