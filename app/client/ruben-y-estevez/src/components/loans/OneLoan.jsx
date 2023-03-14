@@ -4,6 +4,7 @@ import axios from "axios";
 import UndoPayment from "./UndoPayment";
 import Print from "../Print";
 import Select from "react-select"
+import moment from "moment";
 
 const OneLoan =()=>{
     const {id} = useParams()
@@ -17,6 +18,7 @@ const OneLoan =()=>{
     const [loadToPrint,setLoadToPrint] = useState(false)
     const [ totalPaid,setTotalPaid]= useState({})
     // console.log("this is total;",loan?.total - 4066.8510823902325)
+
 
     useEffect(()=>{
         axios.get("http://localhost:8000/api/User/loggedUser",{withCredentials:true})
@@ -124,7 +126,7 @@ const OneLoan =()=>{
             
     }
 
-    console.log("this is to Print",toPrint)
+    // console.log("this is to Print",toPrint)
 
 
     const handleSelect =()=>{
@@ -223,7 +225,6 @@ const OneLoan =()=>{
                     <li>use moddals to aplay bonuse by getting the curent payment and rest the number inpute and the number can t be mor thant the couta</li>
                     <li>add a calculator that automatically add the sume of the total that need to be pay( if more than one cuota is selected )  and allows the user to to input a number and  and return the amount of money that the user need to give back </li>
                     <li>make a history with al the payments that have been made </li>
-                    <li>add a fully pay field  or a active field to the loans if it is tru then the loan does not show up </li>
 
                     <li>to make the laste loans pass in todays date  from the moment that that the webe site is accese pass it as a prorp or you can yus get the date in the late loans component(yet to be made ) and compair  it agais the dates of all the loans and  return the loans that are == to todays date or  and also if the loans are over due also show them and add the late nes to the ccouta payment  </li>
 

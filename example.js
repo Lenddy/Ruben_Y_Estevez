@@ -483,3 +483,50 @@
 // 2023-03-10T17:43:22.084+00:00
 
 // Date
+
+
+
+// function addLatenessAmount(loan, payment) {
+//     const latenessInterestRate = loan.latenessInterest / 100;
+//     const dueDate = new Date(loan.dateAdded);
+//     dueDate.setDate(dueDate.getDate() + loan.cuotasNumber * 30);
+//     const paymentDate = new Date(payment.paymentDate);
+//     const lateDays = Math.floor((paymentDate - dueDate) / (24 * 60 * 60 * 1000)) - 5;
+//     const latenessAmount = Math.max(0, payment.balance * latenessInterestRate * lateDays);
+//     payment.balance += latenessAmount;
+//     payment.latenessGenerated = Math.max(0, lateDays);
+//     loan.totalLatenessPayment += latenessAmount;
+//     loan.numberLateness += Math.max(0, lateDays);
+//     loan.total += latenessAmount;
+//     loan.totalPaid += payment.principalPayment + payment.interestPayment + latenessAmount;
+//     loan.payments[payment._id - 1] = payment;
+//     loan.dates[payment._id - 1] = payment.paymentDate;
+//     loan.loanFullyPaid = loan.total <= 0;
+//     return loan;
+//   }
+
+
+
+
+
+/*
+the moment the page loads 
+
+you need to go over all the loans 
+
+for each individual loan  you need to go into the payment array 
+
+then you need to check the payment  date of every individual payment 
+
+if the payment date of that payment is == or > than todays date you need to make a api call to upgrade you 3 to four thing 
+    1 totalLatenessPayment  // is the total of all the lateness that the client have paid 
+        you need to get the current amount totalLatenessPayment + the amount that the payments is late 
+
+    2 numberLateness // you need to update the amount of times the client has been late the dame 
+
+    3 add a lateNess key to the payments array and the amount of lateNess is determine by the percentage of the lateness interest
+
+
+    you can also add a new key to the payments that show the amount of days that a payments has be late
+
+*/

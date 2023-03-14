@@ -2,17 +2,20 @@ import {useEffect,useState , } from 'react';
 import { Link,useNavigate} from 'react-router-dom';
 import ConfirmDelete from './ConfirmDelete';
 import axios from 'axios';
+import moment from 'moment';
 
 
 
 const DashBoard = (props) => {
     const [user,setUser] = useState({})
     const [person,setPerson] = useState([])
+    const [loan,setLoan] = useState([])
     const navigate = useNavigate()
-
+    
     let interest = (15000 * (14 * 0.01))/13;
     let total = ((15000 /13) + interest);
     console.log(interest, total)
+
 
     const onload =()=>{
         axios.get("http://localhost:8000/api/People",{withCredentials:true}) //
@@ -23,7 +26,8 @@ const DashBoard = (props) => {
             console.log(err)
         })
     }
-    
+
+
     useEffect(()=>{
         axios.get("http://localhost:8000/api/User/loggedUser",{withCredentials:true})
         .then(res=>{
@@ -32,18 +36,18 @@ const DashBoard = (props) => {
             }
         }).catch(
             err=>{console.log("error",err) 
-        navigate("/")
-            }
+            navigate("/")
+        }
         )
     },[])
-
+    
     const logout =()=>{
         axios.get("http://localhost:8000/api/User/logout",{withCredentials:true})
         .then(res=>{
             navigate("/")
         }).catch(
             err=>{console.log("error",err) 
-            }
+        }
         )
     }
 
@@ -56,11 +60,109 @@ const DashBoard = (props) => {
         }).catch(err =>{
             console.log(err)
         })
-    },[props.refresh])//when i put the state person it keep re rendering 
+    },[])//when i put the state person it keep re rendering 
 
 
+
+/*
+things to fix
+1. the lateness interest is not being calculated correctly
+2. the lateness to pay is not going up every time the function is called ( it stays the same and it should be increasing by the lateness interest every day after 5 days)
+3. the day keeps increasint every time the function is call you  to fine a way  to put todays date and keep track of  todays date an previous dates so that the days late in the payment is not updated all the time 
+4. dont know if it works but fine out if the number late neness is being updated correctly
+5 if the loan is active  the function should run for that loan 
+6 fine ount what the fuck is happenin with the dates in the add dates 
+
+
+ */
+
+    const lateness = async (item) => {
+        if (!item) {
+          return;
+        }
+      
+        const today = moment();
+        let paymentDate;
+        let paymentId;
+        let loanId;
+        let latenessPayment;
+        let daysLate;
+        let totalLatenessPayment;
+        let numberLateness;
+      
+        for (let i = 0; i < item.length; i++) {
+          loanId = item[i]._id;
+          latenessPayment = 0;
+          daysLate = 0;
+          totalLatenessPayment = 0;
+          numberLateness = 0;
+      
+          for (let n = 0; n < item[i].payments.length; n++) {
+            paymentDate = moment(item[i].payments[n].paymentDate, "YYYY/MM/DD");
+      
+            if (paymentDate.isBefore(today)) {
+              const duration = moment.duration(today.diff(paymentDate));
+              const daysDifference = Math.abs(duration.asDays());
+      
+              if (daysDifference < 5) {
+                daysLate += item[i].payments[n].daysLate + 1;
+              } else {
+                daysLate += item[i].payments[n].daysLate + 1;
+                paymentId = item[i].payments[n]._id;
+                latenessPayment += item[i].payments[n].principalPayment * (item[i].latenessInterest / 100);
+                totalLatenessPayment += latenessPayment;
+                numberLateness++;
+              }
+            }
+          }
+      
+          if (numberLateness > 0) {
+            console.log(
+              `Updating lateness payment for loan ${loanId} with payment ID ${paymentId}: lateness payment is ${latenessPayment}, days late is ${daysLate}, total lateness payment is ${totalLatenessPayment}, number of lateness is ${numberLateness}`
+            );
+      
+            try {
+              const response = await axios.put(
+                `http://localhost:8000/api/Loan/update/Lateness/${loanId}/${paymentId}/${latenessPayment}/${daysLate}/${totalLatenessPayment}/${numberLateness}`
+              );
+              console.log(response.data);
+            } catch (error) {
+              console.log(error.response.data);
+            }
+          }
+        }
+      
+        console.log("Finished updating lateness payments");
+        return item;
+      };
+      
+  
+
+    useEffect(()=>{
+        axios.get("http://localhost:8000/api/Loan")
+        .then(
+            res=>{
+                console.log("this is the result of the loas",res)
+                setLoan(res.data.results)
+            }
+            ).catch(err=>{
+                console.log("error:",err)
+            });
+        },[])
+        
+        
+        
+
+
+
+    // console.log(lateness(loan))
+    
+        console.log("this is the lateness function ",lateness(loan))
+    
+    
+    
     return (
-        <div>
+            <div>
             <h1>make all this information into tabs when you learn material ui</h1>
             <p className='text-primary' > add a field or sub field with then loan request form </p>
             <Link to="/nuevo/cliente"><button className=' btn btn-secondary text-white'>agregar cliente</button> </Link>
@@ -75,7 +177,7 @@ const DashBoard = (props) => {
                     <Link to="/nuevo/cliente"><button className=' btn btn-secondary text-white'>agregar nuevo cliente</button> </Link>
                     </div>:
                     person.map((p,idx)=>{
- 
+
                         return (
                             <div className="d-inline-flex p-2 bd-highlight " key={p._id}>
                             <div className="card  " style={{width: "18rem"}}>

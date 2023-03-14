@@ -87,8 +87,7 @@ console.log(info.dateAdded)
                 loanIdNumber:loan.count +1,
                 interest: 10,
                 latenessInterest: 10,
-                dateAdded:moment(Date()).format("YYYY-MM-DD")
-
+                dateAdded: moment(Date()).format("YYYY-MM-DD")
             })
         }else{
             setInfo({
@@ -138,7 +137,7 @@ console.log(info.dateAdded)
 
                 <div>
                     <label >fecha</label>
-                    <input type="date" name="dateAdded"  className='form-control'defaultValue={moment(Date()).format("YYYY-MM-DD")} placeholder={moment(Date()).format("YYYY-MM-DD")} onChange={changeHandler}/>
+                    <input type="date" name="dateAdded"  className='form-control'defaultValue={moment(Date()).format("YYYY-MM-DD")} onChange={changeHandler}/>
                     {info.dateAdded?.length > 0 && info.dateAdded?.length < 2?
                     <p style={{color:"red"}} >debes de agregar el dia que el préstamo fue echo</p>:
                     formInfoErr.dateAdded? <p style={{color:"red"}} > {formInfoErr.dateAdded.message} </p>:

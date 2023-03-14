@@ -16,7 +16,7 @@ const loan = mongoose.Schema({
     loanAmount:{
         type: Number,
         required:[true,"debes de poner una suma"],
-        min:[100.00,"la suma prestada debe se ser por lo menos 100.00 pesos"]
+        min:[1.00,"la suma prestada debe se ser por lo menos 100.00 pesos"]
     },
     interest:{
         type: Number,
@@ -28,10 +28,12 @@ const loan = mongoose.Schema({
     },
     totalLatenessPayment:{
         type:Number,
+        default:0
         // required:[true,"debes de poner el numero de pagos/cuotas"],
     },
     numberLateness:{
         type:Number,
+        default:0
         // required:[true,"debes de poner el numero de pagos/cuotas"],
     },
     cuotasNumber:{

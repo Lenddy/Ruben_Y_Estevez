@@ -108,12 +108,16 @@ const LongIn = () => {
                             setInterval(update, 1000);
                         }); */}
                         </div>
+                        <div className='text-success'>
+                        <h3>to enable  dark mode uncomment the first line from index.css file</h3>
+                        </div>
                     <div>
                     <p className='text-danger'>idea came into my head to have a flag(boolean) tha sets the a loan to true(or false when tey are done because the loan wont be true or false because i was never created) when is active but set to false when the las 
                     payment(cuota) is payed  and while this boolean is true trow a erro message  that does not alow one(OR SAYS THE WHILE THEY HAVE AT LEAST ONE CUOTA UN PAYED IN THEIR LAST(CURRENT LOAN) THEY ARE NOT ALOW TO HAVE MORE LOANS )    ALSO FIGRE OUT THE BLACK LISTING  WITH A BOOLEAN()/ ALSO TALK WITH THE PEOPLE ABOUT A FEATURE THAT IF THEY ARE IN A GREEN LIST( ORE TRUSTED LIST ) THEY ARE ALOW TO HAVE ONE FEATURE (LIKE PAY LEST MONEY  OR SOMETHING LIKE THAT )   </p>
                     </div>
             todo is hidden remember
             <div >
+                <li>make use of the is active to make loan that will activate when a date is hit</li>
                 <h1>todo list</h1>
                 contenteditable="true" allow you do edit text that is not on a input tag
                 <ol>

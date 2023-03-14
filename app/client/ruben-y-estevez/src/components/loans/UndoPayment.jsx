@@ -77,7 +77,6 @@ const UndoPayment = (props) => {
     return (
         <div>
 
-
         <Button className="btn btn-danger mt-3" onClick={() =>{ setShow(true);} }> 
         anular un cobro
         </Button>

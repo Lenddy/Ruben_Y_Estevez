@@ -172,7 +172,78 @@ class Loan{
         }
     }
 
-    updateTotalPid = async(req,res)=>{
+
+
+    // await loan.findOne({_id:id})
+    //     .updateOne(
+    //         {"payments._id": payment_id},
+    //         {
+    //             $set:{
+    //                 "payments.$.isPaid":Boolean(false)
+    //             }
+    //         }
+    //     )
+    // updateLateness = async (req, res) => {
+    //     const id = req.params.id 
+    //     const payment_id =  parseInt(req.params.payment_id);
+    //     const latenessPayment = parseFloat(req.params.latenessPayment)
+    //     const daysLate = parseInt(req.params.daysLate)
+    //     const totalLatenessPayment = parseFloat(req.params.totalLatenessPayment)
+    //     const numberLateness = parseInt(req.params.numberLateness)
+    //     try {
+    //         const latenessUpdate = await loan.findOneAndUpdate(
+    //             { _id: id },
+    //             {totalLatenessPayment:totalLatenessPayment,numberLateness:numberLateness},
+    //             )
+    //         .findOneAndUpdate(
+    //             {"payments._id": payment_id},
+    //             {
+    //                 $set:{
+    //                     "payments.$.latenessPayment":latenessPayment,
+    //                     "payments.$.daysLate":daysLate,
+    //             }
+    //         );
+    //         res.json({ results: latenessUpdate })
+    //     }catch(err){
+    //         res.json({err,msg:"error updating the lateness of one loan"})
+    //     }
+    // }
+
+
+    updateLateness = async (req, res) => {
+        const id = req.params.id;
+        const payment_id = parseInt(req.params.payment_id);
+        const latenessPayment = parseFloat(req.params.latenessPayment);
+        const daysLate = parseInt(req.params.daysLate);
+        const totalLatenessPayment = parseFloat(req.params.totalLatenessPayment);
+        const numberLateness = parseInt(req.params.numberLateness);
+        try {
+          const loanUpdate = await loan.findOneAndUpdate(
+            { _id: id },
+            {
+              $set: {
+                totalLatenessPayment: totalLatenessPayment,
+                numberLateness: numberLateness
+              }
+            }
+          );
+          const paymentUpdate = await loan.findOneAndUpdate(
+            { _id: id, "payments._id": payment_id },
+            {
+              $set: {
+                "payments.$.latenessPayment": latenessPayment,
+                "payments.$.daysLate": daysLate
+              }
+            }
+          );
+          res.json({ results: paymentUpdate });
+        } catch (err) {
+          res.json({ err, msg: "error updating the lateness of one loan" });
+        }
+      };
+      
+
+    updateTotalPaid = async(req,res)=>{
         const id = req.params.id
         const sum = req.params.sum
         try{
@@ -189,6 +260,7 @@ class Loan{
             res.json({err,msg: "error updating the  total paid"})
         }
     }
+
 
 
 //deletes a loan not in use at the moment 
