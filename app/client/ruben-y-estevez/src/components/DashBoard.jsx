@@ -14,7 +14,6 @@ const DashBoard = (props) => {
     
     let interest = (15000 * (14 * 0.01))/13;
     let total = ((15000 /13) + interest);
-    console.log(interest, total)
 
 
     const onload =()=>{
