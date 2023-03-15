@@ -8,7 +8,7 @@ function Test() {
     // Do something with the selected option
     // ...
 
-    // Reset the form
+    //: Reset the form
     setSelectedOption('');
     event.target.reset();
   };

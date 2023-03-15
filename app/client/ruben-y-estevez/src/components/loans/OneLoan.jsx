@@ -5,6 +5,8 @@ import UndoPayment from "./UndoPayment";
 import Print from "../Print";
 import Select from "react-select"
 import moment from "moment";
+import Bonus from "./Bonus";
+import Descuento from "./Descuento";
 
 const OneLoan =()=>{
     const {id} = useParams()
@@ -195,6 +197,8 @@ const OneLoan =()=>{
             <div>
                 <Link to="/Dashboard" className="btn btn-success" >todos los clientes</Link>
                 <Link to="/Prestamos" className="btn btn-primary" >todos los prestamos</Link>
+                <Bonus id={id} payments={payments} />
+                <Descuento id={id} payments={payments} />
                 <UndoPayment id={id} payments={payments} />
 
             </div>
@@ -221,8 +225,8 @@ const OneLoan =()=>{
                 <h1>todo</h1>
                 <ul>
                     <li> add a late fee</li>
-                    <li>make a function that adds a lateness fee 10 after five days of not paying  the standart is a 10% of the cuota but try to fine a way that that number can be change  </li>
-                    <li>use moddals to aplay bonuse by getting the curent payment and rest the number inpute and the number can t be mor thant the couta</li>
+                    <li>make a function that adds a lateness fee 10 after five days of not paying  the standard is a 10% of the cuota but try to fine a way that that number can be change  </li>
+                    <li>use modals to aplay bonuse by getting the curent payment and rest the number inputs and the number can t be mor thant the couta</li>
                     <li>add a calculator that automatically add the sume of the total that need to be pay( if more than one cuota is selected )  and allows the user to to input a number and  and return the amount of money that the user need to give back </li>
                     <li>make a history with al the payments that have been made </li>
 

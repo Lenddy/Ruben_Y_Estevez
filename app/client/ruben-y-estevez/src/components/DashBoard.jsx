@@ -73,7 +73,8 @@ things to fix
 5 if the loan is active  the function should run for that loan 
 6 fine ount what the fuck is happenin with the dates in the add dates 
 
-
+! you can use  1.1 to ad a 10 persent lateness interest to the loan
+! how bout you use the lateness interest and  use it her for example if the lateness interest is 20 persent then you can use 20/100 to get 0.2 and then you can use 0.2 to multiply the principal payment to get the lateness payment
  */
 
     const lateness = async (item) => {
@@ -181,7 +182,7 @@ things to fix
                         return (
                             <div className="d-inline-flex p-2 bd-highlight " key={p._id}>
                             <div className="card  " style={{width: "18rem"}}>
-                                <img className="card-img-top " src="https://media.istockphoto.com/id/1209654046/vector/user-avatar-profile-icon-black-vector-illustration.jpg?s=612x612&w=0&k=20&c=EOYXACjtZmZQ5IsZ0UUp1iNmZ9q2xl1BD1VvN6tZ2UI=" alt="client picture"/>
+                                <img className="card-img-top " src="https://media.istockphoto.com/id/1209654046/vector/user-avatar-profile-icon-black-vector-illustration.jpg?s=612x612&w=0&k=20&c=EOYXACjtZmZQ5IsZ0UUp1iNmZ9q2xl1BD1VvN6tZ2UI=" alt="client"/>
                                 <div className="card-body">
                                 <h5 className="card-title">{p.name} {p.Lname}</h5>
                                 <p>{p.idType}: {p.idNum}</p>

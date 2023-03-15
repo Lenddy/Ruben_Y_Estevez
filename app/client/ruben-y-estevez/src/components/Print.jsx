@@ -12,7 +12,7 @@ const Print = (props) => {
     const [show, setShow] = useState(true);
     const [payment_info, setPayment_info] = useState({});
     // setShow(active)
-    console.log("gett this info brooooo",info)
+    console.log("get this info brooooo",info)
     const length = info?.loan?.payments?.length
     console.log("gett this info bruuuuuu",info?.loan.total)
     console.log("this is the total paid", totalPaid)

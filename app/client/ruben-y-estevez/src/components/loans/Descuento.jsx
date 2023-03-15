@@ -4,7 +4,9 @@ import axios from 'axios';
 import { Button,Modal } from 'react-bootstrap';
 import OneLoan from "./OneLoan"
 
-const UndoPayment = (props) => {
+
+const Descuento = (props) => {
+
     const {id,payments} = props
     const navigate = useNavigate()
     const [show, setShow] = useState(false);
@@ -13,6 +15,7 @@ const UndoPayment = (props) => {
     const [number,setNumber] = useState()
     const [loan,setLoan] = useState({})
 
+    
 
     // console.log("this is the id:",id,"\n this is payments",payments)
 
@@ -78,7 +81,7 @@ const UndoPayment = (props) => {
         <div>
 
         <Button className="btn btn-danger mt-3 d-inline-flex" onClick={() =>{ setShow(true);} }> 
-        anular un cobro
+        Descuento
         </Button>
 
     <Modal show={show} fullscreen={true} onHide={() => setShow(false)}>
@@ -121,7 +124,6 @@ const UndoPayment = (props) => {
             </div>
     )
 };
-{/*onClick={submitHandler}> */}
 
 
-export default UndoPayment;
+export default Descuento;
