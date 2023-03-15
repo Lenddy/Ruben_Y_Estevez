@@ -10,7 +10,6 @@ const DashBoard = (props) => {
     const [user,setUser] = useState({})
     const [person,setPerson] = useState([])
     const [loan,setLoan] = useState([])
-    const navigate = useNavigate()
     
     let interest = (15000 * (14 * 0.01))/13;
     let total = ((15000 /13) + interest);
