@@ -530,3 +530,17 @@ if the payment date of that payment is == or > than todays date you need to make
     you can also add a new key to the payments that show the amount of days that a payments has be late
 
 */
+let dict = {
+ name : "lenddy",
+ lName:  "Morales",
+ age : 19
+}
+let dict2 = {
+ name : "ana",
+ lName:  "estevez",
+ age : 19
+}
+console.table([dict,dict2])
+
+
+console.log(13*0.1)
