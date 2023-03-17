@@ -217,6 +217,7 @@ class Loan{
         const daysLate = parseInt(req.params.daysLate);
         const totalLatenessPayment = parseFloat(req.params.totalLatenessPayment);
         const numberLateness = parseInt(req.params.numberLateness);
+        const updatedPrincipal = parseFloat(req.params.updatedPrincipalPayment);
         try {
           const loanUpdate = await loan.findOneAndUpdate(
             { _id: id },
@@ -232,7 +233,8 @@ class Loan{
             {
               $set: {
                 "payments.$.latenessPayment": latenessPayment,
-                "payments.$.daysLate": daysLate
+                "payments.$.daysLate": daysLate,
+                "payments.$.principalPayment": updatedPrincipal
               }
             }
           );

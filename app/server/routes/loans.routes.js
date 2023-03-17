@@ -17,8 +17,7 @@ module.exports = (app)=>{
     app.put("/api/Loan/update/status/undo/:id/:payment_id",loan.undoManyLoanStatus)
     app.put("/api/Loan/update/totalPaid/:id/:sum",loan.updateTotalPaid)
     
-    app.put("/api/Loan/update/Lateness/:id/:payment_id/:latenessPayment/:daysLate/:totalLatenessPayment/:numberLateness",loan.updateLateness)
-
+    app.put("/api/Loan/update/Lateness/:id/:payment_id/:latenessPayment/:updatedPrincipalPayment/:daysLate/:totalLatenessPayment/:numberLateness",loan.updateLateness)
     // app.get("/api/Loan/:id/:payment_id",loan.getOneLoanPayment)
     // app.get("/api/Loan//:id/:payment_id",loan.getOneLoanPayment)
 }
