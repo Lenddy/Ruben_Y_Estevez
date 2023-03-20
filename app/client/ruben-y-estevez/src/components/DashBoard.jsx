@@ -101,11 +101,11 @@ things to fix
 
 		for (let i = 0; i < item.length; i++) {
 			loanId = item[i]._id; //* have loan id
+			numberLateness = item[i].numberLateness; //* total of late cuotas
+			totalLatenessPayment = 0; //
 			for (let n = 0; n < item[i].payments.length; n++) {
 				latenessPayment = 0;
 				daysLate = 0;
-				totalLatenessPayment = 0;
-				numberLateness = item[i].numberLateness;
 				currentLatenessPayment = 0;
 				updatedPrincipalPayment = item[i].payments[n].principalPayment;
 				paymentId = item[i].payments[n]._id; //* got payment id
@@ -121,6 +121,7 @@ things to fix
 					const duration = moment.duration(today.diff(paymentDate));
 					console.log("this is duration", duration);
 					let daysDifference = Math.abs(duration.asDays());
+					daysLate = daysDifference;
 
 					//dont know if you still want that
 					// Add one day to payment date for each day late
@@ -132,14 +133,13 @@ things to fix
 					//this is fix compare the days diference with the late nes days in the data ba if the days are the same run the code below else do no nothin or breate aout of the curent iteration maybe use continue
 
 					if (
-						Math.floor(daysDifference) ===
+						Math.floor(daysDifference) <=
 						item[i].payments[n].daysLate
 					) {
 						continue;
 					}
 
 					if (daysDifference >= 5) {
-						daysLate = daysDifference;
 						numberLateness += 1;
 						console.log("this is daysLate", daysLate);
 						for (let z = Math.floor(daysDifference); z >= 5; z--) {
@@ -177,46 +177,6 @@ things to fix
 			}
 		}
 	};
-
-	// const lateness = async (item) => {
-	//     try {
-	//       if (!item) {
-	//         return;
-	//       }
-	//       const today = moment();
-	//       let paymentDate, paymentId, loanId, latenessPayment, daysLate, totalLatenessPayment, numberLateness, currentLatenessPayment, updatedPrincipalPayment;
-	//       item.forEach(({_id, payments, numberLateness, latenessInterest}) => {
-	//         payments.forEach(({_id: paymentId, paymentDate, principalPayment}) => {
-	//           latenessPayment = 0;
-	//           daysLate = 0;
-	//           totalLatenessPayment = 0;
-	//           currentLatenessPayment = 0;
-	//           updatedPrincipalPayment = principalPayment;
-	//           const paymentDateMoment = moment(paymentDate, "YYYY/MM/DD");
-	//           if (paymentDateMoment.isBefore(today)) {
-	//             const duration = moment.duration(today.diff(paymentDateMoment));
-	//             const daysDifference = Math.abs(duration.asDays());
-	//             paymentDateMoment.add(daysDifference, "days");
-	//             if (daysDifference >= 5) {
-	//               daysLate = daysDifference;
-	//               numberLateness += 1;
-	//               for (let z = Math.floor(daysDifference); z > 5; z--) {
-	//                 currentLatenessPayment = principalPayment * (latenessInterest / 100);
-	//                 latenessPayment += currentLatenessPayment;
-	//                 updatedPrincipalPayment += currentLatenessPayment;
-	//               }
-	//               totalLatenessPayment += latenessPayment;
-	//               console.log(`Updating lateness payment for loan ${_id} with payment ID ${paymentId}: lateness payment is ${latenessPayment}, days late is ${daysLate}, total lateness payment is ${totalLatenessPayment}, number of days late is ${daysDifference}`);
-	//               const response = await axios.put(`http://localhost:8000/api/Loan/update/Lateness/${_id}/${paymentId}/${latenessPayment}/${updatedPrincipalPayment}/${daysLate}/${totalLatenessPayment}/${numberLateness}`);
-	//               console.log(response.data);
-	//             }
-	//           }
-	//         });
-	//       });
-	//     } catch (error) {
-	//       console.log(error.response.data);
-	//     }
-	//   };
 
 	useEffect(() => {
 		axios
