@@ -1,4 +1,4 @@
-const moment = require("moment");
+// const moment = require("moment");
 // // const weekly = 7
 // // const byWeekly = 15
 // // const monthly = 30
@@ -501,99 +501,99 @@ if the payment date of that payment is == or > than todays date you need to make
 
 // console.log(13*0.1)
 
-const lateness2 = async (item) => {
-	//do nothing if empty
-	if (!item) {
-		return;
-	}
+// const lateness2 = async (item) => {
+// 	//do nothing if empty
+// 	if (!item) {
+// 		return;
+// 	}
 
-	const today = moment(); //todays date
-	//initialized variables
-	let paymentDate;
-	let paymentId;
-	let loanId;
-	let latenessPayment;
-	let daysLate;
-	let totalLatenessPayment;
-	let numberLateness;
+// 	const today = moment(); //todays date
+// 	//initialized variables
+// 	let paymentDate;
+// 	let paymentId;
+// 	let loanId;
+// 	let latenessPayment;
+// 	let daysLate;
+// 	let totalLatenessPayment;
+// 	let numberLateness;
 
-	//first loop through the loans
-	for (let i = 0; i < item.length; i++) {
-		loanId = item[i]._id;
-		latenessPayment = 0;
-		daysLate = 0;
-		totalLatenessPayment = 0;
-		numberLateness = 0;
+// 	//first loop through the loans
+// 	for (let i = 0; i < item.length; i++) {
+// 		loanId = item[i]._id;
+// 		latenessPayment = 0;
+// 		daysLate = 0;
+// 		totalLatenessPayment = 0;
+// 		numberLateness = 0;
 
-		//second loop through the payments of a loan
-		for (let n = 0; n < item[i].payments.length; n++) {
-			//get the payment date of the payment
-			paymentDate = moment(item[i].payments[n].paymentDate, "YYYY/MM/DD");
+// 		//second loop through the payments of a loan
+// 		for (let n = 0; n < item[i].payments.length; n++) {
+// 			//get the payment date of the payment
+// 			paymentDate = moment(item[i].payments[n].paymentDate, "YYYY/MM/DD");
 
-			//check if the payment date is before todays date
-			if (paymentDate.isBefore(today)) {
-				//this is the amount of days that the payment is late
-				const duration = moment.duration(today.diff(paymentDate));
-				let daysDifference = Math.abs(duration.asDays());
+// 			//check if the payment date is before todays date
+// 			if (paymentDate.isBefore(today)) {
+// 				//this is the amount of days that the payment is late
+// 				const duration = moment.duration(today.diff(paymentDate));
+// 				let daysDifference = Math.abs(duration.asDays());
 
-				//todo i think this is not necessary
-				if (daysDifference > 0) {
-					// Add one day to payment date for each day late
-					paymentDate.add(daysDifference, "days");
-				}
+// 				//todo i think this is not necessary
+// 				if (daysDifference > 0) {
+// 					// Add one day to payment date for each day late
+// 					paymentDate.add(daysDifference, "days");
+// 				}
 
-				//check if the payment is more than or == 5 days late
-				if (daysDifference >= 5) {
-					daysLate += daysDifference;
-					paymentId = item[i].payments[n]._id;
-					latenessPayment +=
-						item[i].payments[n].principalPayment *
-						(item[i].latenessInterest / 100);
-					//todo i think this needs to be mode some were else like the while loop
-					totalLatenessPayment += latenessPayment;
-					numberLateness++;
+// 				//check if the payment is more than or == 5 days late
+// 				if (daysDifference >= 5) {
+// 					daysLate += daysDifference;
+// 					paymentId = item[i].payments[n]._id;
+// 					latenessPayment +=
+// 						item[i].payments[n].principalPayment *
+// 						(item[i].latenessInterest / 100);
+// 					//todo i think this needs to be mode some were else like the while loop
+// 					totalLatenessPayment += latenessPayment;
+// 					numberLateness++;
 
-					// Update principal payment with lateness payment
-					let updatedPrincipalPayment = (item[i].payments[
-						n
-					].principalPayment += latenessPayment);
+// 					// Update principal payment with lateness payment
+// 					let updatedPrincipalPayment = (item[i].payments[
+// 						n
+// 					].principalPayment += latenessPayment);
 
-					// Update lateness payment for the loan payment
-					while (daysDifference >= 5) {
-						try {
-							console.log(
-								`Updating lateness payment for loan ${loanId} with payment ID ${paymentId}: lateness payment is ${latenessPayment}, days late is ${daysLate}, total lateness payment is ${totalLatenessPayment}, number of days late is ${daysDifference}`
-							);
+// 					// Update lateness payment for the loan payment
+// 					while (daysDifference >= 5) {
+// 						try {
+// 							console.log(
+// 								`Updating lateness payment for loan ${loanId} with payment ID ${paymentId}: lateness payment is ${latenessPayment}, days late is ${daysLate}, total lateness payment is ${totalLatenessPayment}, number of days late is ${daysDifference}`
+// 							);
 
-							const response = await axios.put(
-								`http://localhost:8000/api/Loan/update/Lateness/${loanId}/${paymentId}/${latenessPayment}/${updatedPrincipalPayment}/${daysLate}/${totalLatenessPayment}/${numberLateness}`
-							);
+// 							const response = await axios.put(
+// 								`http://localhost:8000/api/Loan/update/Lateness/${loanId}/${paymentId}/${latenessPayment}/${updatedPrincipalPayment}/${daysLate}/${totalLatenessPayment}/${numberLateness}`
+// 							);
 
-							console.log(response.data);
-						} catch (error) {
-							console.log(error.response.data);
-						}
-						// todo the total lateneess shuld be out side of this loop
-						// Reduce daysDifference by 5 and increase lateness payment accordingly
-						daysDifference -= 1;
-						// latenessPayment =
-						// 	item[i].payments[n].principalPayment *
-						// 	(item[i].latenessInterest / 100);
+// 							console.log(response.data);
+// 						} catch (error) {
+// 							console.log(error.response.data);
+// 						}
+// 						// todo the total lateneess shuld be out side of this loop
+// 						// Reduce daysDifference by 5 and increase lateness payment accordingly
+// 						daysDifference -= 1;
+// 						// latenessPayment =
+// 						// 	item[i].payments[n].principalPayment *
+// 						// 	(item[i].latenessInterest / 100);
 
-						// Add updated lateness payment to the total lateness payment
-						// totalLatenessPayment += latenessPayment;
+// 						// Add updated lateness payment to the total lateness payment
+// 						// totalLatenessPayment += latenessPayment;
 
-						// Increase the updated principal payment by the current lateness payment
-						updatedPrincipalPayment += latenessPayment;
-					}
-				}
-			}
-		}
-	}
+// 						// Increase the updated principal payment by the current lateness payment
+// 						updatedPrincipalPayment += latenessPayment;
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
 
-	console.log("Finished updating lateness payments");
-	return item;
-};
+// 	console.log("Finished updating lateness payments");
+// 	return item;
+// };
 
 // const lateness = async (item) => {
 //     //do nothing if empty
@@ -697,192 +697,192 @@ const lateness2 = async (item) => {
 //after the proses of the adding the late nes  you make a api call to add all the values
 
 // {loanId}/${paymentId}/${latenessPayment}/${updatedPrincipalPayment}/${daysLate}/${totalLatenessPayment}/${numberLateness}
-const lateness = async (item) => {
-	if (!item) {
-		return;
-	}
-	//getting todays date
-	const today = moment();
+// const lateness = async (item) => {
+// 	if (!item) {
+// 		return;
+// 	}
+// 	//getting todays date
+// 	const today = moment();
 
-	let paymentDate;
-	let paymentId;
-	let loanId; //* have loan id
-	let latenessPayment;
-	let daysLate;
-	let totalLatenessPayment;
-	let numberLateness;
-	let currentLatenessPayment;
-	let updatedPrincipalPayment;
+// 	let paymentDate;
+// 	let paymentId;
+// 	let loanId; //* have loan id
+// 	let latenessPayment;
+// 	let daysLate;
+// 	let totalLatenessPayment;
+// 	let numberLateness;
+// 	let currentLatenessPayment;
+// 	let updatedPrincipalPayment;
 
-	for (let i = 0; i < item.length; i++) {
-		loanId = item[i]._id; //* have loan id
-		for (let n = 0; n < item[i].payments.length; n++) {
-			latenessPayment = 0;
-			daysLate = 0;
-			totalLatenessPayment = 0;
-			numberLateness = item[i].numberLateness;
-			currentLatenessPayment = 0;
-			updatedPrincipalPayment = item[i].payments[n].principalPayment;
-			paymentId = item[i].payments[n]._id; //* got payment id
-			console.log("this is paymentId", paymentId);
+// 	for (let i = 0; i < item.length; i++) {
+// 		loanId = item[i]._id; //* have loan id
+// 		for (let n = 0; n < item[i].payments.length; n++) {
+// 			latenessPayment = 0;
+// 			daysLate = 0;
+// 			totalLatenessPayment = 0;
+// 			numberLateness = item[i].numberLateness;
+// 			currentLatenessPayment = 0;
+// 			updatedPrincipalPayment = item[i].payments[n].principalPayment;
+// 			paymentId = item[i].payments[n]._id; //* got payment id
+// 			console.log("this is paymentId", paymentId);
 
-			paymentDate = moment(item[i].payments[n].paymentDate, "YYYY/MM/DD");
-			console.log("this is the paymentDate", paymentDate);
+// 			paymentDate = moment(item[i].payments[n].paymentDate, "YYYY/MM/DD");
+// 			console.log("this is the paymentDate", paymentDate);
 
-			if (paymentDate.isBefore(today)) {
-				const duration = moment.duration(today.diff(paymentDate));
-				console.log("this is duration", duration);
-				let daysDifference = Math.abs(duration.asDays());
+// 			if (paymentDate.isBefore(today)) {
+// 				const duration = moment.duration(today.diff(paymentDate));
+// 				console.log("this is duration", duration);
+// 				let daysDifference = Math.abs(duration.asDays());
 
-				// Add one day to payment date for each day late
-				// paymentDate.add(daysDifference, "days");
-				// console.log(
-				// 	"this is paymentDate after adding days",
-				// 	paymentDate
-				// );
+// 				// Add one day to payment date for each day late
+// 				// paymentDate.add(daysDifference, "days");
+// 				// console.log(
+// 				// 	"this is paymentDate after adding days",
+// 				// 	paymentDate
+// 				// );
 
-				if (daysDifference >= 5) {
-					daysLate = daysDifference;
-					console.log("this is daysLate", daysLate);
-					for (
-						let z = Math.floor(daysDifference - 5);
-						z < daysDifference;
-						z++
-					) {
-						currentLatenessPayment =
-							item[i].payments[n].principalPayment *
-							(item[i].latenessInterest / 100);
-						latenessPayment += currentLatenessPayment;
-						updatedPrincipalPayment += currentLatenessPayment;
-					}
+// 				if (daysDifference >= 5) {
+// 					daysLate = daysDifference;
+// 					console.log("this is daysLate", daysLate);
+// 					for (
+// 						let z = Math.floor(daysDifference - 5);
+// 						z < daysDifference;
+// 						z++
+// 					) {
+// 						currentLatenessPayment =
+// 							item[i].payments[n].principalPayment *
+// 							(item[i].latenessInterest / 100);
+// 						latenessPayment += currentLatenessPayment;
+// 						updatedPrincipalPayment += currentLatenessPayment;
+// 					}
 
-					// Update principal payment with lateness payment
-					console.log(
-						"this is updatedPrincipalPayment",
-						updatedPrincipalPayment
-					);
+// 					// Update principal payment with lateness payment
+// 					console.log(
+// 						"this is updatedPrincipalPayment",
+// 						updatedPrincipalPayment
+// 					);
 
-					totalLatenessPayment += latenessPayment;
-					numberLateness++;
+// 					totalLatenessPayment += latenessPayment;
+// 					numberLateness++;
 
-					// Update lateness payment for the loan payment
-					try {
-						console.log(
-							`Updating lateness payment for loan ${loanId} with payment ID ${paymentId}: lateness payment is ${latenessPayment}, days late is ${daysLate}, total lateness payment is ${totalLatenessPayment}, number of days late is ${daysDifference}`
-						);
+// 					// Update lateness payment for the loan payment
+// 					try {
+// 						console.log(
+// 							`Updating lateness payment for loan ${loanId} with payment ID ${paymentId}: lateness payment is ${latenessPayment}, days late is ${daysLate}, total lateness payment is ${totalLatenessPayment}, number of days late is ${daysDifference}`
+// 						);
 
-						const response = await axios.put(
-							`http://localhost:8000/api/Loan/update/Lateness/${loanId}/${paymentId}/${latenessPayment}/${updatedPrincipalPayment}/${daysLate}/${totalLatenessPayment}/${numberLateness}`
-						);
+// 						const response = await axios.put(
+// 							`http://localhost:8000/api/Loan/update/Lateness/${loanId}/${paymentId}/${latenessPayment}/${updatedPrincipalPayment}/${daysLate}/${totalLatenessPayment}/${numberLateness}`
+// 						);
 
-						console.log(response.data);
-					} catch (error) {
-						console.log(error.response.data);
-					}
+// 						console.log(response.data);
+// 					} catch (error) {
+// 						console.log(error.response.data);
+// 					}
 
-					// Reduce daysDifference by 5 and increase lateness payment accordingly
-					daysDifference -= 1;
-					// latenessPayment =
-					// 	item[i].payments[n].principalPayment *
-					// 	(item[i].latenessInterest / 100);
+// 					// Reduce daysDifference by 5 and increase lateness payment accordingly
+// 					daysDifference -= 1;
+// 					// latenessPayment =
+// 					// 	item[i].payments[n].principalPayment *
+// 					// 	(item[i].latenessInterest / 100);
 
-					// Add updated lateness payment to the total lateness payment
-					// totalLatenessPayment += latenessPayment;
+// 					// Add updated lateness payment to the total lateness payment
+// 					// totalLatenessPayment += latenessPayment;
 
-					// Increase the updated principal payment by the current lateness payment
-					updatedPrincipalPayment += latenessPayment;
-				}
-			}
-		}
-	}
-};
+// 					// Increase the updated principal payment by the current lateness payment
+// 					updatedPrincipalPayment += latenessPayment;
+// 				}
+// 			}
+// 		}
+// 	}
+// };
 
-const loans = {
-	results: {
-		_id: "640ea7fd8e90ac4c4e7332de",
-		loanIdNumber: 1,
-		dateAdded: "2023-03-13T00:00:00.000Z",
-		loanAmount: 1000,
-		interest: 10,
-		latenessInterest: 10,
-		totalLatenessPayment: 0,
-		numberLateness: 0,
-		cuotasNumber: 5,
-		timeType: "Mensual",
-		payments: [
-			{
-				_id: 1,
-				interestPayment: 18.181818181818183,
-				capitalPayment: 186.84584366870783,
-				principalPayment: null,
-				paymentDate: "2023/03/3",
-				balance: 794.972338149474,
-				isPaid: false,
-				daysLate: 0,
-				latenessPayment: 0,
-			},
-			{
-				_id: 2,
-				interestPayment: 14.45404251180862,
-				capitalPayment: 190.5736193387174,
-				principalPayment: 205.02766185052602,
-				paymentDate: "2023/04/3",
-				balance: 589.944676298948,
-				isPaid: false,
-				daysLate: 0,
-				latenessPayment: 0,
-			},
-			{
-				_id: 3,
-				interestPayment: 10.726266841799056,
-				capitalPayment: 194.30139500872696,
-				principalPayment: 205.02766185052602,
-				paymentDate: "2023/05/3",
-				balance: 384.91701444842204,
-				isPaid: false,
-				daysLate: 0,
-				latenessPayment: 0,
-			},
-			{
-				_id: 4,
-				interestPayment: 6.998491171789492,
-				capitalPayment: 198.02917067873653,
-				principalPayment: 205.02766185052602,
-				paymentDate: "2023/06/3",
-				balance: 179.88935259789602,
-				isPaid: false,
-				daysLate: 0,
-				latenessPayment: 0,
-			},
-			{
-				_id: 5,
-				interestPayment: 3.2707155017799283,
-				capitalPayment: 201.75694634874608,
-				principalPayment: 205.02766185052602,
-				paymentDate: "2023/07/3",
-				balance: -25.138309252629995,
-				isPaid: false,
-				daysLate: 0,
-				latenessPayment: 0,
-			},
-		],
-		totalInterest: 53.63133420899528,
-		totalPrincipal: 1025.13830925263,
-		total: 1025.13830925263,
-		totalPaid: 0,
-		dates: [
-			"2023/03/27",
-			"2023/04/11",
-			"2023/04/26",
-			"2023/05/11",
-			"2023/05/26",
-		],
-		loanFullyPaid: false,
-		active: true,
-		client_id: "63df15c5c64ca24b926c4caf",
-		createdAt: "2023-03-13T04:35:09.488Z",
-		updatedAt: "2023-03-16T17:58:24.696Z",
-		__v: 0,
-	},
-};
-console.log(lateness(loans));
+// const loans = {
+// 	results: {
+// 		_id: "640ea7fd8e90ac4c4e7332de",
+// 		loanIdNumber: 1,
+// 		dateAdded: "2023-03-13T00:00:00.000Z",
+// 		loanAmount: 1000,
+// 		interest: 10,
+// 		latenessInterest: 10,
+// 		totalLatenessPayment: 0,
+// 		numberLateness: 0,
+// 		cuotasNumber: 5,
+// 		timeType: "Mensual",
+// 		payments: [
+// 			{
+// 				_id: 1,
+// 				interestPayment: 18.181818181818183,
+// 				capitalPayment: 186.84584366870783,
+// 				principalPayment: null,
+// 				paymentDate: "2023/03/3",
+// 				balance: 794.972338149474,
+// 				isPaid: false,
+// 				daysLate: 0,
+// 				latenessPayment: 0,
+// 			},
+// 			{
+// 				_id: 2,
+// 				interestPayment: 14.45404251180862,
+// 				capitalPayment: 190.5736193387174,
+// 				principalPayment: 205.02766185052602,
+// 				paymentDate: "2023/04/3",
+// 				balance: 589.944676298948,
+// 				isPaid: false,
+// 				daysLate: 0,
+// 				latenessPayment: 0,
+// 			},
+// 			{
+// 				_id: 3,
+// 				interestPayment: 10.726266841799056,
+// 				capitalPayment: 194.30139500872696,
+// 				principalPayment: 205.02766185052602,
+// 				paymentDate: "2023/05/3",
+// 				balance: 384.91701444842204,
+// 				isPaid: false,
+// 				daysLate: 0,
+// 				latenessPayment: 0,
+// 			},
+// 			{
+// 				_id: 4,
+// 				interestPayment: 6.998491171789492,
+// 				capitalPayment: 198.02917067873653,
+// 				principalPayment: 205.02766185052602,
+// 				paymentDate: "2023/06/3",
+// 				balance: 179.88935259789602,
+// 				isPaid: false,
+// 				daysLate: 0,
+// 				latenessPayment: 0,
+// 			},
+// 			{
+// 				_id: 5,
+// 				interestPayment: 3.2707155017799283,
+// 				capitalPayment: 201.75694634874608,
+// 				principalPayment: 205.02766185052602,
+// 				paymentDate: "2023/07/3",
+// 				balance: -25.138309252629995,
+// 				isPaid: false,
+// 				daysLate: 0,
+// 				latenessPayment: 0,
+// 			},
+// 		],
+// 		totalInterest: 53.63133420899528,
+// 		totalPrincipal: 1025.13830925263,
+// 		total: 1025.13830925263,
+// 		totalPaid: 0,
+// 		dates: [
+// 			"2023/03/27",
+// 			"2023/04/11",
+// 			"2023/04/26",
+// 			"2023/05/11",
+// 			"2023/05/26",
+// 		],
+// 		loanFullyPaid: false,
+// 		active: true,
+// 		client_id: "63df15c5c64ca24b926c4caf",
+// 		createdAt: "2023-03-13T04:35:09.488Z",
+// 		updatedAt: "2023-03-16T17:58:24.696Z",
+// 		__v: 0,
+// 	},
+// };
+// console.log(lateness(loans));

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
+import io from "socket.io-client";
 
 const LongIn = () => {
 	const [formInfo, setFormInfo] = useState({});
@@ -10,6 +11,12 @@ const LongIn = () => {
 	const [show, setShow] = useState("password");
 	const [loan, setLoan] = useState([]);
 	const navigate = useNavigate();
+	const [socket] = useState(() => io(":8000")); //new user socket
+	useEffect(() => {
+		socket.on("new_connection", (data) => {
+			console.log("new connection", data);
+		});
+	}, []);
 
 	const changeHandler = (e) => {
 		setFormInfo({
@@ -33,7 +40,7 @@ const LongIn = () => {
 				// console.log(res);
 				setUsuarios(res.data.results);
 			});
-	}, []);
+	}, [usuarios]);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -175,7 +182,7 @@ things to fix
 
 	// console.log(lateness(loan))
 
-	console.log("this is the lateness function ", lateness(loan));
+	// console.log("this is the lateness function ", lateness(loan));
 	lateness(loan);
 
 	return (
@@ -221,12 +228,7 @@ things to fix
 						className="form-control"
 						onChange={changeHandler}
 					/>
-					{formInfo.contraseña?.length > 0 &&
-					formInfo.contraseña?.length < 3 ? (
-						<p style={{ color: "red" }}>
-							contraseña debe de ser por lo menos 3 caracteres
-						</p>
-					) : formErr.nombreDeUsuario ? (
+					{formErr.nombreDeUsuario ? (
 						<p className="text-danger">
 							{formErr.nombreDeUsuario?.msg}
 						</p>
