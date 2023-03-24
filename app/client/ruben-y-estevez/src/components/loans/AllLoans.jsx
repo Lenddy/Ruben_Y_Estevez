@@ -17,7 +17,7 @@ const AllLoans = () => {
 			.catch((err) => {
 				console.log("there can an error on the all loans", err);
 			});
-	}, []);
+	}, [loans]);
 
 	return (
 		<div>

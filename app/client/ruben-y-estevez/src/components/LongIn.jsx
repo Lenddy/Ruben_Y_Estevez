@@ -2,21 +2,37 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
-import io from "socket.io-client";
-
+// import io from "socket.io-client";
+import {
+	Typography,
+	Button,
+	TextField,
+	InputAdornment,
+	MenuItem,
+	Stack,
+	ToggleButton,
+	IconButton,
+	Box,
+} from "@mui/material";
+// ,  Checkbox, FormControlLabel, InputAdornment, IconButton
+import LoginIcon from "@mui/icons-material/Login";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+// import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 const LongIn = () => {
 	const [formInfo, setFormInfo] = useState({});
 	const [usuarios, setUsuarios] = useState([]);
 	const [formErr, setFormErr] = useState({});
-	const [show, setShow] = useState("password");
+	const [show, setShow] = useState(false);
 	const [loan, setLoan] = useState([]);
 	const navigate = useNavigate();
-	const [socket] = useState(() => io(":8000")); //new user socket
-	useEffect(() => {
-		socket.on("new_connection", (data) => {
-			console.log("new connection", data);
-		});
-	}, []);
+	// const [socket] = useState(() => io(":8000")); //new user socket
+	// useEffect(() => {
+	// 	socket.on("new_connection", (data) => {
+	// 		console.log("new connection", data);
+	// 	});
+	// }, []);
 
 	const changeHandler = (e) => {
 		setFormInfo({
@@ -25,12 +41,8 @@ const LongIn = () => {
 		});
 	};
 
-	const showHandler = (e) => {
-		if (e.target.checked) {
-			setShow("text");
-		} else {
-			setShow("password");
-		}
+	const handleToggleShow = () => {
+		setShow(!show);
 	};
 
 	useEffect(() => {
@@ -60,22 +72,6 @@ const LongIn = () => {
 			.catch((err) => console.log(err));
 	};
 
-	/*
-todo
-things to fix
-1. the lateness interest is not being calculated correctly
-2. the lateness to pay is not going up every time the function is called ( it stays the same and it should be increasing by the lateness interest every day after 5 days)
-3. the day keeps increasint every time the function is call you  to fine a way  to put todays date and keep track of  todays date an previous dates so that the days late in the payment is not updated all the time 
-4. dont know if it works but fine out if the number late neness is being updated correctly
-5 if the loan is active  the function should run for that loan 
-6 fine ount what the fuck is happenin with the dates in the add dates 
-
-! you can use  1.1 to ad a 10 persent lateness interest to the loan
-! how bout you use the lateness interest and  use it her for example if the lateness interest is 20 persent then you can use 20/100 to get 0.2 and then you can use 0.2 to multiply the principal payment to get the lateness payment
- */
-
-	//try4
-	//todo tings to do  fix number late and the total latenes payment  i think that they are no grabing the numbers that they already have so try loking into that
 	const lateness = async (item) => {
 		if (!item) {
 			console.log("there is no loan here");
@@ -180,222 +176,83 @@ things to fix
 			});
 	}, []);
 
-	// console.log(lateness(loan))
-
-	// console.log("this is the lateness function ", lateness(loan));
+	//you might want to use a useEffect to get the loan and then run the first time only
 	lateness(loan);
 
 	return (
 		<div>
-			<h1 className="text-danger">
-				{" "}
-				you might want to change the input type to the time of repayment
-				on the back end for the loans set it to numbers{" "}
-			</h1>
-			<h1>Iniciar sesión</h1>
+			<Typography variant="h3">Iniciar sesión</Typography>
 			<Link to="/registrarse">
-				<button className=" btn btn-secondary text-white">
+				<Button variant="contained" endIcon={<PersonAddIcon />}>
 					nueva cuenta
-				</button>{" "}
+				</Button>
 			</Link>
+
 			<form className="form-group " onSubmit={submitHandler}>
-				<div>
-					<label htmlFor="">Usuario </label>
-					<select
-						name="nombreDeUsuario"
-						className="form-control"
-						onChange={changeHandler}
-					>
-						<option value="" selected={true} disabled="disabled">
-							seleccionar usuario
-						</option>
-						{usuarios.map((u) => {
-							return (
-								<option value={u.nombreDeUsuario} key={u._id}>
-									{" "}
-									{u.nombreDeUsuario}
-								</option>
-							);
-						})}
-					</select>
-				</div>
+				<Box whiteSpace={"500px"}>
+					<Stack spacing={2} direction="column">
+						<TextField
+							label="Seleccionar Usuario"
+							name="nombreDeUsuario"
+							onChange={changeHandler}
+							defaultValue={""}
+							select
+							required
+						>
+							{usuarios.map((u) => {
+								return (
+									<MenuItem
+										value={u.nombreDeUsuario}
+										key={u._id}
+									>
+										{u.nombreDeUsuario}
+									</MenuItem>
+								);
+							})}
+						</TextField>
 
-				<div>
-					<label htmlFor="">contraseña</label>
-					<input
-						type={show}
-						name="contraseña"
-						className="form-control"
-						onChange={changeHandler}
-					/>
-					{formErr.nombreDeUsuario ? (
-						<p className="text-danger">
-							{formErr.nombreDeUsuario?.msg}
-						</p>
-					) : formErr.contraseña ? (
-						<p className="text-danger">{formErr.contraseña?.msg}</p>
-					) : null}
-				</div>
-				<div>
-					<label htmlFor="">mostrar contraseña</label>
-					<input
-						type="checkbox"
-						name="checkbox"
-						onChange={(e) => showHandler(e)}
-					/>{" "}
-					{/*make it that when this is check that the type changes from password to text */}
-				</div>
-				<button className="btn btn-success mt-3">
-					{" "}
-					iniciar session
-				</button>
+						<TextField
+							label="Contraseña"
+							type={show ? "text" : "password"}
+							name="contraseña"
+							onChange={changeHandler}
+							required
+							InputProps={{
+								endAdornment: (
+									<InputAdornment position="end">
+										<IconButton onClick={handleToggleShow}>
+											{show ? (
+												<VisibilityIcon color="primary" />
+											) : (
+												<VisibilityOffIcon />
+											)}
+										</IconButton>
+									</InputAdornment>
+								),
+							}}
+						/>
+
+						{formErr.nombreDeUsuario ? (
+							<p className="text-danger">
+								{formErr.nombreDeUsuario?.msg}
+							</p>
+						) : formErr.contraseña ? (
+							<p className="text-danger">
+								{formErr.contraseña?.msg}
+							</p>
+						) : null}
+
+						<Button
+							variant="contained"
+							endIcon={<LoginIcon />}
+							color="success"
+							size="large"
+						>
+							iniciar session
+						</Button>
+					</Stack>
+				</Box>
 			</form>
-			<div>
-				{" "}
-				make a clock that show the curent day of the week the day the
-				month the year and the time dinamicaly use this function as
-				reference var datetime = null, date = null;
-				{/* var update = function () {
-                            date = moment(new Date())
-                            datetime.html(date.format('dddd, MMMM Do YYYY, h:mm:ss a'));
-                        };
-
-                        $(document).ready(function(){
-                            datetime = $('#datetime')
-                            update();
-                            setInterval(update, 1000);
-                        }); */}
-			</div>
-			<div className="text-success">
-				<h3>
-					to enable dark mode uncomment the first line from index.css
-					file
-				</h3>
-			</div>
-			<div>
-				<p className="text-danger">
-					idea came into my head to have a flag(boolean) tha sets the
-					a loan to true(or false when tey are done because the loan
-					wont be true or false because i was never created) when is
-					active but set to false when the las payment(cuota) is payed
-					and while this boolean is true trow a erro message that does
-					not alow one(OR SAYS THE WHILE THEY HAVE AT LEAST ONE CUOTA
-					UN PAYED IN THEIR LAST(CURRENT LOAN) THEY ARE NOT ALOW TO
-					HAVE MORE LOANS ) ALSO FIGRE OUT THE BLACK LISTING WITH A
-					BOOLEAN()/ ALSO TALK WITH THE PEOPLE ABOUT A FEATURE THAT IF
-					THEY ARE IN A GREEN LIST( ORE TRUSTED LIST ) THEY ARE ALOW
-					TO HAVE ONE FEATURE (LIKE PAY LEST MONEY OR SOMETHING LIKE
-					THAT ){" "}
-				</p>
-			</div>
-			todo is hidden remember
-			<div>
-				<li>
-					make use of the is active to make loan that will activate
-					when a date is hit
-				</li>
-				<h1>todo list</h1>
-				contenteditable="true" allow you do edit text that is not on a
-				input tag
-				<ol>
-					<li contenteditable="true">
-						use regex for the phone numbers
-					</li>
-					<li>
-						make the app to be able to support companies == new db =
-						companies will have their name , email , phone number ,
-						and address and socials if they want and a description
-						,: and use that info on the print component
-					</li>
-					<li>
-						learn how to transfer messages and audio files from
-						WhatsApp to this system/webpage
-					</li>
-					<li>make a calculator on the payment page</li>
-					<li>
-						learn how to make a drop down menu select multiple
-						inputs (example) if a person selects a field that is not
-						the first one then input that was selected is selected
-						and aso the previous inputs before that ar also selected
-						(idea) if more that oen input is selected make all the
-						other inputs in to an array([]) and loop on that array
-						to calculate the total amount( also use for the
-						calculator later on){" "}
-					</li>
-					<li>add a way to store data locally</li>
-					<li>
-						genera info about the company(mission, vision , values)
-					</li>
-					<li>
-						add sorting to the website (using useLocalStorage
-						method)
-					</li>
-					<li>
-						add socket.io (also add a messaging system) one to many
-						tables perhaps
-					</li>
-					<li>
-						{" "}
-						how to add things to excel using react(data credit) also
-						one that allow you to print(not needed)
-					</li>
-					<li>add a calculator(maybe us an api)</li>
-					<li>add the loan(loans table ) and the rentals table</li>
-					<li>add how to look by specific things</li>
-					<li>
-						how to recover deleted things (loans(person),rentals,){" "}
-					</li>
-					<li>
-						se how many loans have taken or have had in past and the
-						time that loan was set(payed back){" "}
-					</li>
-					<li>
-						maybe how to render the page on the persons chose
-						language(not needed){" "}
-					</li>
-					<li>
-						{" "}
-						add to be able to add documents to every individual
-						(loaned, rental)
-					</li>
-					<li>
-						how to calculate the amount of payments that a person
-						need to make all round (and the day of those payments){" "}
-					</li>
-					<li>history of payments</li>
-					<li>
-						add a chart on that show how much mony is coming and out
-						and how much interest is coming in{" "}
-					</li>
-					<li> to be able to make bonus to you payments </li>
-					<li>
-						{" "}
-						make customs components alerts (go watch the video about
-						custom alerts in your YouTube )
-					</li>
-					<li>
-						come see this div to dynamically render the React
-						component language
-						{/* import React, { useState, useEffect } from 'react';
-
-                    const App = () => {
-                    const [language, setLanguage] = useState('en');
-
-                 useEffect(() => {
-            const deviceLanguage =
-                    (navigator.language || navigator.userLanguage).slice(0, 2);
-                    setLanguage(deviceLanguage);
-                    }, []);
-
-                     return <div>{language}</div>;
-                    };
-
-export default App;*/}
-					</li>
-					<li>write a better spellcheck app</li>
-					<li>learn how to build blockchain application</li>
-				</ol>
-			</div>
 		</div>
 	);
 };

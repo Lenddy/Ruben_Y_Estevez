@@ -1,0 +1,80 @@
+things to do
+
+
+1 build a working ci/cd  to continues in integrate and continues deploy the website 
+
+
+2 learn material ui to make the web site look better
+
+general info about the company(mission, vision , values)
+
+<Typography variant="h3" className="text-danger">
+
+you might want to change the input type to the time of repayment
+on the back end for the loans set it to numbers
+
+
+make a calculator on the payment page
+
+make use of the is active to make loan that will activate
+when a date is hit
+to enable dark mode uncomment the first line from index.css file
+
+make the app to be able to support companies == new db = companies will have their name , email , phone number , and address and socials if they want and a description ,: and use that info on the print component
+
+use regex for the phone numbers
+
+learn how to transfer messages and audio files from WhatsApp to this system/webpage
+
+add a way to store data locally
+
+make a clock that show the curent day of the week the day the month the year and the time dinamicaly use this function as reference var datetime = null, date = null;  var update = function () { date = moment(new Date()) datetime.html(date.format('dddd, MMMM Do YYYY, h:mm:ss a')); };
+$(document).ready(function(){ datetime = $('#datetime') update(); setInterval(update, 1000); }); */}
+
+
+contenteditable="true" allow you do edit text that is not on ainput tag < contenteditable="true">
+
+add sorting to the website (using useLocalStorage method)
+
+add socket.io (also add a messaging system) one to many tables perhaps
+
+how to add things to excel using react(data credit) also
+
+add a calculator(maybe us an api)
+
+add the loan(loans table ) and the rentals table
+
+how to recover deleted things (loans(person),rentals,)
+
+
+se how many loans have taken or have had in past and the time that loan was set(payed back)
+
+
+maybe how to render the page on the persons device  language(not needed)
+
+add to be able to add documents to every individual (loaned, rental)
+
+history of payments
+
+
+add a chart on that show how much mony is coming in and out and how much interest is coming in
+
+
+make customs components alerts (go watch the video about
+custom alerts in your YouTube )
+
+
+come see this div to dynamically render the React
+component language
+{/* import React, { useState, useEffect } from 'react';
+
+const App = () => {
+const [language, setLanguage] = useState('en');
+
+useEffect(() => { const deviceLanguage = (navigator.language || navigator.userLanguage).slice(0, 2); setLanguage(deviceLanguage); }, []);
+ return <div>{language}</div>; };
+
+export default App;*/}
+
+write a better spellcheck app
+learn how to build blockchain application

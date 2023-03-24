@@ -53,15 +53,15 @@ io.on("connection", (socket) => {
 	// });
 
 	//when a user disconnects it will console log the socket id and decrement the connected users
-	socket.on("disconnect", () => {
-		connectedUsers--;
-		console.log(
-			`there are ${connectedUsers} connected users  and this is the socket id ${socket.id} of the last one `
-		);
-		// socket.broadcast.emit("new_connection", {
-		// 	msg: `someone left  there are now ${connectedUsers} active}`,
-		// });
-	});
+	// socket.on("disconnect", () => {
+	// 	connectedUsers--;
+	// 	console.log(
+	// 		`there are ${connectedUsers} connected users  and this is the socket id ${socket.id} of the last one `
+	// 	);
+	// socket.broadcast.emit("new_connection", {
+	// 	msg: `someone left  there are now ${connectedUsers} active}`,
+	// });
+	// });
 });
 
 //!server file end
