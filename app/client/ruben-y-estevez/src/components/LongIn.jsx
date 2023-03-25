@@ -16,7 +16,6 @@ import {
 } from "@mui/material";
 // ,  Checkbox, FormControlLabel, InputAdornment, IconButton
 import LoginIcon from "@mui/icons-material/Login";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 // import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
@@ -182,11 +181,6 @@ const LongIn = () => {
 	return (
 		<div>
 			<Typography variant="h3">Iniciar sesión</Typography>
-			<Link to="/registrarse">
-				<Button variant="contained" endIcon={<PersonAddIcon />}>
-					nueva cuenta
-				</Button>
-			</Link>
 
 			<form className="form-group " onSubmit={submitHandler}>
 				<Box whiteSpace={"500px"}>

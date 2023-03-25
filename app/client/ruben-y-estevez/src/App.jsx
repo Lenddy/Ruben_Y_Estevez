@@ -1,7 +1,5 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-// import LongIn from "./components/LongIn";
-// import Register from "./components/Register";
 import DashBoard from "./components/DashBoard";
 import ClientForm from "./components/ClientForm";
 import OneClient from "./components/OneClient";
@@ -10,7 +8,7 @@ import AllLoans from "./components/loans/AllLoans";
 import AddLoan from "./components/loans/AddLoan";
 import OneLoan from "./components/loans/OneLoan";
 import ConfirmLoan from "./components/loans/ConfirmLoan";
-import Test from "./components/Test";
+// import Test from "./components/Test";
 import Print from "./components/Print";
 import Log_Reg from "./components/Log_Reg";
 
@@ -19,7 +17,6 @@ const App = () => {
 		<div className="App">
 			<Routes>
 				<Route exact path="/" element={<Log_Reg />}></Route>
-				{/* <Route exact path='/Registrarse' element = {<Register/>} /> */}
 				<Route exact path="/DashBoard" element={<DashBoard />} />
 				<Route exact path="/nuevo/cliente" element={<ClientForm />} />
 				<Route exact path="/:id" element={<OneClient />} />

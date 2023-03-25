@@ -11,6 +11,8 @@ import {
 	Box,
 } from "@mui/material";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
@@ -52,15 +54,6 @@ const Register = () => {
 	return (
 		<Box>
 			<Typography variant="h3">Registrarse</Typography>
-			<Link to="/">
-				<Button
-					variant="contained"
-					endIcon={<PersonOutlineIcon />}
-					size="large"
-				>
-					soy un usuario
-				</Button>
-			</Link>
 			<form className="form-group " onSubmit={submitHandler}>
 				<Stack spacing={2} direction="column">
 					<TextField
@@ -182,7 +175,11 @@ const Register = () => {
 						</p>
 					) : null}
 
-					<Button variant="contained" color="success">
+					<Button
+						variant="contained"
+						color="success"
+						endIcon={<PersonAddIcon />}
+					>
 						Registrarse
 					</Button>
 				</Stack>
