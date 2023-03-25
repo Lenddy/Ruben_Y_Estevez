@@ -247,6 +247,7 @@ const LongIn = () => {
 							endIcon={<LoginIcon />}
 							color="success"
 							size="large"
+							onClick={submitHandler}
 						>
 							iniciar session
 						</Button>
