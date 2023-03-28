@@ -274,20 +274,17 @@ const OneLoan = () => {
 			{renderToPrint(loadToPrint)}
 			<div>
 				<Link to="/Dashboard" className="btn btn-success">
-					todos los clientes
+					inicio
 				</Link>
-				<Link to="/Prestamos" className="btn btn-primary">
-					todos los prestamos
-				</Link>
-				<Bonus id={id} payments={payments} />
-				<Descuento id={id} payments={payments} />
+				{/* <Bonus id={id} payments={payments} />
+				<Descuento id={id} payments={payments} /> */}
 				<UndoPayment id={id} payments={payments} />
 			</div>
-			<h1>
+			{/* <p>
 				comprobante fiscal and input represents the number and bellow a
 				select with consumidor final and factura valida para crédito
 				fiscal the value is the number
-			</h1>
+			</p> */}
 
 			<h1>{loan?.client_id?.fullName}</h1>
 
@@ -299,18 +296,8 @@ const OneLoan = () => {
 				</form>
 
 				<div>
-					<p className=" text-danger">todo now </p>
-					<p>1 sent client and payment info and print</p>
-					<h1>todo</h1>
-					<ul>
-						<li> add a late fee</li>
-						<li>
-							make a function that adds a lateness fee 10 after
-							five days of not paying the standard is a 10% of the
-							cuota but try to fine a way that that number can be
-							change{" "}
-						</li>
-						<li>
+					{/*<ul>
+						 <li>
 							use modals to aplay bonuse by getting the curent
 							payment and rest the number inputs and the number
 							can t be mor thant the couta
@@ -325,19 +312,8 @@ const OneLoan = () => {
 						<li>
 							make a history with al the payments that have been
 							made{" "}
-						</li>
-
-						<li>
-							to make the laste loans pass in todays date from the
-							moment that that the webe site is accese pass it as
-							a prorp or you can yus get the date in the late
-							loans component(yet to be made ) and compair it
-							agais the dates of all the loans and return the
-							loans that are == to todays date or and also if the
-							loans are over due also show them and add the late
-							nes to the ccouta payment{" "}
-						</li>
-					</ul>
+						</li> 
+					</ul>*/}
 				</div>
 			</div>
 		</div>

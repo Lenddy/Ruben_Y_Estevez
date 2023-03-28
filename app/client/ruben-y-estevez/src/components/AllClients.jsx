@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ConfirmDelete from "./ConfirmDelete";
+import OneClient from "./OneClient";
 import axios from "axios";
 import { TextField, Stack } from "@mui/material";
 
@@ -127,13 +128,7 @@ const AllClients = () => {
 											<p>Teléfono: {p.pNumber}</p>
 											<div>
 												<hr />
-												<Link
-													to={`/${p._id}`}
-													className="btn btn-success card-text"
-												>
-													ver
-												</Link>
-												|
+												<OneClient id={p._id} />|
 												<Link
 													to={`/editar/cliente/${p._id}`}
 													className="btn btn-primary"

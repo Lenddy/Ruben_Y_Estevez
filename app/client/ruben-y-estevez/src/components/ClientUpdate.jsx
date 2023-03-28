@@ -20,7 +20,7 @@ const ClientUpdate = () => {
 	const [info, setInfo] = useState({});
 	const [formInfoErr, setFormInfoErr] = useState({});
 	const [notFound, setNotFound] = useState(false);
-	console.log(info.name);
+	console.log(info);
 
 	useEffect(() => {
 		axios
@@ -104,7 +104,6 @@ const ClientUpdate = () => {
 							label="Primer Nombre"
 							type="text"
 							name="name"
-							className="form-control"
 							onChange={changeHandler}
 							Value={info.name}
 							required
