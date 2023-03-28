@@ -183,7 +183,8 @@ const LongIn = () => {
 			<Typography variant="h3">Iniciar sesión</Typography>
 
 			<form className="form-group " onSubmit={submitHandler}>
-				<Box whiteSpace={"500px"}>
+				<Box>
+					{/*whiteSpace={"500px"} */}
 					<Stack spacing={2} direction="column">
 						<TextField
 							label="Seleccionar Usuario"

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { TextField, Stack } from "@mui/material";
 
 const AllLoans = () => {
 	const [loans, setAllLoans] = useState([]);
@@ -17,35 +18,38 @@ const AllLoans = () => {
 			.catch((err) => {
 				console.log("there can an error on the all loans", err);
 			});
-	}, [loans]);
+	}, []);
 
 	return (
 		<div>
-			<Link to={`/Nuevo/Prestamos`} className="btn btn-success card-text">
-				Agregar préstamo
-			</Link>
-			<Link to="/Dashboard" className="btn btn-primary">
-				todos los clientes
-			</Link>
+			<Stack
+				spacing={2}
+				direction="row"
+				className="d-flex justify-content-center"
+			>
+				<p className=" ">
+					<TextField
+						label="Buscar Préstamo"
+						type="text"
+						size="small"
+						onChange={(e) => setSearch(e.target.value)}
+					/>
+				</p>
+				<Link to={`/Nuevo/Prestamos`} className="">
+					<button className=" btn btn-secondary text-white ">
+						Agregar préstamo
+					</button>
+				</Link>
+			</Stack>
 
-			<h1>
+			{/* <h1>
 				make a feed(carousel) that show the clients than need to pay
 				this day and have other feature{" "}
 			</h1>
 			<h1>
 				you might also want to learn the bootstrap alert and colapsa and
 				drop downs and the nav bar
-			</h1>
-			<div>
-				<p className="text-warning">
-					search client: by(add later) :
-					<input
-						type="text"
-						onChange={(e) => setSearch(e.target.value)}
-						placeholder="search..."
-					/>
-				</p>
-			</div>
+			</h1> */}
 			{loans.length === 0 || loans.length == null ? (
 				<>
 					<p>agrega un préstamo</p>
