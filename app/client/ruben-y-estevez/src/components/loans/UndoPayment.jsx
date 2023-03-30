@@ -120,7 +120,30 @@ const UndoPayment = (props) => {
 	// 	});
 	// };
 
-	// !sent a variable  boolean that switches from false to  true when you click the undo(anular) btn an  and attach this variable to the use effect that renders the cuotas  and also set the show to be false when click
+	// // !sent a variable  boolean that switches from false to  true when you click the undo(anular) btn an  and attach this variable to the use effect that renders the cuotas  and also set the show to be false when click
+	// const submitHandler = (e, payment_id) => {
+	// 	e.preventDefault();
+	// 	axios
+	// 		.put(
+	// 			`http://localhost:8000/api/Loan/update/status/${id}/${payment_id}`
+	// 		) //
+	// 		.then((res) => {
+	// 			axios
+	// 				.put(
+	// 					`http://localhost:8000/api/Loan/update/totalPaid/${id}/${loanValues?.totalPayment}`
+	// 				)
+	// 				.then((res) => {
+	// 					console.log("this is the result", res);
+	// 				})
+	// 				.catch((err) => {
+	// 					console.log("there was an error", err);
+	// 				});
+	// 			console.log(res);
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log("error", err);
+	// 		});
+	// };
 	const submitHandler = (e, payment_id) => {
 		e.preventDefault();
 		axios

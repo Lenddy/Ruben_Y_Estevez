@@ -26,6 +26,16 @@ const Print = (props) => {
 		}
 		return newNumber;
 	};
+	useEffect(() => {
+		setTimeout(() => {
+			console.log("print");
+			window.print();
+		}, 10);
+
+		setTimeout(() => {
+			navigate("/Dashboard");
+		}, 10);
+	}, []);
 
 	return (
 		<div>
