@@ -27,28 +27,6 @@ const Print = (props) => {
 		return newNumber;
 	};
 
-	useEffect(() => {
-		info?.loan?.payments
-			.filter((p) => p._id == payment_id)
-			.map((p, idx) => {
-				setPayment_info({
-					allInfo: p,
-				});
-			});
-	}, []);
-	console.log("this is the object ", payment_info);
-
-	useEffect(() => {
-		setTimeout(() => {
-			console.log("print");
-			window.print();
-		}, 10);
-
-		setTimeout(() => {
-			navigate("/Prestamos");
-		}, 10);
-	}, []);
-
 	return (
 		<div>
 			<Modal show={show} fullscreen={true} onHide={() => setShow(false)}>

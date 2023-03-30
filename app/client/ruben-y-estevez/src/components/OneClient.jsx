@@ -116,7 +116,7 @@ const OneClient = (props) => {
 				</Modal.Header>
 				<Modal.Body>
 					<Stack spacing={2} direction="column">
-						<div>ID:{}</div>
+						<div>ID: {client._id}</div>
 						<div>
 							dia de nacimiento
 							{moment(client.dob).format("YYYY/MM/DD")}
@@ -138,23 +138,21 @@ const OneClient = (props) => {
 						</div>
 						<div>Dirección trabajo {client.workAddress}</div>
 						<div>prestamos#.{loan.length}</div>
-					</Stack>
-				</Modal.Body>
-				<div></div>
-
-				{notFound ? (
-					<h1 className="text-danger">
-						hubo un error encontrando a este cliente o el cliente no
-						existe regrese hacia la pagina donde están todos los
-						clientes y inténtelo denuedo
-					</h1>
-				) : (
-					<div>
-						<h1>
-							dia creado
-							{moment(client.createAt).format("YYYY/MM/DD")}
-						</h1>
-						{/* {loan.map((l, idx) => {
+						{notFound ? (
+							<h1 className="text-danger">
+								hubo un error encontrando a este cliente o el
+								cliente no existe regrese hacia la pagina donde
+								están todos los clientes y inténtelo denuedo
+							</h1>
+						) : (
+							<div>
+								{/*<h1>
+									dia creado
+									{moment(client.createAt).format(
+										"YYYY/MM/DD"
+									)}
+								</h1>
+								 {loan.map((l, idx) => {
 							return (
 								<div key={l._id}>
 									<h4>
@@ -163,9 +161,18 @@ const OneClient = (props) => {
 									</h4>
 								</div>
 							);
-						})} */}
-					</div>
-				)}
+						})} 
+				<div>
+					{" "}
+					use the editable lable in html to edit text and that text
+					that chage should be the updatable{" "}
+				</div>*/}
+							</div>
+						)}
+					</Stack>
+				</Modal.Body>
+				<div></div>
+
 				<Modal.Footer>
 					<Link to={`/editar/cliente/${id}`} className="btn">
 						<Button variant="success">editar</Button>

@@ -22,6 +22,7 @@ const AllLoans = () => {
 
 	return (
 		<div>
+			{/* make the one loan into a modal and show it that way  */}
 			<Stack
 				spacing={2}
 				direction="row"
