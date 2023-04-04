@@ -51,7 +51,7 @@ const LongIn = () => {
 				// console.log(res);
 				setUsuarios(res.data.results);
 			});
-	}, [usuarios]);
+	}, []);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
