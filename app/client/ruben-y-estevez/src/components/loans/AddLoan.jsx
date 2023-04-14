@@ -82,7 +82,7 @@ const AddLoan = (props) => {
 					setFormInfoErr(res.data.err.errors);
 				} else {
 					setFormInfoErr();
-					navigate("/Prestamos"); //change this to
+					navigate("/Dashboard"); //change this to
 				}
 			})
 			.catch((err) => {
@@ -130,7 +130,7 @@ const AddLoan = (props) => {
 					todos los clientes
 				</button>{" "}
 			</Link>
-			pass the id insted of the full name than get the name gorm the id
+			{/* pass the id insted of the full name than get the name gorm the id */}
 			<h1>Numero de préstamo : {ZeroPaddedInput(loan.count + 1)} </h1>
 			<form className="from-group" onSubmit={submitHandler}>
 				<div></div>
