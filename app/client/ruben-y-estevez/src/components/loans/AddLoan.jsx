@@ -47,6 +47,19 @@ const AddLoan = (props) => {
 			});
 	}, []);
 
+	const logout = () => {
+		axios
+			.get("http://localhost:8000/api/User/logout", {
+				withCredentials: true,
+			})
+			.then((res) => {
+				navigate("/");
+			})
+			.catch((err) => {
+				console.log("error", err);
+			});
+	};
+
 	useEffect(() => {
 		axios
 			.get(`http://localhost:8000/api/Loan`)
@@ -98,6 +111,7 @@ const AddLoan = (props) => {
 			});
 		}
 	};
+	console.log("this is the whole info ", info);
 
 	const ZeroPaddedInput = (number) => {
 		let newNumber = "";
