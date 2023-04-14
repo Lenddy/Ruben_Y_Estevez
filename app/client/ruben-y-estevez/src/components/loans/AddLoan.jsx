@@ -82,7 +82,7 @@ const AddLoan = (props) => {
 					setFormInfoErr(res.data.err.errors);
 				} else {
 					setFormInfoErr();
-					navigate("/Dashboard"); //change this to
+					navigate("/DashBoard"); //change this to
 				}
 			})
 			.catch((err) => {
