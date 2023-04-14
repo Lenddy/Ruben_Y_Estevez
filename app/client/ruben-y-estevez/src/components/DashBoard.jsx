@@ -8,18 +8,9 @@ import PersonIcon from "@mui/icons-material/Person";
 import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
 import AllLoans from "./loans/AllLoans";
 import AllCLients from "./AllClients";
-import {
-	Typography,
-	Button,
-	TextField,
-	InputAdornment,
-	MenuItem,
-	Stack,
-	ToggleButton,
-	IconButton,
-	Box,
-	Tab,
-} from "@mui/material";
+import { Stack, Box, Tab } from "@mui/material";
+import SwipeableViews from "react-swipeable-views-react-18-fix";
+import LogOut from "./LogOut";
 
 const DashBoard = (props) => {
 	const [user, setUser] = useState({});
@@ -27,9 +18,13 @@ const DashBoard = (props) => {
 	const [tab, setTab] = useState("1");
 	const navigate = useNavigate();
 	const [currentTime, setCurrentTime] = useState(moment());
-
-	let interest = (15000 * (14 * 0.01)) / 13;
-	let total = 15000 / 13 + interest;
+	const [tabIndex, setTabIndex] = useState(0);
+	const tabChange = (e, newVal) => {
+		setTab(newVal);
+		setTabIndex(parseInt(newVal) - 1);
+	};
+	// let interest = (15000 * (14 * 0.01)) / 13;
+	// let total = 15000 / 13 + interest;
 
 	useEffect(() => {
 		const intervalId = setInterval(() => {
@@ -70,19 +65,6 @@ const DashBoard = (props) => {
 			});
 	}, []);
 
-	const logout = () => {
-		axios
-			.get("http://localhost:8000/api/User/logout", {
-				withCredentials: true,
-			})
-			.then((res) => {
-				navigate("/");
-			})
-			.catch((err) => {
-				console.log("error", err);
-			});
-	};
-
 	useEffect(() => {
 		axios
 			.get("http://localhost:8000/api/People", { withCredentials: true }) //
@@ -95,18 +77,19 @@ const DashBoard = (props) => {
 			});
 	}, []); //when i put the state person it keep re rendering
 
-	const tabChange = (e, newVal) => {
-		setTab(newVal);
-	};
+	// const tabChange = (e, newVal) => {
+	// 	setTab(newVal);
+	// };
 
 	return (
 		<div>
-			<Stack spacing={2} direction="row">
+			<Stack spacing={10} direction="row">
 				<strong className="">Hola {user.nombre}</strong>
 				<p>
 					{moment().format("dddd, MMMM Do YYYY")}|
 					{currentTime.format("h:mm:ss a")}
 				</p>
+				<LogOut />
 			</Stack>
 
 			<TabContext value={tab}>
@@ -115,6 +98,7 @@ const DashBoard = (props) => {
 						arial-label="tabs example"
 						onChange={tabChange}
 						centered
+						swipeable={true}
 					>
 						<Tab
 							label="Clientes"
@@ -128,25 +112,21 @@ const DashBoard = (props) => {
 							icon={<RequestQuoteIcon />}
 							iconPosition="start"
 						/>
-						<Tab label="casi viene" value="3" disabled />
+						<Tab label="EN Progreso" value="3" disabled />
 					</TabList>
 				</Box>
-				<TabPanel value="1">
-					<AllCLients />
-				</TabPanel>
-				<TabPanel value="2">
-					<AllLoans />
-				</TabPanel>
-				<TabPanel value="3">casi viene</TabPanel>
+				<SwipeableViews index={tabIndex} onChangeIndex={setTabIndex}>
+					<TabPanel value="1">
+						<AllCLients />
+					</TabPanel>
+					<TabPanel value="2">
+						<AllLoans />
+					</TabPanel>
+					<TabPanel value="3">EN Progreso</TabPanel>
+				</SwipeableViews>
 			</TabContext>
 		</div>
 	);
-
-	// <SwipeableViews
-	//     axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-	//     index={value}
-	//     onChangeIndex={handleChangeIndex}
-	//   ></SwipeableViews>
 };
 
 export default DashBoard;
