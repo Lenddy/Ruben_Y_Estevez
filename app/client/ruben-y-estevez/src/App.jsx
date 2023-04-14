@@ -13,6 +13,7 @@ import Log_Reg from "./components/Log_Reg";
 const App = () => {
 	return (
 		<div className="App">
+			<h1 className="text-danger">Demo</h1>
 			<Routes>
 				<Route exact path="/" element={<Log_Reg />}></Route>
 				<Route exact path="/DashBoard" element={<DashBoard />} />
